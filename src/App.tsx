@@ -8,6 +8,7 @@ import {
   Button, TextField, Container,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { format } from 'date-fns';
 import { firebaseAuth } from './firebase/index';
 
 const useStyles = makeStyles(() => ({
@@ -41,7 +42,7 @@ function App() {
   const submitTextToEsa = async () => {
     setSending(true);
     const helloWorld = firebase.functions().httpsCallable('helloWorld');
-    const data = await helloWorld({ text });
+    const data = await helloWorld({ text: `${format(new Date(), 'hh:mm')} ${text}\n\n---` });
     setText('');
     setEsaText(data.data.body_md);
     console.log(data);
