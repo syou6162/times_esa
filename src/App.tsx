@@ -92,6 +92,7 @@ function App() {
                   onChange={(event) => { setText(event.target.value); }}
                 />
                 <Button
+                  disabled={sending}
                   variant="contained"
                   color="primary"
                   onClick={() => submitTextToEsa()}
