@@ -25,6 +25,7 @@ function App() {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
   const [text, setText] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
   const [myAccount, setMyAccount] = useState<firebase.User>();
@@ -38,11 +39,13 @@ function App() {
   };
 
   const submitTextToEsa = async () => {
+    setSending(true);
     const helloWorld = firebase.functions().httpsCallable('helloWorld');
     const data = await helloWorld({ text });
     setText('');
     setEsaText(data.data.body_md);
     console.log(data);
+    setSending(false);
   };
 
   useEffect(() => {
@@ -82,6 +85,7 @@ function App() {
                       root: classes.multilineColor,
                       notchedOutline: classes.notchedOutline,
                     },
+                    disabled: sending,
                   }}
                   rows={10}
                   value={text}
