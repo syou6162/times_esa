@@ -43,7 +43,7 @@ function App() {
   const submitTextToEsa = async () => {
     setSending(true);
     const helloWorld = firebase.functions().httpsCallable('helloWorld');
-    const data = await helloWorld({ text: `${format(new Date(), 'hh:mm')} ${text}\n\n---\n` });
+    const data = await helloWorld({ text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` });
     setText('');
     setEsaText(data.data.body_md);
     console.log(data);
