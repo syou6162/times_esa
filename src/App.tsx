@@ -42,8 +42,8 @@ function App() {
 
   const submitTextToEsa = async () => {
     setSending(true);
-    const helloWorld = firebase.functions().httpsCallable('helloWorld');
-    const data = await helloWorld({
+    const submit = firebase.functions().httpsCallable('submitTextToEsa');
+    const data = await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       title: '日報',
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,

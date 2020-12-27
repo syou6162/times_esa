@@ -55,7 +55,7 @@ async function getDailyReport(category: string, title: string) {
   return axios.get(`/v1/teams/${teamName}/posts/${res.data.posts[0].number}`);
 }
 
-export const helloWorld = functions.https.onCall(async (req) => {
+export const submitTextToEsa = functions.https.onCall(async (req) => {
   functions.logger.info('Hello logs!', req);
   const tmp = await createOrUpdatePost(req.category, req.title, req.text);
   functions.logger.info('returned json', tmp.data);
