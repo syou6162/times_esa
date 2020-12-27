@@ -55,6 +55,12 @@ function App() {
       if (!user) return;
       if (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES) return;
       setMyAccount(user);
+
+      const getDailyReport = firebase.functions().httpsCallable('dailyReport');
+      const data = getDailyReport({});
+      data.then((result) => {
+        setEsaText(result.data.body_md);
+      });
     });
   }, []);
 
