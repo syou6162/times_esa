@@ -24,7 +24,7 @@ jobs:
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
           REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
           REACT_APP_VALID_MAIL_ADDRESSES: ${{ secrets.REACT_APP_VALID_MAIL_ADDRESSES }}
-        run: npm run-script build          
+        run: npm run-script build
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
       - name: Deploy Firebase
