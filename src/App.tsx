@@ -46,7 +46,6 @@ function App() {
     const data = await helloWorld({ text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` });
     setText('');
     setEsaText(data.data.body_md);
-    console.log(data);
     setSending(false);
   };
 
