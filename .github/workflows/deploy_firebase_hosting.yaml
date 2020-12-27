@@ -1,4 +1,4 @@
-name: React, Firebase
+name: Firebase Hostingでのdeployを実行する
 
 on:
   push:
