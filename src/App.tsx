@@ -121,7 +121,11 @@ function App() {
               }}
               />
               <div style={{
-                whiteSpace: 'pre-wrap', textAlign: 'left', justifyContent: 'left', alignItems: 'left',
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+                textAlign: 'left',
+                justifyContent: 'left',
+                alignItems: 'left',
               }}
               >
                 {fetching ? ('今日の日報を取得中です...') : esaText}
