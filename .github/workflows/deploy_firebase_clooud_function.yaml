@@ -15,9 +15,9 @@ jobs:
           node-version: '12'
       - run: npm install
         working-directory: ./functions
-      - run: npm lint
+      - run: npm run-script lint
         working-directory: ./functions
-      - run: npm build 
+      - run: npm run-script build 
         working-directory: ./functions
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
