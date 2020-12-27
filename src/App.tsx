@@ -27,6 +27,7 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [fetching, setFetching] = useState(false);
   const [text, setText] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
   const [myAccount, setMyAccount] = useState<firebase.User>();
@@ -55,11 +56,13 @@ function App() {
       if (!user) return;
       if (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES) return;
       setMyAccount(user);
+      setFetching(true);
 
       const getDailyReport = firebase.functions().httpsCallable('dailyReport');
       const data = getDailyReport({});
       data.then((result) => {
         setEsaText(result.data.body_md);
+        setFetching(false);
       });
     });
   }, []);
@@ -112,7 +115,7 @@ function App() {
                 whiteSpace: 'pre-wrap', textAlign: 'left', justifyContent: 'left', alignItems: 'left',
               }}
               >
-                {esaText}
+                {fetching ? ('今日の日報を取得中です...') : esaText}
               </div>
             </Container>
 
