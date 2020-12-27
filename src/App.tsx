@@ -111,6 +111,10 @@ function App() {
                 </Button>
 
               </form>
+              <hr style={{
+                borderTop: '2px dashed #bbb', borderBottom: 'none',
+              }}
+              />
               <div style={{
                 whiteSpace: 'pre-wrap', textAlign: 'left', justifyContent: 'left', alignItems: 'left',
               }}
