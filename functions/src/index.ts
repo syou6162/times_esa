@@ -12,10 +12,10 @@ const axios = axiosBase.create({
   responseType: 'json',
 });
 
-async function createOrUpdatePost(title: string, text: string) {
+async function createOrUpdatePost(category: string, title: string, text: string) {
   const res = await axios.get(`/v1/teams/${teamName}/posts`, {
     params: {
-      q: 'category:日報/2020/12/27 title:日報',
+      q: `category:${category} title:${title}`,
     },
   });
   if (res.data.total_count === 0) {
@@ -23,25 +23,28 @@ async function createOrUpdatePost(title: string, text: string) {
     return axios.post('/v1/teams/yasuhisa/posts', {
       post: {
         name: title,
+        category,
         body_md: text,
+        wip: false,
       },
     });
   }
   functions.logger.info('記事があったよ');
   return axios.patch(`/v1/teams/${teamName}/posts/${res.data.posts[0].number}`, {
     post: {
-      name: '日報',
-      category: '日報/2020/12/27',
+      name: title,
+      category,
       body_md: `${text}\n${res.data.posts[0].body_md}`,
+      wip: false,
     },
   });
 }
 
-async function getDailyReport(title: string) {
+async function getDailyReport(category: string, title: string) {
   functions.logger.info(title);
   const res = await axios.get(`/v1/teams/${teamName}/posts`, {
     params: {
-      q: 'category:日報/2020/12/27 title:日報',
+      q: `category:${category} title:${title}`,
     },
   });
   if (res.data.total_count === 0) {
@@ -54,8 +57,7 @@ async function getDailyReport(title: string) {
 
 export const helloWorld = functions.https.onCall(async (req) => {
   functions.logger.info('Hello logs!', req);
-
-  const tmp = await createOrUpdatePost('日報/2020/12/27/日報', req.text);
+  const tmp = await createOrUpdatePost(req.category, req.title, req.text);
   functions.logger.info('returned json', tmp.data);
   return tmp.data;
 });
@@ -65,7 +67,7 @@ export const helloWorld = functions.https.onCall(async (req) => {
 export const dailyReport = functions.https.onCall(async (req) => {
   functions.logger.info('Hello logs!', req);
 
-  const tmp = await getDailyReport('日報/2020/12/27/日報');
+  const tmp = await getDailyReport(req.category, req.title);
   functions.logger.info('returned json', tmp.data);
   return tmp.data;
 });

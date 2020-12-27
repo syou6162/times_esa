@@ -43,7 +43,11 @@ function App() {
   const submitTextToEsa = async () => {
     setSending(true);
     const helloWorld = firebase.functions().httpsCallable('helloWorld');
-    const data = await helloWorld({ text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` });
+    const data = await helloWorld({
+      category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
+      title: '日報',
+      text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
+    });
     setText('');
     setEsaText(data.data.body_md);
     setSending(false);
@@ -58,7 +62,10 @@ function App() {
       setFetching(true);
 
       const getDailyReport = firebase.functions().httpsCallable('dailyReport');
-      const data = getDailyReport({});
+      const data = getDailyReport({
+        category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
+        title: '日報',
+      });
       data.then((result) => {
         setEsaText(result.data.body_md);
         setFetching(false);
@@ -108,7 +115,6 @@ function App() {
                 >
                   つぶやく
                 </Button>
-
               </form>
               <hr style={{
                 borderTop: '2px dashed #bbb', borderBottom: 'none',
