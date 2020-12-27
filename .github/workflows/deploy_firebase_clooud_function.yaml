@@ -1,0 +1,27 @@
+name: Firebase Cloud Functionsでのdeployを実行する
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - run: npm install
+        working-directory: ./functions
+      - run: npm lint
+        working-directory: ./functions
+      - run: npm build 
+        working-directory: ./functions
+      - name: Setup Firebase CLI
+        run: npm install -g firebase-tools
+      - name: Deploy Firebase Cloud Functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only functions --token $FIREBASE_TOKEN
