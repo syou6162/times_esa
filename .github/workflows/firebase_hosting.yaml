@@ -1,0 +1,15 @@
+name: Firebase Hosting部分の確認
+
+on: [push]
+
+jobs:
+  check_firebase_hosting:
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+    - run: npm install
+    - run: npm run-script build          
