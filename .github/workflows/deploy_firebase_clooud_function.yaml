@@ -14,11 +14,10 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
+      - run: npm install
         working-directory: ./functions
-      - run: npm run-script lint
-        working-directory: ./functions
-      - run: npm run-script build 
-        working-directory: ./functions
+      - run: npm --prefix functions run lint
+      - run: npm --prefix functions run build
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
       - name: Deploy Firebase Cloud Functions
