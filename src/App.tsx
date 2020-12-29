@@ -123,16 +123,10 @@ const App: React.FC = () => {
                 borderTop: '2px dashed #bbb', borderBottom: 'none',
               }}
               />
-              <div style={{
-                whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word',
-                textAlign: 'left',
-                justifyContent: 'left',
-                alignItems: 'left',
-              }}
-              >
-                {fetching ? ('今日の日報を取得中です...') : esaText}
-              </div>
+              <DailyReport
+                fetching={fetching}
+                esaText={esaText}
+              />
             </Container>
 
           )}
