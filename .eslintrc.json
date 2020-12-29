@@ -27,6 +27,6 @@
       "import/no-unresolved": "off",
       "import/extensions": "off",
       "arrow-body-style": ["error", "always"],
-      "react/destructuring-assignment": ["enabled", "never"]
+      "react/destructuring-assignment": ["error", "never"]
     }
 }
