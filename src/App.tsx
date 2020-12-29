@@ -42,9 +42,7 @@ const App: React.FC = () => {
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
           </div>
         )
-          : (
-            <TimesEsa />
-          )}
+          : <TimesEsa />}
       </header>
     </div>
   );
