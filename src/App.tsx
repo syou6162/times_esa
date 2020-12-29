@@ -10,17 +10,20 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { format } from 'date-fns';
 import { firebaseAuth } from './firebase/index';
+import DailyReport from './components/DailyReport';
 
-const useStyles = makeStyles(() => ({
-  multilineColor: {
-    color: 'white',
-  },
-  notchedOutline: {
-    borderWidth: '1px',
-    margin: '10px',
-    borderColor: 'white',
-  },
-}));
+const useStyles = makeStyles(() => {
+  return ({
+    multilineColor: {
+      color: 'white',
+    },
+    notchedOutline: {
+      borderWidth: '1px',
+      margin: '10px',
+      borderColor: 'white',
+    },
+  });
+});
 
 const App: React.FC = () => {
   const classes = useStyles();
@@ -111,7 +114,7 @@ const App: React.FC = () => {
                   disabled={sending}
                   variant="contained"
                   color="primary"
-                  onClick={() => submitTextToEsa()}
+                  onClick={() => { submitTextToEsa(); }}
                 >
                   つぶやく
                 </Button>

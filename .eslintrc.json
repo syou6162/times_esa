@@ -25,6 +25,8 @@
       "no-use-before-define": "off",
       "@typescript-eslint/no-use-before-define": ["error"],
       "import/no-unresolved": "off",
-      "import/extensions": "off"
+      "import/extensions": "off",
+      "arrow-body-style": ["error", "always"],
+      "react/destructuring-assignment": ["enabled", "never"]
     }
 }
