@@ -6,7 +6,7 @@ type EsaTextFieldProps = {
   sending: boolean;
   text: string;
   // eslint-disable-next-line no-unused-vars
-  setText: (text: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const useStyles = makeStyles(() => {
@@ -39,7 +39,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       }}
       rows={10}
       value={props.text}
-      onChange={(event) => { props.setText(event.target.value); }}
+      onChange={props.onChange}
     />
   );
 };

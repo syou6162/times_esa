@@ -1,31 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button, Container,
-} from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { format } from 'date-fns';
 import firebase from 'firebase';
 
-import EsaTextField from '../EsaTextField';
 import DailyReport from '../DailyReport';
+import EsaSubmitForm from '../EsaSubmitForm';
 
 const TimesEsa: React.FC<{}> = () => {
-  const [sending, setSending] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [text, setText] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
-
-  const submitTextToEsa = async () => {
-    setSending(true);
-    const submit = firebase.functions().httpsCallable('submitTextToEsa');
-    const data = await submit({
-      category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      title: '日報',
-      text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
-    });
-    setText('');
-    setEsaText(data.data.body_md);
-    setSending(false);
-  };
 
   useEffect(() => {
     setFetching(true);
@@ -43,17 +26,7 @@ const TimesEsa: React.FC<{}> = () => {
   return (
     <Container maxWidth="xl">
       #times_esa
-      <form>
-        <EsaTextField sending={sending} text={text} setText={(t) => { setText(t); }} />
-        <Button
-          disabled={sending}
-          variant="contained"
-          color="primary"
-          onClick={() => { submitTextToEsa(); }}
-        >
-          つぶやく
-        </Button>
-      </form>
+      <EsaSubmitForm onSubmit={(text) => { setEsaText(text); }} />
       <hr style={{
         borderTop: '2px dashed #bbb', borderBottom: 'none',
       }}
