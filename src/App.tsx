@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function App() {
+const App: React.FC = () => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(true);
@@ -136,6 +136,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
