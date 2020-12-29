@@ -1,38 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import './App.css';
 
 // firebase functions
 import firebase from 'firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import {
-  Button, TextField, Container,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { format } from 'date-fns';
 import { firebaseAuth } from './firebase/index';
-import DailyReport from './components/DailyReport';
-
-const useStyles = makeStyles(() => {
-  return ({
-    multilineColor: {
-      color: 'white',
-    },
-    notchedOutline: {
-      borderWidth: '1px',
-      margin: '10px',
-      borderColor: 'white',
-    },
-  });
-});
+import TimesEsa from './components/TimesEsa';
 
 const App: React.FC = () => {
-  const classes = useStyles();
-
   const [loading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
-  const [fetching, setFetching] = useState(false);
-  const [text, setText] = useState<string>('');
-  const [esaText, setEsaText] = useState<string>('');
   const [myAccount, setMyAccount] = useState<firebase.User>();
 
   const uiConfig = {
@@ -43,36 +19,12 @@ const App: React.FC = () => {
     ],
   };
 
-  const submitTextToEsa = async () => {
-    setSending(true);
-    const submit = firebase.functions().httpsCallable('submitTextToEsa');
-    const data = await submit({
-      category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      title: '日報',
-      text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
-    });
-    setText('');
-    setEsaText(data.data.body_md);
-    setSending(false);
-  };
-
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
       setLoading(false);
       if (!user) return;
       if (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES) return;
       setMyAccount(user);
-      setFetching(true);
-
-      const getDailyReport = firebase.functions().httpsCallable('dailyReport');
-      const data = getDailyReport({
-        category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-        title: '日報',
-      });
-      data.then((result) => {
-        setEsaText(result.data.body_md);
-        setFetching(false);
-      });
     });
   }, []);
 
@@ -91,44 +43,7 @@ const App: React.FC = () => {
           </div>
         )
           : (
-            <Container maxWidth="xl">
-              #times_esa
-              <form>
-                <TextField
-                  fullWidth
-                  multiline
-                  placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
-                  variant="outlined"
-                  InputProps={{
-                    classes: {
-                      root: classes.multilineColor,
-                      notchedOutline: classes.notchedOutline,
-                    },
-                    disabled: sending,
-                  }}
-                  rows={10}
-                  value={text}
-                  onChange={(event) => { setText(event.target.value); }}
-                />
-                <Button
-                  disabled={sending}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => { submitTextToEsa(); }}
-                >
-                  つぶやく
-                </Button>
-              </form>
-              <hr style={{
-                borderTop: '2px dashed #bbb', borderBottom: 'none',
-              }}
-              />
-              <DailyReport
-                fetching={fetching}
-                esaText={esaText}
-              />
-            </Container>
-
+            <TimesEsa />
           )}
       </header>
     </div>
