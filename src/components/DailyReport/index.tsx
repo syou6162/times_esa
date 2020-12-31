@@ -29,6 +29,7 @@ const DailyReportHtml: React.FC<DailyReportHtmlProps> = (props: DailyReportHtmlP
     <div
       style={{
         whiteSpace: 'normal',
+        overflow: 'hidden',
         textAlign: 'left',
         justifyContent: 'left',
         alignItems: 'left',
