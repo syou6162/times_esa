@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
 
-type DailyReportProps = {
-  fetching: boolean;
+type DailyReportTextProps = {
   esaText: string;
 };
 
-const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
+const DailyReportText: React.FC<DailyReportTextProps> = (props: DailyReportTextProps) => {
   return (
     <div style={{
       whiteSpace: 'pre-wrap',
@@ -15,7 +15,58 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
       alignItems: 'left',
     }}
     >
-      {props.fetching ? ('今日の日報を取得中です...') : props.esaText}
+      {props.esaText}
+    </div>
+  );
+};
+
+type DailyReportHtmlProps = {
+  esaHtml: string;
+};
+
+const DailyReportHtml: React.FC<DailyReportHtmlProps> = (props: DailyReportHtmlProps) => {
+  return (
+    <div
+      style={{
+        textAlign: 'left',
+        justifyContent: 'left',
+        alignItems: 'left',
+      }}
+      dangerouslySetInnerHTML={{ __html: props.esaHtml }}
+    />
+  );
+};
+
+type DailyReportProps = {
+  fetching: boolean;
+  esaText: string;
+  esaHtml: string;
+};
+
+const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
+  const [isText, setIsText] = useState(false);
+
+  const handleClick = () => {
+    setIsText(!isText);
+  };
+
+  return (
+    <div>
+      <Button
+        variant="contained"
+        onClick={handleClick}
+      >
+        { isText ? 'text => html' : 'html => text' }
+      </Button>
+      { /* eslint no-nested-ternary: 0 */ }
+      <div>
+        {
+          props.fetching ? ('今日の日報を取得中です...') : (
+            isText ? <DailyReportText esaText={props.esaText} />
+              : <DailyReportHtml esaHtml={props.esaHtml} />
+          )
+        }
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import EsaSubmitForm from '../EsaSubmitForm';
 const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
   const [esaText, setEsaText] = useState<string>('');
+  const [esaHtml, setEsaHtml] = useState<string>('');
 
   useEffect(() => {
     setFetching(true);
@@ -17,8 +18,9 @@ const TimesEsa: React.FC<{}> = () => {
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       title: '日報',
     });
-    data.then((result) => {
-      setEsaText(result.data.body_md);
+    data.then((tmp) => {
+      setEsaText(tmp.data.body_md);
+      setEsaHtml(tmp.data.body_html);
       setFetching(false);
     });
   }, []);
@@ -26,12 +28,12 @@ const TimesEsa: React.FC<{}> = () => {
   return (
     <Container maxWidth="xl">
       #times_esa
-      <EsaSubmitForm onSubmit={(text) => { setEsaText(text); }} />
+      <EsaSubmitForm onSubmit={(md, html) => { setEsaText(md); setEsaHtml(html); }} />
       <hr style={{
         borderTop: '2px dashed #bbb', borderBottom: 'none',
       }}
       />
-      <DailyReport fetching={fetching} esaText={esaText} />
+      <DailyReport fetching={fetching} esaText={esaText} esaHtml={esaHtml} />
     </Container>
   );
 };

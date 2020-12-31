@@ -7,7 +7,7 @@ import EsaTextField from '../EsaTextField';
 
 type EsaSubmitFormProps = {
   // eslint-disable-next-line no-unused-vars
-  onSubmit: (text: string) => void;
+  onSubmit: (markdown: string, html: string) => void;
 };
 
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
@@ -25,7 +25,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
     });
     setText('');
-    props.onSubmit(data.data.body_md);
+    props.onSubmit(data.data.body_md, data.data.body_html);
     setSending(false);
   };
 
