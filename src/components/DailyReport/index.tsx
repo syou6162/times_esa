@@ -48,7 +48,7 @@ type DailyReportProps = {
 };
 
 const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
-  const [isText, setIsText] = useState(true);
+  const [isText, setIsText] = useState(false);
 
   const toggleFormat = () => {
     setIsText(!isText);
