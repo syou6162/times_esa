@@ -46,7 +46,6 @@ async function createOrUpdatePost(
     },
   });
   if (response.data.total_count === 0) {
-    functions.logger.info('記事がなかったよ!');
     return axios.post<EsaPost>('/v1/teams/yasuhisa/posts', {
       post: {
         name: title,
@@ -58,7 +57,6 @@ async function createOrUpdatePost(
       return res.data;
     });
   }
-  functions.logger.info('記事があったよ');
   return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`, {
     post: {
       name: title,
@@ -84,11 +82,9 @@ async function getDailyReport(
     },
   });
   if (response.data.total_count === 0) {
-    functions.logger.info('記事がなかったよ!');
     const esaPost: EsaPost = { body_md: '', body_html: '' };
     return esaPost;
   }
-  functions.logger.info('記事があったよ');
   return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
     return res.data;
   });
