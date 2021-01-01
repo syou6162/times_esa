@@ -14,6 +14,11 @@ const TimesEsa: React.FC<{}> = () => {
   const loadDailyReport = () => {
     setFetching(true);
     const getDailyReport = firebase.functions().httpsCallable('dailyReport');
+    // ローカルで試したいときはこれを使う
+    // const functions = firebase.functions();
+    // functions.useFunctionsEmulator('http://localhost:5000');
+    // const getDailyReport = functions.httpsCallable('dailyReport');
+
     const data = getDailyReport({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       title: '日報',
