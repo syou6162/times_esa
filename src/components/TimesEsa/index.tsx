@@ -18,9 +18,9 @@ const TimesEsa: React.FC<{}> = () => {
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       title: '日報',
     });
-    data.then((tmp) => {
-      setEsaText(tmp.data.body_md);
-      setEsaHtml(tmp.data.body_html);
+    data.then((res) => {
+      setEsaText(res.data.body_md);
+      setEsaHtml(res.data.body_html);
       setFetching(false);
     });
   }, []);
