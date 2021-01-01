@@ -37,7 +37,12 @@ const TimesEsa: React.FC<{}> = () => {
         borderTop: '2px dashed #bbb', borderBottom: 'none',
       }}
       />
-      <DailyReport fetching={fetching} esaText={esaText} esaHtml={esaHtml} />
+      <DailyReport
+        fetching={fetching}
+        esaText={esaText}
+        esaHtml={esaHtml}
+        reloadDailyReport={() => { loadDailyReport(); }}
+      />
     </Container>
   );
 };

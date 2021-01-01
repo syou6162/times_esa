@@ -44,6 +44,7 @@ type DailyReportProps = {
   fetching: boolean;
   esaText: string;
   esaHtml: string;
+  reloadDailyReport: () => void;
 };
 
 const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
@@ -56,6 +57,18 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   return (
     <div>
       <Button
+        style={{
+          margin: '5px',
+        }}
+        variant="contained"
+        onClick={props.reloadDailyReport}
+      >
+        最新の日報を取得する
+      </Button>
+      <Button
+        style={{
+          margin: '5px',
+        }}
         variant="contained"
         onClick={toggleFormat}
       >
