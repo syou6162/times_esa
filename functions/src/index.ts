@@ -101,7 +101,7 @@ export const submitTextToEsa = functions.https.onCall(async (
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
-  
+
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
   const result = await createOrUpdatePost(axios, esaConfig, req.category, req.title, req.text);
@@ -115,7 +115,7 @@ export const dailyReport = functions.https.onCall(async (
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
-  
+
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
   const result = await getDailyReport(axios, esaConfig, req.category, req.title);
