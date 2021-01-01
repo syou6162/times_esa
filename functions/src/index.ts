@@ -1,5 +1,7 @@
 import * as functions from 'firebase-functions';
-import { AxiosInstance } from 'axios'
+import { AxiosInstance } from 'axios';
+
+const axiosBase = require('axios');
 
 type EsaConfig = {
   teamName: string;
@@ -9,13 +11,11 @@ type EsaConfig = {
 function getEsaConfig(): EsaConfig {
   const teamName = functions.config().esa.team_name;
   const accessToken = functions.config().esa.access_token;
-  const config: EsaConfig = { teamName, accessToken }
+  const config: EsaConfig = { teamName, accessToken };
   return config;
-};
+}
 
 function createAxiosClient(accessToken: string): AxiosInstance {
-  const axiosBase = require('axios');
-
   const axios = axiosBase.create({
     baseURL: 'https://api.esa.io',
     headers: {
@@ -27,13 +27,19 @@ function createAxiosClient(accessToken: string): AxiosInstance {
   return axios;
 }
 
-async function createOrUpdatePost(axios: AxiosInstance, esaConfig: EsaConfig, category: string, title: string, text: string) {
-  const res = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
+async function createOrUpdatePost(
+  axios: AxiosInstance,
+  esaConfig: EsaConfig,
+  category: string,
+  title: string,
+  text: string,
+) {
+  const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
     },
   });
-  if (res.data.total_count === 0) {
+  if (response.data.total_count === 0) {
     functions.logger.info('記事がなかったよ!');
     return axios.post('/v1/teams/yasuhisa/posts', {
       post: {
@@ -47,11 +53,11 @@ async function createOrUpdatePost(axios: AxiosInstance, esaConfig: EsaConfig, ca
     });
   }
   functions.logger.info('記事があったよ');
-  return axios.patch(`/v1/teams/${esaConfig.teamName}/posts/${res.data.posts[0].number}`, {
+  return axios.patch(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`, {
     post: {
       name: title,
       category,
-      body_md: `${text}\n${res.data.posts[0].body_md}`,
+      body_md: `${text}\n${response.data.posts[0].body_md}`,
       wip: false,
     },
   }).then((res) => {
@@ -59,19 +65,26 @@ async function createOrUpdatePost(axios: AxiosInstance, esaConfig: EsaConfig, ca
   });
 }
 
-async function getDailyReport(axios: AxiosInstance, esaConfig: EsaConfig, category: string, title: string) {
+async function getDailyReport(
+  axios: AxiosInstance,
+  esaConfig: EsaConfig,
+  category: string,
+  title: string,
+) {
   functions.logger.info(title);
-  const res = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
+  const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
     },
   });
-  if (res.data.total_count === 0) {
+  if (response.data.total_count === 0) {
     functions.logger.info('記事がなかったよ!');
     return { body_md: '', body_html: '' };
   }
   functions.logger.info('記事があったよ');
-  return axios.get(`/v1/teams/${esaConfig.teamName}/posts/${res.data.posts[0].number}`).then((res) => res.data);
+  return axios.get(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res) => {
+    return res.data;
+  });
 }
 
 export const submitTextToEsa = functions.https.onCall(async (req) => {
