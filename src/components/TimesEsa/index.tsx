@@ -11,7 +11,7 @@ const TimesEsa: React.FC<{}> = () => {
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
 
-  useEffect(() => {
+  const loadDailyReport = () => {
     setFetching(true);
     const getDailyReport = firebase.functions().httpsCallable('dailyReport');
     const data = getDailyReport({
@@ -23,6 +23,10 @@ const TimesEsa: React.FC<{}> = () => {
       setEsaHtml(res.data.body_html);
       setFetching(false);
     });
+  };
+
+  useEffect(() => {
+    loadDailyReport();
   }, []);
 
   return (
