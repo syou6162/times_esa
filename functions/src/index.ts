@@ -94,23 +94,34 @@ async function getDailyReport(
   });
 }
 
-export const submitTextToEsa = functions.https.onCall(async (req) => {
-  functions.logger.info('Hello logs!', req);
+function checkAuthTokenEmail(context: functions.https.CallableContext) {
+  if (!context.auth || context.auth.token.email !== functions.config().context.valid_email) {
+    throw new functions.https.HttpsError('permission-denied', 'Auth Error');
+  }
+}
+
+export const submitTextToEsa = functions.https.onCall(async (
+  req,
+  context: functions.https.CallableContext,
+) => {
+  checkAuthTokenEmail(context);
+  
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
   const result = await createOrUpdatePost(axios, esaConfig, req.category, req.title, req.text);
-  functions.logger.info('returned json', result);
   return result;
 });
 
 // あとでonCallに変える
 // 引数二つ
-export const dailyReport = functions.https.onCall(async (req) => {
-  functions.logger.info('Hello logs!', req);
+export const dailyReport = functions.https.onCall(async (
+  req,
+  context: functions.https.CallableContext,
+) => {
+  checkAuthTokenEmail(context);
+  
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-
   const result = await getDailyReport(axios, esaConfig, req.category, req.title);
-  functions.logger.info('returned json', result);
   return result;
 });
