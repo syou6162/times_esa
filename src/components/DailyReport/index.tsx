@@ -34,6 +34,7 @@ const DailyReportHtml: React.FC<DailyReportHtmlProps> = (props: DailyReportHtmlP
         justifyContent: 'left',
         alignItems: 'left',
       }}
+      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: props.esaHtml }}
     />
   );
