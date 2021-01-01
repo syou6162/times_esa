@@ -49,7 +49,7 @@ type DailyReportProps = {
 const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   const [isText, setIsText] = useState(true);
 
-  const handleClick = () => {
+  const toggleFormat = () => {
     setIsText(!isText);
   };
 
@@ -57,7 +57,7 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
     <div>
       <Button
         variant="contained"
-        onClick={handleClick}
+        onClick={toggleFormat}
       >
         { isText ? 'text => html' : 'html => text' }
       </Button>
