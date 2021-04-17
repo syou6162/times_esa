@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "5.11.10",
     "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "13.1.1",
-    "date-fns": "2.20.0",
+    "date-fns": "2.21.1",
     "dotenv": "8.2.0",
     "firebase": "8.3.2",
     "react": "17.0.2",
