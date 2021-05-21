@@ -1,3 +1,6 @@
+// eslintで怒られるのは合っていて、firebase側が悪そうだが一旦disableしてしのぐ...
+// ref: https://stackoverflow.com/questions/67554921/vuejs-and-firebase-import-firebase-package-the-correct-way
+// eslint-disable-next-line import/no-extraneous-dependencies
 import firebase from 'firebase/app';
 
 const firebaseConfig = {
