@@ -63,7 +63,9 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
       {texts.map(([time, t]) => {
         const tweet = `https://twitter.com/intent/tweet?text=${t}`;
         return (
-          <div>
+          <div
+            key={`${time}_${t}`}
+          >
             {time}
             {' '}
             {t}
