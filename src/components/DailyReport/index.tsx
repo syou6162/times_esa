@@ -46,7 +46,7 @@ type DailyReportTweetProps = {
 
 const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTweetProps) => {
   const texts = `${props.esaText}\n\n`.split('\n---\n\n').slice(0, -1).map((t) => {
-    const regex = /(\d\d:\d\d)\s+(.*?)\s/;
+    const regex = /(\d\d:\d\d)\s+(.*?)\s?$/;
     const match = t.match(regex)!;
     return [match[1], match[2]];
   });
