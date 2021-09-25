@@ -109,10 +109,7 @@ enum DailyReportType {
 }
 
 const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
-  const [
-    dailyReportType,
-    setDailyReportType,
-  ] = useState<DailyReportType>(DailyReportType.HTML);
+  const [dailyReportType, setDailyReportType] = useState<DailyReportType>(DailyReportType.HTML);
 
   const getDailyReportByType = (t: DailyReportType) => {
     switch (t) {
