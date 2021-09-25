@@ -124,6 +124,21 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
     }
   };
 
+  const getDailyReportTypeButton = (label: string, t: DailyReportType) => {
+    return (
+      <Button
+        style={{
+          margin: '5px',
+          textTransform: 'none',
+        }}
+        variant="contained"
+        onClick={() => { setDailyReportType(t); }}
+      >
+        {label}
+      </Button>
+    );
+  };
+
   return (
     <div>
       <Button
@@ -135,36 +150,9 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
       >
         最新の日報を取得する
       </Button>
-      <Button
-        style={{
-          margin: '5px',
-          textTransform: 'none',
-        }}
-        variant="contained"
-        onClick={() => { setDailyReportType(DailyReportType.HTML); }}
-      >
-        html
-      </Button>
-      <Button
-        style={{
-          margin: '5px',
-          textTransform: 'none',
-        }}
-        variant="contained"
-        onClick={() => { setDailyReportType(DailyReportType.TEXT); }}
-      >
-        text
-      </Button>
-      <Button
-        style={{
-          margin: '5px',
-          textTransform: 'none',
-        }}
-        variant="contained"
-        onClick={() => { setDailyReportType(DailyReportType.TWEET); }}
-      >
-        tweet
-      </Button>
+      { getDailyReportTypeButton('html', DailyReportType.HTML) }
+      { getDailyReportTypeButton('text', DailyReportType.TEXT) }
+      { getDailyReportTypeButton('tweet', DailyReportType.TWEET) }
       { /* eslint no-nested-ternary: 0 */ }
       <div>
         {
