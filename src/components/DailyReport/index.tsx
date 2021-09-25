@@ -130,10 +130,11 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
     return (
       <Button
         style={{
-          margin: '5px',
+          margin: '3px',
           textTransform: 'none',
         }}
         variant="contained"
+        size="small"
         onClick={() => { setDailyReportType(t); }}
       >
         {label}
@@ -145,12 +146,14 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
     <div>
       <Button
         style={{
-          margin: '5px',
+          margin: '3px',
+          textTransform: 'none',
         }}
         variant="contained"
+        size="small"
         onClick={props.reloadDailyReport}
       >
-        最新の日報を取得する
+        Update
       </Button>
       { getDailyReportTypeButton('html', DailyReportType.HTML) }
       { getDailyReportTypeButton('text', DailyReportType.TEXT) }
