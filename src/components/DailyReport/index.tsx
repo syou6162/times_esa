@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 type DailyReportHtmlProps = {
   esaHtml: string;
@@ -40,15 +41,50 @@ const DailyReportText: React.FC<DailyReportTextProps> = (props: DailyReportTextP
   );
 };
 
+type CopyButtonProps = {
+  text: string;
+};
+
+const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  return (
+    <CopyToClipboard
+      text={props.text}
+      onCopy={() => {
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 2000);
+      }}
+    >
+      <Button
+        style={{
+          margin: '5px',
+          textTransform: 'none',
+          float: 'right',
+        }}
+        variant="contained"
+        color={isCopied ? 'secondary' : 'primary'}
+      >
+        {isCopied ? 'コピーしました!' : 'コピーする'}
+      </Button>
+    </CopyToClipboard>
+  );
+};
+
 type DailyReportTweetProps = {
   esaText: string;
-};
+}
 
 const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTweetProps) => {
   const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n').split('\n---\n\n').slice(0, -1).map((t) => {
     const regex = /^(?<time>\d\d:\d\d)?\s?(?<tweet>[\s\S]*?)\s?$/;
     const match = t.match(regex);
-    return [match?.groups?.time, match?.groups?.tweet];
+    if (match != null && match.groups) {
+      return [match.groups.time, match.groups.tweet];
+    }
+    return ['', ''];
   });
   return (
     <div
@@ -81,6 +117,7 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
             >
               Tweetする
             </Button>
+            <CopyButton text={t} />
             <hr
               style={{
                 clear: 'both',
