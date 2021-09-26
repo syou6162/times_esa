@@ -105,19 +105,21 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
             {time}
             {' '}
             {t}
-            <Button
-              style={{
-                margin: '5px',
-                textTransform: 'none',
-                float: 'right',
-              }}
-              variant="contained"
-              color="primary"
-              href={tweet}
-            >
-              Tweetする
-            </Button>
-            <CopyButton text={t} />
+            <div>
+              <Button
+                style={{
+                  margin: '5px',
+                  textTransform: 'none',
+                  float: 'right',
+                }}
+                variant="contained"
+                color="primary"
+                href={tweet}
+              >
+                Tweetする
+              </Button>
+              <CopyButton text={t} />
+            </div>
             <hr
               style={{
                 clear: 'both',
