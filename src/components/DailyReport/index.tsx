@@ -109,23 +109,25 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
     return ['', ''];
   });
   return (
-    <div
-      style={{
-        whiteSpace: 'pre-wrap',
-        wordWrap: 'break-word',
-        textAlign: 'left',
-        justifyContent: 'left',
-        alignItems: 'left',
-      }}
-    >
+    <div>
       {texts.map(([time, t]) => {
         return (
           <div
             key={`${time}_${t}`}
           >
-            {time}
-            {' '}
-            {t}
+            <div
+              style={{
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+                textAlign: 'left',
+                justifyContent: 'left',
+                alignItems: 'left',
+              }}
+            >
+              {time}
+              {' '}
+              {t}
+            </div>
             <div>
               <TweetButton text={t} />
               <CopyButton text={t} />
