@@ -73,6 +73,28 @@ const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) => {
   );
 };
 
+type TweetButtonProps = {
+  text: string;
+};
+
+const TweetButton: React.FC<TweetButtonProps> = (props: TweetButtonProps) => {
+  const tweet = `https://twitter.com/intent/tweet?text=${props.text}`;
+  return (
+    <Button
+      style={{
+        margin: '5px',
+        textTransform: 'none',
+        float: 'right',
+      }}
+      variant="contained"
+      color="primary"
+      href={tweet}
+    >
+      Tweetする
+    </Button>
+  );
+};
+
 type DailyReportTweetProps = {
   esaText: string;
 }
@@ -87,37 +109,29 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
     return ['', ''];
   });
   return (
-    <div
-      style={{
-        whiteSpace: 'pre-wrap',
-        wordWrap: 'break-word',
-        textAlign: 'left',
-        justifyContent: 'left',
-        alignItems: 'left',
-      }}
-    >
+    <div>
       {texts.map(([time, t]) => {
-        const tweet = `https://twitter.com/intent/tweet?text=${t}`;
         return (
           <div
             key={`${time}_${t}`}
           >
-            {time}
-            {' '}
-            {t}
-            <Button
+            <div
               style={{
-                margin: '5px',
-                textTransform: 'none',
-                float: 'right',
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+                textAlign: 'left',
+                justifyContent: 'left',
+                alignItems: 'left',
               }}
-              variant="contained"
-              color="primary"
-              href={tweet}
             >
-              Tweetする
-            </Button>
-            <CopyButton text={t} />
+              {time}
+              {' '}
+              {t}
+            </div>
+            <div>
+              <TweetButton text={t} />
+              <CopyButton text={t} />
+            </div>
             <hr
               style={{
                 clear: 'both',
