@@ -73,6 +73,28 @@ const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) => {
   );
 };
 
+type TweetButtonProps = {
+  text: string;
+};
+
+const TweetButton: React.FC<TweetButtonProps> = (props: TweetButtonProps) => {
+  const tweet = `https://twitter.com/intent/tweet?text=${props.text}`;
+  return (
+    <Button
+      style={{
+        margin: '5px',
+        textTransform: 'none',
+        float: 'right',
+      }}
+      variant="contained"
+      color="primary"
+      href={tweet}
+    >
+      Tweetする
+    </Button>
+  );
+};
+
 type DailyReportTweetProps = {
   esaText: string;
 }
@@ -97,7 +119,6 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
       }}
     >
       {texts.map(([time, t]) => {
-        const tweet = `https://twitter.com/intent/tweet?text=${t}`;
         return (
           <div
             key={`${time}_${t}`}
@@ -106,18 +127,7 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
             {' '}
             {t}
             <div>
-              <Button
-                style={{
-                  margin: '5px',
-                  textTransform: 'none',
-                  float: 'right',
-                }}
-                variant="contained"
-                color="primary"
-                href={tweet}
-              >
-                Tweetする
-              </Button>
+              <TweetButton text={t} />
               <CopyButton text={t} />
             </div>
             <hr
