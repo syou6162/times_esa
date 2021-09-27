@@ -112,8 +112,6 @@ export const submitTextToEsa = functions.https.onCall(async (
   return result;
 });
 
-// あとでonCallに変える
-// 引数二つ
 export const dailyReport = functions.https.onCall(async (
   req,
   context: functions.https.CallableContext,
