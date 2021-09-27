@@ -37,6 +37,7 @@ async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
+  tags: string[],
   title: string,
   text: string,
 ): Promise<EsaPost> {
@@ -50,6 +51,7 @@ async function createOrUpdatePost(
       post: {
         name: title,
         category,
+        tags,
         body_md: text,
         wip: false,
       },
@@ -61,6 +63,7 @@ async function createOrUpdatePost(
     post: {
       name: title,
       category,
+      tags,
       body_md: `${text}\n${response.data.posts[0].body_md}`,
       wip: false,
     },
@@ -104,12 +107,10 @@ export const submitTextToEsa = functions.https.onCall(async (
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await createOrUpdatePost(axios, esaConfig, req.category, req.title, req.text);
+  const result = await createOrUpdatePost(axios, esaConfig, req.category, req.tags, req.title, req.text);
   return result;
 });
 
-// あとでonCallに変える
-// 引数二つ
 export const dailyReport = functions.https.onCall(async (
   req,
   context: functions.https.CallableContext,
