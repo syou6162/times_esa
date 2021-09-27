@@ -10,13 +10,14 @@ const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
+  const [esaTagsText, setEsaTagsText] = useState<string>('');
 
   const loadDailyReport = () => {
     setFetching(true);
     const getDailyReport = firebase.functions().httpsCallable('dailyReport');
     // ローカルで試したいときはこれを使う
     // const functions = firebase.functions();
-    // functions.useFunctionsEmulator('http://localhost:5000');
+    // functions.useFunctionsEmulator('http://localhost:5001');
     // const getDailyReport = functions.httpsCallable('dailyReport');
 
     const data = getDailyReport({
@@ -26,6 +27,8 @@ const TimesEsa: React.FC<{}> = () => {
     data.then((res) => {
       setEsaText(res.data.body_md);
       setEsaHtml(res.data.body_html);
+      setEsaTagsText(res.data.tags.join(', '));
+
       setFetching(false);
     });
   };
@@ -37,7 +40,14 @@ const TimesEsa: React.FC<{}> = () => {
   return (
     <Container maxWidth="xl">
       #times_esa
-      <EsaSubmitForm onSubmit={(md, html) => { setEsaText(md); setEsaHtml(html); }} />
+      <EsaSubmitForm
+        tagsText={esaTagsText}
+        onSubmit={(md: string, html: string, tags: string[]) => {
+          setEsaText(md);
+          setEsaHtml(html);
+          setEsaTagsText(tags.join(', '));
+        }}
+      />
       <hr style={{
         borderTop: '2px dashed #bbb', borderBottom: 'none',
       }}
