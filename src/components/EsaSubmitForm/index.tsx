@@ -29,6 +29,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
     });
     setText('');
+    setTagsText(data.data.tags.join(', '));
     props.onSubmit(data.data.body_md, data.data.body_html, data.data.tags);
     setSending(false);
   };
