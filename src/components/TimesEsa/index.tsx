@@ -8,6 +8,7 @@ import EsaSubmitForm from '../EsaSubmitForm';
 
 const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
+  const [esaUpdatedAt, setUpdatedAt] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
   const [esaTagsText, setEsaTagsText] = useState<string>('');
@@ -25,6 +26,8 @@ const TimesEsa: React.FC<{}> = () => {
       title: '日報',
     });
     data.then((res) => {
+      setUpdatedAt(res.data.updated_at);
+
       setEsaText(res.data.body_md);
       setEsaHtml(res.data.body_html);
       setEsaTagsText(res.data.tags.join(', '));
@@ -41,6 +44,7 @@ const TimesEsa: React.FC<{}> = () => {
     <Container maxWidth="xl">
       #times_esa
       <EsaSubmitForm
+        key={`esa_form_${esaUpdatedAt}_${esaTagsText}`}
         tagsText={esaTagsText}
         onSubmit={(md: string, html: string, tags: string[]) => {
           setEsaText(md);
