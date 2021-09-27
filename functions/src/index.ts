@@ -107,7 +107,14 @@ export const submitTextToEsa = functions.https.onCall(async (
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await createOrUpdatePost(axios, esaConfig, req.category, req.tags, req.title, req.text);
+  const result = await createOrUpdatePost(
+    axios,
+    esaConfig,
+    req.category,
+    req.tags,
+    req.title,
+    req.text
+  );
   return result;
 });
 
