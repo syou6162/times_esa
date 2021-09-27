@@ -76,7 +76,6 @@ async function getDailyReport(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
-  tags: string[],
   title: string,
 ): Promise<EsaPost> {
   functions.logger.info(title);
@@ -120,6 +119,6 @@ export const dailyReport = functions.https.onCall(async (
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getDailyReport(axios, esaConfig, req.category, req.tags, req.title);
+  const result = await getDailyReport(axios, esaConfig, req.category, req.title);
   return result;
 });
