@@ -113,7 +113,7 @@ export const submitTextToEsa = functions.https.onCall(async (
     req.category,
     req.tags,
     req.title,
-    req.text
+    req.text,
   );
   return result;
 });
