@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 type EsaTextFieldProps = {
   sending: boolean;
+  fetching: boolean;
   text: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -35,7 +36,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
           root: classes.multilineColor,
           notchedOutline: classes.notchedOutline,
         },
-        disabled: props.sending,
+        disabled: props.sending || props.fetching,
       }}
       rows={7}
       value={props.text}
