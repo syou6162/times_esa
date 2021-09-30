@@ -46,6 +46,7 @@ const TimesEsa: React.FC<{}> = () => {
       <EsaSubmitForm
         key={`esa_form_${esaUpdatedAt}_${esaTagsText}`}
         tagsText={esaTagsText}
+        fetching={fetching}
         onSubmit={(md: string, html: string, tags: string[]) => {
           setEsaText(md);
           setEsaHtml(html);
