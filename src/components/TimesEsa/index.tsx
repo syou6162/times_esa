@@ -55,6 +55,8 @@ const TimesEsa: React.FC<{}> = () => {
         tagsText={esaTagsText}
         fetching={fetching}
         onSubmit={(md: string, html: string, tags: string[]) => {
+          setfetchErrorMessage('');
+
           setEsaText(md);
           setEsaHtml(html);
           setEsaTagsText(tags.join(', '));
