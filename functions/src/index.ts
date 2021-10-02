@@ -85,8 +85,7 @@ async function getDailyReport(
     },
   });
   if (response.data.total_count === 0) {
-    const esaPost: EsaPost = { body_md: '', body_html: '' };
-    return esaPost;
+    throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
   }
   return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
     return res.data;

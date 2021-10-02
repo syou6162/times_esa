@@ -146,6 +146,8 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
 
 type DailyReportProps = {
   fetching: boolean;
+  fetchErrorMessage: string;
+
   esaText: string;
   esaHtml: string;
   reloadDailyReport: () => void;
@@ -192,6 +194,15 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
       </Button>
     );
   };
+  const getDailyReport = () => {
+    if (props.fetching) {
+      return '今日の日報を取得中です...';
+    // eslint-disable-next-line no-else-return
+    } else if (props.fetchErrorMessage !== '') {
+      return props.fetchErrorMessage;
+    }
+    return getDailyReportByType(dailyReportType);
+  };
 
   return (
     <div>
@@ -211,9 +222,7 @@ const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
       { getDailyReportTypeButton('tweet', DailyReportType.TWEET) }
       { /* eslint no-nested-ternary: 0 */ }
       <div>
-        {
-          props.fetching ? ('今日の日報を取得中です...') : getDailyReportByType(dailyReportType)
-        }
+        { getDailyReport() }
       </div>
     </div>
   );
