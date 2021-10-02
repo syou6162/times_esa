@@ -78,15 +78,13 @@ async function getDailyReport(
   category: string,
   title: string,
 ): Promise<EsaPost> {
-  functions.logger.info(title);
   const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
     },
   });
   if (response.data.total_count === 0) {
-    const esaPost: EsaPost = { body_md: '', body_html: '' };
-    return esaPost;
+    throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
   }
   return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
     return res.data;

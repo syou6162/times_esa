@@ -8,6 +8,8 @@ import EsaSubmitForm from '../EsaSubmitForm';
 
 const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
+  const [fetchErrorMessage, setfetchErrorMessage] = useState<string>('');
+
   const [esaUpdatedAt, setUpdatedAt] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
@@ -15,6 +17,8 @@ const TimesEsa: React.FC<{}> = () => {
 
   const loadDailyReport = () => {
     setFetching(true);
+    setfetchErrorMessage('');
+
     const getDailyReport = firebase.functions().httpsCallable('dailyReport');
     // ローカルで試したいときはこれを使う
     // const functions = firebase.functions();
@@ -32,6 +36,9 @@ const TimesEsa: React.FC<{}> = () => {
       setEsaHtml(res.data.body_html);
       setEsaTagsText(res.data.tags.join(', '));
 
+      setFetching(false);
+    }).catch((error) => {
+      setfetchErrorMessage(`${error.code}: ${error.message}`);
       setFetching(false);
     });
   };
@@ -59,6 +66,7 @@ const TimesEsa: React.FC<{}> = () => {
       />
       <DailyReport
         fetching={fetching}
+        fetchErrorMessage={fetchErrorMessage}
         esaText={esaText}
         esaHtml={esaHtml}
         reloadDailyReport={() => { loadDailyReport(); }}
