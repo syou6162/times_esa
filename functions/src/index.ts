@@ -78,7 +78,6 @@ async function getDailyReport(
   category: string,
   title: string,
 ): Promise<EsaPost> {
-  functions.logger.info(title);
   const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
