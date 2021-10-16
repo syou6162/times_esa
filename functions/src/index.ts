@@ -31,6 +31,12 @@ type EsaPost = {
   // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
   body_md: string; // eslint-disable-line camelcase
   body_html: string; // eslint-disable-line camelcase
+  number: number;
+}
+
+export type EsaSearchResult = {
+  posts: EsaPost[];
+  total_count: number;
 }
 
 async function createOrUpdatePost(
@@ -41,7 +47,7 @@ async function createOrUpdatePost(
   title: string,
   text: string,
 ): Promise<EsaPost> {
-  const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
+  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
     },
@@ -59,12 +65,13 @@ async function createOrUpdatePost(
       return res.data;
     });
   }
-  return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`, {
+  const latestEsaPost: EsaPost = response.data.posts[0];
+  return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
     post: {
       name: title,
       category,
       tags,
-      body_md: `${text}\n${response.data.posts[0].body_md}`,
+      body_md: `${text}\n${latestEsaPost.body_md}`,
       wip: false,
     },
   }).then((res: AxiosResponse<EsaPost>) => {
@@ -78,7 +85,7 @@ async function getDailyReport(
   category: string,
   title: string,
 ): Promise<EsaPost> {
-  const response = await axios.get(`/v1/teams/${esaConfig.teamName}/posts`, {
+  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category} title:${title}`,
     },
