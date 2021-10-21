@@ -36,7 +36,7 @@ type EsaPost = {
 
 export type EsaSearchResult = {
   posts: EsaPost[];
-  total_count: number;
+  total_count: number; // eslint-disable-line camelcase
 }
 
 async function createOrUpdatePost(
