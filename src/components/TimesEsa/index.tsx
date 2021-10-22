@@ -11,6 +11,7 @@ const TimesEsa: React.FC<{}> = () => {
   const [fetchErrorMessage, setfetchErrorMessage] = useState<string>('');
 
   const [esaUpdatedAt, setUpdatedAt] = useState<string>('');
+  const [esaUrl, setEsaUrl] = useState<string>('');
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
   const [esaTagsText, setEsaTagsText] = useState<string>('');
@@ -31,6 +32,7 @@ const TimesEsa: React.FC<{}> = () => {
     });
     data.then((res) => {
       setUpdatedAt(res.data.updated_at);
+      setEsaUrl(res.data.url);
 
       setEsaText(res.data.body_md);
       setEsaHtml(res.data.body_html);
@@ -49,7 +51,9 @@ const TimesEsa: React.FC<{}> = () => {
 
   return (
     <Container maxWidth="xl">
-      #times_esa
+      <a href={esaUrl}>
+        #times_esa
+      </a>
       <EsaSubmitForm
         key={`esa_form_${esaUpdatedAt}_${esaTagsText}`}
         tagsText={esaTagsText}
