@@ -32,6 +32,7 @@ type EsaPost = {
   body_md: string; // eslint-disable-line camelcase
   body_html: string; // eslint-disable-line camelcase
   number: number;
+  tags: string[];
 }
 
 export type EsaSearchResult = {
@@ -70,7 +71,7 @@ async function createOrUpdatePost(
     post: {
       name: title,
       category,
-      tags,
+      tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
       body_md: `${text}\n${latestEsaPost.body_md}`,
       wip: false,
     },
