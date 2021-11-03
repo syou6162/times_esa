@@ -51,7 +51,7 @@ const TimesEsa: React.FC<{}> = () => {
 
   return (
     <Container maxWidth="xl">
-      <a href={esaUrl}>
+      <a href={esaUrl} target="_blank" rel="noopener noreferrer">
         #times_esa
       </a>
       <EsaSubmitForm
