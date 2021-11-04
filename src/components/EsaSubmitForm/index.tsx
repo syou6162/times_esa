@@ -22,17 +22,27 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     // submit ボタンのデフォルトの振る舞い (GET や POST) を抑制する
     e.preventDefault();
     setSending(true);
-    const submit = firebase.functions().httpsCallable('submitTextToEsa');
-    const data = await submit({
+    const submit = firebase.functions().httpsCallable(
+      'submitTextToEsa',
+      {
+        timeout: 10000, // 10秒
+      },
+    );
+    await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       tags: tagsText.split(', '),
       title: '日報',
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
+    }).then((data) => {
+      setText('');
+      setTagsText(data.data.tags.join(', '));
+      props.onSubmit(data.data.body_md, data.data.body_html, data.data.tags);
+    }).catch((err: Error) => {
+      // eslint-disable-next-line no-alert
+      alert(`${err.name}: ${err.message}`);
+    }).finally(() => {
+      setSending(false);
     });
-    setText('');
-    setTagsText(data.data.tags.join(', '));
-    props.onSubmit(data.data.body_md, data.data.body_html, data.data.tags);
-    setSending(false);
   };
 
   return (
