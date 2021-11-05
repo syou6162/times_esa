@@ -13,6 +13,28 @@ type EsaSubmitFormProps = {
   onSubmit: (markdown: string, html: string, tags: string[]) => void;
 };
 
+function getDay(): string {
+  const day = (new Date()).getDay();
+  switch (day) {
+    case 0:
+      return '日曜日';
+    case 1:
+      return '月曜日';
+    case 2:
+      return '火曜日';
+    case 3:
+      return '水曜日';
+    case 4:
+      return '木曜日';
+    case 5:
+      return '金曜日';
+    case 6:
+      return '土曜日';
+    default:
+      return ''; // ここにはこない
+  }
+}
+
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
   const [text, setText] = useState<string>('');
@@ -30,7 +52,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     );
     await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      tags: tagsText.split(', '),
+      tags: tagsText.split(', ').concat(getDay()),
       title: '日報',
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
     }).then((data) => {
