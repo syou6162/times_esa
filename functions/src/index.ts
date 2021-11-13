@@ -66,9 +66,8 @@ async function createOrUpdatePost(
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
     });
-  } else if (response.data.total_count > 1) {
-    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
-  } else {
+  }
+  if (response.data.total_count === 1) {
     const latestEsaPost: EsaPost = response.data.posts[0];
     return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
       post: {
@@ -82,6 +81,7 @@ async function createOrUpdatePost(
       return res.data;
     });
   }
+  throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
 }
 
 async function getDailyReport(
