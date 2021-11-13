@@ -54,7 +54,7 @@ async function createOrUpdatePost(
     },
   });
   if (response.data.total_count === 0) {
-    return axios.post<EsaPost>('/v1/teams/yasuhisa/posts', {
+    return axios.post<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts`, {
       post: {
         name: title,
         category,
