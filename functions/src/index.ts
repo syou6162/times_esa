@@ -67,7 +67,7 @@ async function createOrUpdatePost(
       return res.data;
     });
   } else if (response.data.total_count > 1) {
-    throw new functions.https.HttpsError('too-many-post', '複数の日報が存在します');
+    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
   } else {
     const latestEsaPost: EsaPost = response.data.posts[0];
     return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
@@ -97,7 +97,7 @@ async function getDailyReport(
   if (response.data.total_count === 0) {
     throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
   } else if (response.data.total_count > 1) {
-    throw new functions.https.HttpsError('too-many-post', '複数の日報が存在します');
+    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
   } else {
     return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
