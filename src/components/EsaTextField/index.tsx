@@ -29,7 +29,6 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
     <TextField
       fullWidth
       multiline
-      required
       placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
       variant="outlined"
       InputProps={{

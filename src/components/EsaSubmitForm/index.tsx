@@ -57,7 +57,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       tags: tagsText.split(', ').concat(getDay()),
       title,
-      text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
+      text: text !== '' ? `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` : '',
     }).then((data) => {
       setTitle(data.data.name);
       setText('');

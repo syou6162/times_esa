@@ -74,7 +74,7 @@ async function createOrUpdatePost(
         name: title,
         category,
         tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
-        body_md: `${text}\n${latestEsaPost.body_md}`,
+        body_md: (text !== '' ? `${text}\n${latestEsaPost.body_md}` : latestEsaPost.body_md),
         wip: false,
       },
     }).then((res: AxiosResponse<EsaPost>) => {
