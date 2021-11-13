@@ -32,6 +32,7 @@ type EsaPost = {
   body_md: string; // eslint-disable-line camelcase
   body_html: string; // eslint-disable-line camelcase
   number: number;
+  name: string;
   tags: string[];
 }
 
@@ -50,7 +51,7 @@ async function createOrUpdatePost(
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category} title:${title}`,
+      q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
@@ -66,37 +67,42 @@ async function createOrUpdatePost(
       return res.data;
     });
   }
-  const latestEsaPost: EsaPost = response.data.posts[0];
-  return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
-    post: {
-      name: title,
-      category,
-      tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
-      body_md: `${text}\n${latestEsaPost.body_md}`,
-      wip: false,
-    },
-  }).then((res: AxiosResponse<EsaPost>) => {
-    return res.data;
-  });
+  if (response.data.total_count === 1) {
+    const latestEsaPost: EsaPost = response.data.posts[0];
+    return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
+      post: {
+        name: title,
+        category,
+        tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
+        body_md: (text !== '' ? `${text}\n${latestEsaPost.body_md}` : latestEsaPost.body_md),
+        wip: false,
+      },
+    }).then((res: AxiosResponse<EsaPost>) => {
+      return res.data;
+    });
+  }
+  throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
 }
 
 async function getDailyReport(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
-  title: string,
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category} title:${title}`,
+      q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
     throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+  } else if (response.data.total_count > 1) {
+    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
+  } else {
+    return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+      return res.data;
+    });
   }
-  return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
-    return res.data;
-  });
 }
 
 function checkAuthTokenEmail(context: functions.https.CallableContext) {
@@ -132,6 +138,6 @@ export const dailyReport = functions.https.onCall(async (
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getDailyReport(axios, esaConfig, req.category, req.title);
+  const result = await getDailyReport(axios, esaConfig, req.category);
   return result;
 });

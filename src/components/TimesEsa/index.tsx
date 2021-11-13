@@ -15,6 +15,7 @@ const TimesEsa: React.FC<{}> = () => {
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
   const [esaTagsText, setEsaTagsText] = useState<string>('');
+  const [esaTitle, setEsaTitle] = useState<string>('日報');
 
   const loadDailyReport = () => {
     setFetching(true);
@@ -28,7 +29,6 @@ const TimesEsa: React.FC<{}> = () => {
 
     const data = getDailyReport({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      title: '日報',
     });
     data.then((res) => {
       setUpdatedAt(res.data.updated_at);
@@ -37,6 +37,7 @@ const TimesEsa: React.FC<{}> = () => {
       setEsaText(res.data.body_md);
       setEsaHtml(res.data.body_html);
       setEsaTagsText(res.data.tags.join(', '));
+      setEsaTitle(res.data.name);
 
       setFetching(false);
     }).catch((error) => {
@@ -55,12 +56,14 @@ const TimesEsa: React.FC<{}> = () => {
         #times_esa
       </a>
       <EsaSubmitForm
-        key={`esa_form_${esaUpdatedAt}_${esaTagsText}`}
+        key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaTagsText}`}
+        title={esaTitle}
         tagsText={esaTagsText}
         fetching={fetching}
-        onSubmit={(md: string, html: string, tags: string[]) => {
+        onSubmit={(title: string, md: string, html: string, tags: string[]) => {
           setfetchErrorMessage('');
 
+          setEsaTitle(title);
           setEsaText(md);
           setEsaHtml(html);
           setEsaTagsText(tags.join(', '));

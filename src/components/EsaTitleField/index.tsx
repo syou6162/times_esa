@@ -2,10 +2,10 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-type EsaTextFieldProps = {
+type EsaTitleFieldProps = {
   sending: boolean;
   fetching: boolean;
-  text: string;
+  title: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -23,13 +23,12 @@ const useStyles = makeStyles(() => {
   });
 });
 
-const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => {
+const EsaTitleField: React.FC<EsaTitleFieldProps> = (props: EsaTitleFieldProps) => {
   const classes = useStyles();
   return (
     <TextField
       fullWidth
-      multiline
-      placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
+      placeholder="日報のタイトルを記入しましょう"
       variant="outlined"
       InputProps={{
         classes: {
@@ -38,12 +37,10 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
         },
         disabled: props.sending || props.fetching,
       }}
-      minRows={7}
-      maxRows={30}
-      value={props.text}
+      value={props.title}
       onChange={props.onChange}
     />
   );
 };
 
-export default EsaTextField;
+export default EsaTitleField;
