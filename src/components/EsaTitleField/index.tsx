@@ -28,7 +28,6 @@ const EsaTitleField: React.FC<EsaTitleFieldProps> = (props: EsaTitleFieldProps) 
   return (
     <TextField
       fullWidth
-      multiline
       placeholder="日報のタイトルを記入しましょう"
       variant="outlined"
       InputProps={{
