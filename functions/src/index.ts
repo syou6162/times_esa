@@ -32,6 +32,7 @@ type EsaPost = {
   body_md: string; // eslint-disable-line camelcase
   body_html: string; // eslint-disable-line camelcase
   number: number;
+  name: string;
   tags: string[];
 }
 
