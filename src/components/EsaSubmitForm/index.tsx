@@ -3,14 +3,16 @@ import { Button } from '@material-ui/core';
 import { format } from 'date-fns';
 import firebase from 'firebase';
 
+import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import EsaTagsField from '../EsaTagsField';
 
 type EsaSubmitFormProps = {
+  title: string;
   tagsText: string;
   fetching: boolean;
   // eslint-disable-next-line no-unused-vars
-  onSubmit: (markdown: string, html: string, tags: string[]) => void;
+  onSubmit: (title: string, markdown: string, html: string, tags: string[]) => void;
 };
 
 function getDay(): string {
@@ -37,6 +39,7 @@ function getDay(): string {
 
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
+  const [title, setTitle] = useState<string>(props.title);
   const [text, setText] = useState<string>('');
   const [tagsText, setTagsText] = useState<string>(props.tagsText);
 
@@ -53,12 +56,13 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       tags: tagsText.split(', ').concat(getDay()),
-      title: '日報',
+      title: title,
       text: `${format(new Date(), 'HH:mm')} ${text}\n\n---\n`,
     }).then((data) => {
+      setTitle(data.data.name);
       setText('');
       setTagsText(data.data.tags.join(', '));
-      props.onSubmit(data.data.body_md, data.data.body_html, data.data.tags);
+      props.onSubmit(data.data.name, data.data.body_md, data.data.body_html, data.data.tags);
     }).catch((err: Error) => {
       // eslint-disable-next-line no-alert
       alert(`${err.name}: ${err.message}`);
@@ -74,6 +78,12 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         sending={sending}
         text={text}
         onChange={(e) => { setText(e.target.value); }}
+      />
+      <EsaTitleField
+        fetching={props.fetching}
+        sending={sending}
+        title={title}
+        onChange={(e) => { setTitle(e.target.value); }}
       />
       <EsaTagsField
         fetching={props.fetching}
