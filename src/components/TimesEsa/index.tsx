@@ -56,7 +56,7 @@ const TimesEsa: React.FC<{}> = () => {
         #times_esa
       </a>
       <EsaSubmitForm
-        key={`esa_form_${esaUpdatedAt}_${esaTagsText}`}
+        key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaTagsText}`}
         title={esaTitle}
         tagsText={esaTagsText}
         fetching={fetching}
