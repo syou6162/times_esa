@@ -138,6 +138,6 @@ export const dailyReport = functions.https.onCall(async (
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getDailyReport(axios, esaConfig, req.category, req.title);
+  const result = await getDailyReport(axios, esaConfig, req.category);
   return result;
 });
