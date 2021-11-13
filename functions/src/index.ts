@@ -50,7 +50,7 @@ async function createOrUpdatePost(
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category} title:${title}`,
+      q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
@@ -65,38 +65,43 @@ async function createOrUpdatePost(
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
     });
+  } else if (response.data.total_count > 1) {
+    throw new functions.https.HttpsError('too-many-post', '複数の日報が存在します');
+  } else {
+    const latestEsaPost: EsaPost = response.data.posts[0];
+    return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
+      post: {
+        name: title,
+        category,
+        tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
+        body_md: `${text}\n${latestEsaPost.body_md}`,
+        wip: false,
+      },
+    }).then((res: AxiosResponse<EsaPost>) => {
+      return res.data;
+    });
   }
-  const latestEsaPost: EsaPost = response.data.posts[0];
-  return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
-    post: {
-      name: title,
-      category,
-      tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
-      body_md: `${text}\n${latestEsaPost.body_md}`,
-      wip: false,
-    },
-  }).then((res: AxiosResponse<EsaPost>) => {
-    return res.data;
-  });
 }
 
 async function getDailyReport(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
-  title: string,
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category} title:${title}`,
+      q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
     throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+  } else if (response.data.total_count > 1) {
+    throw new functions.https.HttpsError('too-many-post', '複数の日報が存在します');
+  } else {
+    return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+      return res.data;
+    });
   }
-  return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
-    return res.data;
-  });
 }
 
 function checkAuthTokenEmail(context: functions.https.CallableContext) {
