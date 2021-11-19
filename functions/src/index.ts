@@ -41,6 +41,16 @@ export type EsaSearchResult = {
   total_count: number; // eslint-disable-line camelcase
 }
 
+function transformTitle(oldTitle: string, newTitle: string): string {
+  const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))));
+  if (JSON.stringify(result) === JSON.stringify(['日報'])) {
+    return '日報';
+  }
+  return result.filter((item) => {
+    return item !== '日報';
+  }).join('、');
+}
+
 async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
@@ -73,7 +83,7 @@ async function createOrUpdatePost(
     const latestEsaPost: EsaPost = response.data.posts[0];
     return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
       post: {
-        name: title,
+        name: transformTitle(latestEsaPost.name, title),
         category,
         tags: Array.from(new Set(tags.concat(latestEsaPost.tags))),
         body_md: (text !== '' ? `${text}\n${latestEsaPost.body_md}` : latestEsaPost.body_md),
