@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 const axiosBase = require('axios');
 
@@ -65,6 +65,8 @@ async function createOrUpdatePost(
       },
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
+    }).catch((err: AxiosError) => {
+      throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
   if (response.data.total_count === 1) {
@@ -79,6 +81,8 @@ async function createOrUpdatePost(
       },
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
+    }).catch((err: AxiosError) => {
+      throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
   throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
