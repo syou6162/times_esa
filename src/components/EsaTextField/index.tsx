@@ -38,7 +38,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
         },
         disabled: props.sending || props.fetching,
       }}
-      minRows={7}
+      minRows={6}
       maxRows={30}
       value={props.text}
       onChange={props.onChange}
