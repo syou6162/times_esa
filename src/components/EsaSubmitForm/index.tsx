@@ -37,6 +37,12 @@ function getDay(): string {
   }
 }
 
+const transformTitle = (title: string): string => {
+  return title.split('\n').filter((w: string) => {
+    return w !== '';
+  }).join('、');
+};
+
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
   const [title, setTitle] = useState<string>(props.title);
@@ -56,7 +62,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
       tags: tagsText.split(', ').concat(getDay()),
-      title,
+      title: transformTitle(title),
       text: text !== '' ? `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` : '',
     }).then((data) => {
       setTitle(data.data.name);
