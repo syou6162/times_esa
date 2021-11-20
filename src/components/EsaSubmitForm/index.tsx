@@ -79,12 +79,6 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
 
   return (
     <form onSubmit={handleSubmit}>
-      <EsaTextField
-        fetching={props.fetching}
-        sending={sending}
-        text={text}
-        onChange={(e) => { setText(e.target.value); }}
-      />
       <EsaTitleField
         fetching={props.fetching}
         sending={sending}
@@ -96,6 +90,12 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         sending={sending}
         tagsText={tagsText}
         onChange={(e) => { setTagsText(e.target.value); }}
+      />
+      <EsaTextField
+        fetching={props.fetching}
+        sending={sending}
+        text={text}
+        onChange={(e) => { setText(e.target.value); }}
       />
       <Button
         disabled={sending}
