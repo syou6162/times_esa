@@ -2,12 +2,14 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { moveCursorToEnd } from '../../util';
+
 type EsaTitleFieldProps = {
   sending: boolean;
   fetching: boolean;
   title: string;
   // eslint-disable-next-line no-unused-vars
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 const useStyles = makeStyles(() => {
@@ -42,6 +44,7 @@ const EsaTitleField: React.FC<EsaTitleFieldProps> = (props: EsaTitleFieldProps) 
       }}
       value={props.title}
       onChange={props.onChange}
+      onFocus={moveCursorToEnd}
     />
   );
 };

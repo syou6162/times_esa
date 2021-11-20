@@ -2,12 +2,14 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { moveCursorToEnd } from '../../util';
+
 type EsaTagsFieldProps = {
   sending: boolean;
   fetching: boolean;
   tagsText: string;
   // eslint-disable-next-line no-unused-vars
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 const useStyles = makeStyles(() => {
@@ -39,6 +41,7 @@ const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => 
       }}
       value={props.tagsText}
       onChange={props.onChange}
+      onFocus={moveCursorToEnd}
     />
   );
 };
