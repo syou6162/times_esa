@@ -7,6 +7,7 @@ type EsaTagsFieldProps = {
   sending: boolean;
   fetching: boolean;
   tags: string[];
+  tagCandidates: string[];
   onChange: (
     // eslint-disable-next-line no-unused-vars
     event: React.ChangeEvent<{}>,
@@ -38,7 +39,7 @@ const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => 
     <Autocomplete
       value={props.tags}
       multiple
-      options={['bigquery', 'データ基盤']}
+      options={props.tagCandidates}
       freeSolo
       autoSelect
       /* eslint-disable no-unused-vars, react/jsx-props-no-spreading */
