@@ -11,6 +11,10 @@ export type Tag = {
   posts_count: number; // eslint-disable-line camelcase
 }
 
+const getPostsCount = (md: string): number => {
+  return md.split('---').length - 1;
+};
+
 const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
   const [fetchErrorMessage, setfetchErrorMessage] = useState<string>('');
@@ -78,9 +82,17 @@ const TimesEsa: React.FC<{}> = () => {
 
   return (
     <Container maxWidth="xl">
-      <a href={esaUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        style={{
+          color: 'white',
+        }}
+        href={esaUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         #times_esa
       </a>
+      {`: 今日は${getPostsCount(esaText)}個つぶやいたよ`}
       <EsaSubmitForm
         key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaTags.join(',')}`}
         title={esaTitle}
