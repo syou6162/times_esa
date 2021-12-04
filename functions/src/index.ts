@@ -41,6 +41,15 @@ export type EsaSearchResult = {
   total_count: number; // eslint-disable-line camelcase
 }
 
+export type Tag = {
+  name: string;
+  posts_count: number; // eslint-disable-line camelcase
+}
+
+export type EsaTags = {
+  tags: Tag[]
+}
+
 function transformTitle(oldTitle: string, newTitle: string): string {
   const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))));
   if (JSON.stringify(result) === JSON.stringify(['日報'])) {
@@ -119,6 +128,14 @@ async function getDailyReport(
   }
 }
 
+async function getTagList(
+  axios: AxiosInstance,
+  esaConfig: EsaConfig,
+): Promise<EsaTags> {
+  const response = await axios.get<EsaTags>(`/v1/teams/${esaConfig.teamName}/tags`);
+  return response.data;
+}
+
 function checkAuthTokenEmail(context: functions.https.CallableContext) {
   if (!context.auth || context.auth.token.email !== functions.config().context.valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
@@ -153,5 +170,17 @@ export const dailyReport = functions.https.onCall(async (
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
   const result = await getDailyReport(axios, esaConfig, req.category);
+  return result;
+});
+
+export const tagList = functions.https.onCall(async (
+  req,
+  context: functions.https.CallableContext,
+) => {
+  checkAuthTokenEmail(context);
+
+  const esaConfig = getEsaConfig();
+  const axios = createAxiosClient(esaConfig.accessToken);
+  const result = await getTagList(axios, esaConfig);
   return result;
 });
