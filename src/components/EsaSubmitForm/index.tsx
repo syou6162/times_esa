@@ -9,7 +9,7 @@ import EsaTagsField from '../EsaTagsField';
 
 type EsaSubmitFormProps = {
   title: string;
-  tagsText: string;
+  tags: string[];
   fetching: boolean;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (title: string, markdown: string, html: string, tags: string[]) => void;
@@ -47,7 +47,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
   const [sending, setSending] = useState(false);
   const [title, setTitle] = useState<string>(props.title);
   const [text, setText] = useState<string>('');
-  const [tagsText, setTagsText] = useState<string>(props.tagsText);
+  const [tags, setTags] = useState<string[]>(props.tags);
 
   const handleSubmit = async (e: React.FormEvent) => {
     // submit ボタンのデフォルトの振る舞い (GET や POST) を抑制する
@@ -61,13 +61,13 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     );
     await submit({
       category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      tags: tagsText.split(', ').concat(getDay()),
+      tags: tags.concat(getDay()),
       title: transformTitle(title),
       text: text !== '' ? `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` : '',
     }).then((data) => {
       setTitle(data.data.name);
       setText('');
-      setTagsText(data.data.tags.join(', '));
+      setTags(data.data.tags);
       props.onSubmit(data.data.name, data.data.body_md, data.data.body_html, data.data.tags);
     }).catch((err: Error) => {
       // eslint-disable-next-line no-alert
@@ -88,8 +88,9 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
       <EsaTagsField
         fetching={props.fetching}
         sending={sending}
-        tagsText={tagsText}
-        onChange={(e) => { setTagsText(e.target.value); }}
+        tags={tags}
+        // eslint-disable-next-line no-unused-vars
+        onChange={(event, value, reason, detail) => { setTags(value); }}
       />
       <EsaTextField
         fetching={props.fetching}
