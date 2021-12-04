@@ -10,6 +10,7 @@ import EsaTagsField from '../EsaTagsField';
 type EsaSubmitFormProps = {
   title: string;
   tags: string[];
+  tagCandidates: string[];
   fetching: boolean;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (title: string, markdown: string, html: string, tags: string[]) => void;
@@ -89,6 +90,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         fetching={props.fetching}
         sending={sending}
         tags={tags}
+        tagCandidates={props.tagCandidates}
         // eslint-disable-next-line no-unused-vars
         onChange={(event, value, reason, detail) => { setTags(value); }}
       />

@@ -6,6 +6,11 @@ import firebase from 'firebase';
 import DailyReport from '../DailyReport';
 import EsaSubmitForm from '../EsaSubmitForm';
 
+export type Tag = {
+  name: string;
+  posts_count: number; // eslint-disable-line camelcase
+}
+
 const TimesEsa: React.FC<{}> = () => {
   const [fetching, setFetching] = useState(false);
   const [fetchErrorMessage, setfetchErrorMessage] = useState<string>('');
@@ -15,6 +20,7 @@ const TimesEsa: React.FC<{}> = () => {
   const [esaText, setEsaText] = useState<string>('');
   const [esaHtml, setEsaHtml] = useState<string>('');
   const [esaTags, setEsaTags] = useState<string[]>([]);
+  const [esaTagCandidates, setEsaTagCandidates] = useState<string[]>([]);
   const [esaTitle, setEsaTitle] = useState<string>('日報');
 
   const loadDailyReport = () => {
@@ -46,8 +52,28 @@ const TimesEsa: React.FC<{}> = () => {
     });
   };
 
+  const loadTagList = () => {
+    setFetching(true);
+    setfetchErrorMessage('');
+
+    const getTagList = firebase.functions().httpsCallable('tagList');
+    const data = getTagList();
+
+    data.then((res) => {
+      setEsaTagCandidates(res.data.tags.map((esaTag: Tag) => {
+        return esaTag.name;
+      }));
+
+      setFetching(false);
+    }).catch((error) => {
+      setfetchErrorMessage(`${error.code}: ${error.message}`);
+      setFetching(false);
+    });
+  };
+
   useEffect(() => {
     loadDailyReport();
+    loadTagList();
   }, []);
 
   return (
@@ -59,6 +85,7 @@ const TimesEsa: React.FC<{}> = () => {
         key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaTags.join(',')}`}
         title={esaTitle}
         tags={esaTags}
+        tagCandidates={esaTagCandidates}
         fetching={fetching}
         onSubmit={(title: string, md: string, html: string, tags: string[]) => {
           setfetchErrorMessage('');
