@@ -83,9 +83,6 @@ const TimesEsa: React.FC<{}> = () => {
   return (
     <Container maxWidth="xl">
       <a
-        style={{
-          color: 'white',
-        }}
         href={esaUrl}
         target="_blank"
         rel="noopener noreferrer"
