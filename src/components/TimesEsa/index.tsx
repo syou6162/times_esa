@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
-import { format } from 'date-fns';
 import firebase from 'firebase';
 
 import DailyReport from '../DailyReport';
 import EsaSubmitForm from '../EsaSubmitForm';
+import { makeDefaultEsaCategory } from '../../util';
 
 export type Tag = {
   name: string;
@@ -26,6 +26,7 @@ const TimesEsa: React.FC<{}> = () => {
   const [esaTags, setEsaTags] = useState<string[]>([]);
   const [esaTagCandidates, setEsaTagCandidates] = useState<string[]>([]);
   const [esaTitle, setEsaTitle] = useState<string>('日報');
+  const [esaCategory, setEsaCategory] = useState<string>('');
 
   const clearEsaFields = () => {
     setUpdatedAt('');
@@ -35,6 +36,7 @@ const TimesEsa: React.FC<{}> = () => {
     setEsaHtml('');
     setEsaTags([]);
     setEsaTitle('日報');
+    setEsaCategory('');
   };
 
   const loadDailyReport = () => {
@@ -48,7 +50,7 @@ const TimesEsa: React.FC<{}> = () => {
     // const getDailyReport = functions.httpsCallable('dailyReport');
 
     const data = getDailyReport({
-      category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
+      category: makeDefaultEsaCategory(new Date()),
     });
     data.then((res) => {
       setUpdatedAt(res.data.updated_at);
@@ -58,6 +60,7 @@ const TimesEsa: React.FC<{}> = () => {
       setEsaHtml(res.data.body_html);
       setEsaTags(res.data.tags);
       setEsaTitle(res.data.name);
+      setEsaCategory(res.data.category);
 
       setFetching(false);
     }).catch((error) => {
@@ -104,14 +107,22 @@ const TimesEsa: React.FC<{}> = () => {
       </a>
       {`: 今日は${getPostsCount(esaText)}個つぶやいたよ`}
       <EsaSubmitForm
-        key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaTags.join(',')}`}
+        key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaCategory}_${esaTags.join(',')}`}
+        category={esaCategory}
         title={esaTitle}
         tags={esaTags}
         tagCandidates={esaTagCandidates}
         fetching={fetching}
-        onSubmit={(title: string, md: string, html: string, tags: string[]) => {
+        onSubmit={(
+          category: string,
+          title: string,
+          md: string,
+          html: string,
+          tags: string[],
+        ) => {
           setfetchErrorMessage('');
 
+          setEsaCategory(category);
           setEsaTitle(title);
           setEsaText(md);
           setEsaHtml(html);

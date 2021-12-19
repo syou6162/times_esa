@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from 'date-fns';
 
 export const moveCursorToEnd = (
   event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -13,4 +14,6 @@ export const moveCursorToEnd = (
   target.scrollLeft = target.scrollWidth;
 };
 
-export default moveCursorToEnd;
+export const makeDefaultEsaCategory = (date: Date): string => {
+  return `日報/${format(date, 'yyyy/MM/dd')}`;
+};

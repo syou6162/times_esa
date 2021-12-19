@@ -6,18 +6,27 @@ import firebase from 'firebase';
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import EsaTagsField from '../EsaTagsField';
+import { makeDefaultEsaCategory } from '../../util';
 
 type EsaSubmitFormProps = {
+  category: string;
   title: string;
   tags: string[];
   tagCandidates: string[];
   fetching: boolean;
-  // eslint-disable-next-line no-unused-vars
-  onSubmit: (title: string, markdown: string, html: string, tags: string[]) => void;
+  onSubmit: (
+    /* eslint-disable no-unused-vars */
+    category: string,
+    title: string,
+    markdown: string,
+    html: string,
+    tags: string[]
+    /* eslint-enable no-unused-vars */
+  ) => void;
 };
 
-function getDay(): string {
-  const day = (new Date()).getDay();
+function getDay(date: Date): string {
+  const day = date.getDay();
   switch (day) {
     case 0:
       return '日曜日';
@@ -46,9 +55,17 @@ const transformTitle = (title: string): string => {
 
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
+  const [category, setCategory] = useState<string>(props.category);
   const [title, setTitle] = useState<string>(props.title);
   const [text, setText] = useState<string>('');
   const [tags, setTags] = useState<string[]>(props.tags);
+
+  const isSameCategory = (): boolean => {
+    if (category === '') { // 今日の日報がまだ作成されていない
+      return true;
+    }
+    return category === makeDefaultEsaCategory(new Date());
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     // submit ボタンのデフォルトの振る舞い (GET や POST) を抑制する
@@ -60,16 +77,24 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         timeout: 10000, // 10秒
       },
     );
+    const date = new Date();
     await submit({
-      category: `日報/${format(new Date(), 'yyyy/MM/dd')}`,
-      tags: tags.concat(getDay()),
+      category: makeDefaultEsaCategory(date),
+      tags: tags.concat(getDay(date)),
       title: transformTitle(title),
-      text: text !== '' ? `${format(new Date(), 'HH:mm')} ${text}\n\n---\n` : '',
+      text: text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
     }).then((data) => {
+      setCategory(data.data.category);
       setTitle(data.data.name);
       setText('');
       setTags(data.data.tags);
-      props.onSubmit(data.data.name, data.data.body_md, data.data.body_html, data.data.tags);
+      props.onSubmit(
+        data.data.category,
+        data.data.name,
+        data.data.body_md,
+        data.data.body_html,
+        data.data.tags,
+      );
     }).catch((err: Error) => {
       // eslint-disable-next-line no-alert
       alert(`${err.name}: ${err.message}`);
@@ -101,7 +126,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         onChange={(e) => { setText(e.target.value); }}
       />
       <Button
-        disabled={sending}
+        disabled={sending || !isSameCategory()}
         variant="contained"
         color="primary"
         type="submit"
