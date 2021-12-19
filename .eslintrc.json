@@ -27,6 +27,7 @@
       "import/no-unresolved": "off",
       "import/extensions": "off",
       "arrow-body-style": ["error", "always"],
-      "react/destructuring-assignment": ["error", "never"]
+      "react/destructuring-assignment": ["error", "never"],
+      "react/function-component-definition": [2, { "namedComponents": "arrow-function"}]
     }
 }
