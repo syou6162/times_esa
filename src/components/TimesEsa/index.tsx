@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@material-ui/core';
-import firebase from 'firebase';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import DailyReport from '../DailyReport';
 import EsaSubmitForm from '../EsaSubmitForm';
@@ -9,6 +9,28 @@ import { makeDefaultEsaCategory } from '../../util';
 export type Tag = {
   name: string;
   posts_count: number; // eslint-disable-line camelcase
+}
+
+type dailyReportRequestType = {
+  category: string;
+}
+
+type dailyReportResponseType = {
+  updated_at: string;
+  url: string;
+
+  body_md: string;
+  body_html: string;
+  tags: string[];
+  name: string;
+  category: string;
+}
+
+type tagListRequestType = {
+}
+
+type tagListResponseType = {
+  tags: Tag[];
 }
 
 const getPostsCount = (md: string): number => {
@@ -43,7 +65,8 @@ const TimesEsa: React.FC<{}> = () => {
     setFetching(true);
     setfetchErrorMessage('');
 
-    const getDailyReport = firebase.functions().httpsCallable('dailyReport');
+    const functions = getFunctions();
+    const getDailyReport = httpsCallable<dailyReportRequestType, dailyReportResponseType>(functions, 'dailyReport');
     // ローカルで試したいときはこれを使う
     // const functions = firebase.functions();
     // functions.useFunctionsEmulator('http://localhost:5001');
@@ -76,7 +99,8 @@ const TimesEsa: React.FC<{}> = () => {
     setFetching(true);
     setfetchErrorMessage('');
 
-    const getTagList = firebase.functions().httpsCallable('tagList');
+    const functions = getFunctions();
+    const getTagList = httpsCallable<tagListRequestType, tagListResponseType>(functions, 'tagList');
     const data = getTagList();
 
     data.then((res) => {

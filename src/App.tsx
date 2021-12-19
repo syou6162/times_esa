@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import './App.css';
 
-// firebase functions
-import firebase from 'firebase';
+import {
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  UserInfo,
+} from 'firebase/auth';
+import 'firebase/compat/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { firebaseAuth } from './firebase/index';
 import TimesEsa from './components/TimesEsa';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [myAccount, setMyAccount] = useState<firebase.User>();
+  const [myAccount, setMyAccount] = useState<UserInfo>();
 
   const uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl: '/',
     signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      GoogleAuthProvider.PROVIDER_ID,
     ],
   };
 
   useEffect(() => {
-    firebaseAuth.onAuthStateChanged((user) => {
+    onAuthStateChanged(firebaseAuth, (user) => {
       setLoading(false);
       if (!user) return;
       if (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES) return;
@@ -39,7 +43,7 @@ const App: React.FC = () => {
         ) : !myAccount ? (
           <div>
             ログインが必要です
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
           </div>
         )
           : <TimesEsa />}
