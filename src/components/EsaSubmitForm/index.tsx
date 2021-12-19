@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { format } from 'date-fns';
-import firebase from 'firebase';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
@@ -53,6 +53,24 @@ const transformTitle = (title: string): string => {
   }).join('、');
 };
 
+type submitTextToEsaRequestType = {
+  category: string;
+  tags: string[];
+  title: string;
+  text: string;
+}
+
+type submitTextToEsaResponseType = {
+  updated_at: string;
+  url: string;
+
+  body_md: string;
+  body_html: string;
+  tags: string[];
+  name: string;
+  category: string;
+}
+
 const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
   const [category, setCategory] = useState<string>(props.category);
@@ -71,7 +89,9 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     // submit ボタンのデフォルトの振る舞い (GET や POST) を抑制する
     e.preventDefault();
     setSending(true);
-    const submit = firebase.functions().httpsCallable(
+    const functions = getFunctions();
+    const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
+      functions,
       'submitTextToEsa',
       {
         timeout: 10000, // 10秒
