@@ -27,6 +27,16 @@ const TimesEsa: React.FC<{}> = () => {
   const [esaTagCandidates, setEsaTagCandidates] = useState<string[]>([]);
   const [esaTitle, setEsaTitle] = useState<string>('日報');
 
+  const clearEsaFields = () => {
+    setUpdatedAt('');
+    setEsaUrl('');
+
+    setEsaText('');
+    setEsaHtml('');
+    setEsaTags([]);
+    setEsaTitle('日報');
+  };
+
   const loadDailyReport = () => {
     setFetching(true);
     setfetchErrorMessage('');
@@ -51,6 +61,9 @@ const TimesEsa: React.FC<{}> = () => {
 
       setFetching(false);
     }).catch((error) => {
+      if (error.code === 'NOT_FOUND') {
+        clearEsaFields();
+      }
       setfetchErrorMessage(`${error.code}: ${error.message}`);
       setFetching(false);
     });
