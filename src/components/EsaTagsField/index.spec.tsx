@@ -17,6 +17,22 @@ describe('esaのタグが正しく表示される', () => {
 
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
+  
+  it('tagCandidatesも空の状態', () => {
+    const props: EsaTagsFieldProps = {
+      sending: false,
+      fetching: false,
+      tags: ["日報", "BigQuery", "月曜日"],
+      tagCandidates: [],
+      onChange: () => { }
+    }
+    const renderResult = render(
+      <EsaTagsField {...props} />
+    );
+
+    expect(renderResult.getAllByRole("button").length).toBe(3);
+    expect(renderResult.asFragment()).toMatchSnapshot();
+  });
 
   it('送信中は入力できない', async () => {
     const props: EsaTagsFieldProps = {
