@@ -37,6 +37,7 @@ export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldPro
   const classes = useStyles();
   return (
     <Autocomplete
+      id="esa_tags_field"
       value={props.tags}
       multiple
       options={props.tagCandidates}

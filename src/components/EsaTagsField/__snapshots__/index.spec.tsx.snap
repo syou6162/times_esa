@@ -19,7 +19,7 @@ exports[`esaのタグが正しく表示される tagsもtagCandidatesも空の�
           autocapitalize="none"
           autocomplete="off"
           class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-          id="mui-75157"
+          id="esa_tags_field"
           placeholder="タグを記入しましょう"
           spellcheck="false"
           type="text"
