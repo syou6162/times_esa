@@ -5,7 +5,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
-import EsaTagsField from '../EsaTagsField';
+import { EsaTagsField } from '../EsaTagsField';
 import { makeDefaultEsaCategory } from '../../util';
 
 type EsaSubmitFormProps = {
