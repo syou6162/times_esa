@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails, AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
 
-type EsaTagsFieldProps = {
+export type EsaTagsFieldProps = {
   sending: boolean;
   fetching: boolean;
   tags: string[];
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => {
   });
 });
 
-const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => {
+export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => {
   const classes = useStyles();
   return (
     <Autocomplete
@@ -69,5 +69,3 @@ const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => 
     />
   );
 };
-
-export default EsaTagsField;
