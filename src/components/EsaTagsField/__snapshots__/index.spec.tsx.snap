@@ -74,6 +74,55 @@ exports[`esaのタグが正しく表示される tagsもtagCandidatesも空の�
 </DocumentFragment>
 `;
 
+exports[`esaのタグが正しく表示される 取得中は入力できない 1`] = `
+<DocumentFragment>
+  <div
+    aria-expanded="false"
+    class="MuiAutocomplete-root"
+    role="combobox"
+  >
+    <div
+      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-13 MuiAutocomplete-inputRoot Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+      >
+        <input
+          aria-autocomplete="list"
+          aria-invalid="false"
+          autocapitalize="none"
+          autocomplete="off"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+          disabled=""
+          id="esa_tags_field"
+          placeholder="タグを記入しましょう"
+          spellcheck="false"
+          type="text"
+          value=""
+        />
+        <div
+          class="MuiAutocomplete-endAdornment"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-15 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-14"
+          style="padding-left: 8px;"
+        >
+          <legend
+            class="PrivateNotchedOutline-legend-16"
+            style="width: 0.01px;"
+          >
+            <span>
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`esaのタグが正しく表示される 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div

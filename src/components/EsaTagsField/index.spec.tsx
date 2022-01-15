@@ -33,4 +33,20 @@ describe('esaのタグが正しく表示される', () => {
     expect(renderResult.getByRole("textbox")).toBeDisabled();
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
+  
+  it('取得中は入力できない', async () => {
+    const props: EsaTagsFieldProps = {
+      sending: false,
+      fetching: true,
+      tags: [],
+      tagCandidates: [],
+      onChange: () => { }
+    }
+    const renderResult = render(
+      <EsaTagsField {...props} />
+    );
+    
+    expect(renderResult.getByRole("textbox")).toBeDisabled();
+    expect(renderResult.asFragment()).toMatchSnapshot();
+  });
 })
