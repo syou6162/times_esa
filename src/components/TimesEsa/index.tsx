@@ -3,7 +3,7 @@ import { Container } from '@material-ui/core';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import DailyReport from '../DailyReport';
-import EsaSubmitForm from '../EsaSubmitForm';
+import { EsaSubmitForm } from '../EsaSubmitForm';
 import { makeDefaultEsaCategory } from '../../util';
 
 export type Tag = {
