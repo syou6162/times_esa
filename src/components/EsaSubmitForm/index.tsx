@@ -72,7 +72,7 @@ type submitTextToEsaResponseType = {
 }
 
 export const submitTextToEsa = (
-  date: Date,
+  category: string,
   tags: string[],
   title: string,
   text: string,
@@ -86,10 +86,10 @@ export const submitTextToEsa = (
     },
   );
   return submit({
-    category: makeDefaultEsaCategory(date),
-    tags: tags.concat(getDay(date)),
-    title: transformTitle(title),
-    text: text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
+    category,
+    tags,
+    title,
+    text,
   });
 };
 
@@ -113,7 +113,7 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
     setSending(true);
     const date = new Date();
     await submitTextToEsa(
-      date,
+      makeDefaultEsaCategory(date),
       tags.concat(getDay(date)),
       transformTitle(title),
       text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
