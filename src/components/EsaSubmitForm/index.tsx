@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { format } from 'date-fns';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
@@ -76,7 +76,7 @@ export const submitTextToEsa = (
   tags: string[],
   title: string,
   text: string,
-) => {
+): Promise<HttpsCallableResult<submitTextToEsaResponseType>> => {
   const functions = getFunctions();
   const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
     functions,
