@@ -160,6 +160,7 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
         onChange={(e) => { setText(e.target.value); }}
       />
       <Button
+        title="esa_submit_form_button"
         disabled={sending || !isSameCategory()}
         variant="contained"
         color="primary"
