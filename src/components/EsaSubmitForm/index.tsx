@@ -25,7 +25,7 @@ export type EsaSubmitFormProps = {
   ) => void;
 };
 
-function getDay(date: Date): string {
+export function getDay(date: Date): string {
   const day = date.getDay();
   switch (day) {
     case 0:

@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import * as EsaSubmitFormModule from '.'
-import { EsaSubmitForm, EsaSubmitFormProps } from '.'
+import { EsaSubmitForm, EsaSubmitFormProps, getDay } from '.'
 import { makeDefaultEsaCategory } from '../../util';
 
 describe('times_esaのフォームが正しく機能する(正常系)', () => {
@@ -13,7 +13,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
 
       body_md: "hello!",
       body_html: "hello!",
-      tags: ["日報", "BigQuery"],
+      tags: ["日報", "BigQuery", getDay(new Date)],
       name: modifiedTitle,
       category: makeDefaultEsaCategory(new Date()),
     },
@@ -78,7 +78,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     const props: EsaSubmitFormProps = {
       category: "",
       title: "こんにちは",
-      tags: [],
+      tags: ["日報", "BigQuery"],
       tagCandidates: [],
       fetching: false,
       onSubmit: () => { },
@@ -94,7 +94,8 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
       fireEvent.click(getByTitle("esa_submit_form_button"));
     });
 
-    expect(submitMock).toBeCalledTimes(1)
+    expect(submitMock).toBeCalledTimes(1);
+    expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
     expect(getByText("BigQuery")).toBeDefined();
     expect(getByText(modifiedTitle)).toBeDefined();
     expect(asFragment()).toMatchSnapshot();

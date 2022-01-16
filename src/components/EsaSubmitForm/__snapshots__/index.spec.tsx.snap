@@ -379,14 +379,58 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
         class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-27 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-27 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
         >
+          <div
+            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            data-tag-index="0"
+            role="button"
+            tabindex="-1"
+          >
+            <span
+              class="MuiChip-label"
+            >
+              日報
+            </span>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+              />
+            </svg>
+          </div>
+          <div
+            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            data-tag-index="1"
+            role="button"
+            tabindex="-1"
+          >
+            <span
+              class="MuiChip-label"
+            >
+              BigQuery
+            </span>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+              />
+            </svg>
+          </div>
           <input
             aria-autocomplete="list"
             aria-invalid="false"
             autocapitalize="none"
             autocomplete="off"
-            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedStart MuiOutlinedInput-inputAdornedStart MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
             id="esa_tags_field"
             placeholder="タグを記入しましょう"
             spellcheck="false"
@@ -398,7 +442,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
           >
             <button
               aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
               tabindex="-1"
               title="Clear"
               type="button"
@@ -579,6 +623,28 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
               class="MuiChip-label"
             >
               BigQuery
+            </span>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+              />
+            </svg>
+          </div>
+          <div
+            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            data-tag-index="2"
+            role="button"
+            tabindex="-1"
+          >
+            <span
+              class="MuiChip-label"
+            >
+              日曜日
             </span>
             <svg
               aria-hidden="true"
