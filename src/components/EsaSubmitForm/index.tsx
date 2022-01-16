@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { format } from 'date-fns';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
 import { makeDefaultEsaCategory } from '../../util';
 
-type EsaSubmitFormProps = {
+export type EsaSubmitFormProps = {
   category: string;
   title: string;
   tags: string[];
@@ -25,7 +25,7 @@ type EsaSubmitFormProps = {
   ) => void;
 };
 
-function getDay(date: Date): string {
+export function getDay(date: Date): string {
   const day = date.getDay();
   switch (day) {
     case 0:
@@ -71,7 +71,29 @@ type submitTextToEsaResponseType = {
   category: string;
 }
 
-const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
+export const submitTextToEsa = (
+  category: string,
+  tags: string[],
+  title: string,
+  text: string,
+): Promise<HttpsCallableResult<submitTextToEsaResponseType>> => {
+  const functions = getFunctions();
+  const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
+    functions,
+    'submitTextToEsa',
+    {
+      timeout: 10000, // 10秒
+    },
+  );
+  return submit({
+    category,
+    tags,
+    title,
+    text,
+  });
+};
+
+export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
   const [category, setCategory] = useState<string>(props.category);
   const [title, setTitle] = useState<string>(props.title);
@@ -89,21 +111,13 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     // submit ボタンのデフォルトの振る舞い (GET や POST) を抑制する
     e.preventDefault();
     setSending(true);
-    const functions = getFunctions();
-    const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
-      functions,
-      'submitTextToEsa',
-      {
-        timeout: 10000, // 10秒
-      },
-    );
     const date = new Date();
-    await submit({
-      category: makeDefaultEsaCategory(date),
-      tags: tags.concat(getDay(date)),
-      title: transformTitle(title),
-      text: text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
-    }).then((data) => {
+    await submitTextToEsa(
+      makeDefaultEsaCategory(date),
+      tags.concat(getDay(date)),
+      transformTitle(title),
+      text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
+    ).then((data) => {
       setCategory(data.data.category);
       setTitle(data.data.name);
       setText('');
@@ -146,6 +160,7 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
         onChange={(e) => { setText(e.target.value); }}
       />
       <Button
+        title="esa_submit_form_button"
         disabled={sending || !isSameCategory()}
         variant="contained"
         color="primary"
@@ -156,5 +171,3 @@ const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) 
     </form>
   );
 };
-
-export default EsaSubmitForm;
