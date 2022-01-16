@@ -89,6 +89,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
 
     expect(submitMock).toBeCalledTimes(0)
     expect(asFragment()).toMatchSnapshot();
+    const before = asFragment();
     
     await waitFor(() => {
       fireEvent.click(getByTitle("esa_submit_form_button"));
@@ -98,6 +99,59 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
     expect(getByText("BigQuery")).toBeDefined();
     expect(getByText(modifiedTitle)).toBeDefined();
+    expect(asFragment()).not.toStrictEqual(before);
+    expect(asFragment()).toMatchSnapshot();
+  });
+});
+
+describe('times_esaのフォームが正しく機能する(異常系)', () => {
+  let alertMock: jest.SpyInstance;
+  let submitMock: jest.SpyInstance; 
+
+  const originalWindowAlert = window.alert;
+
+  beforeEach(() => {
+    alertMock = jest.fn();
+    window.alert = (alertMock as any);
+
+    submitMock = jest.spyOn(EsaSubmitFormModule, 'submitTextToEsa').mockImplementation((): any => {
+      return new Promise((resolve, reject) => {
+        return reject(new Error("Internal Error"));
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.clearAllMocks();
+    
+    window.alert = originalWindowAlert;
+  });
+  
+  it('投稿後の内容が画面に正しく反映される', async () => {
+    const props: EsaSubmitFormProps = {
+      category: "",
+      title: "こんにちは",
+      tags: ["日報", "BigQuery"],
+      tagCandidates: [],
+      fetching: false,
+      onSubmit: () => { },
+    }
+    const { getByTitle, getByText, asFragment } = render(
+      <EsaSubmitForm {...props} />
+    );
+    const before = asFragment();
+
+    await waitFor(() => {
+      fireEvent.click(getByTitle("esa_submit_form_button"));
+    });
+
+    expect(submitMock).toBeCalledTimes(1);
+    expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
+    expect(alertMock).toBeCalledTimes(1);
+
+    // 変更に失敗したので、DOMに変わりはない
+    expect(asFragment()).toStrictEqual(before);
     expect(asFragment()).toMatchSnapshot();
   });
 });
