@@ -100,7 +100,6 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     expect(getByText("BigQuery")).toBeDefined();
     expect(getByText(modifiedTitle)).toBeDefined();
     expect(asFragment()).not.toStrictEqual(before);
-    expect(asFragment()).toMatchSnapshot();
   });
 });
 
