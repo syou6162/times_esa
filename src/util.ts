@@ -17,3 +17,5 @@ export const moveCursorToEnd = (
 export const makeDefaultEsaCategory = (date: Date): string => {
   return `日報/${format(date, 'yyyy/MM/dd')}`;
 };
+
+export const functionsRegion = 'asia-northeast1';

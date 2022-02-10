@@ -3,6 +3,8 @@ import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 const axiosBase = require('axios');
 
+const region = 'asia-northeast1';
+
 type EsaConfig = {
   teamName: string;
   accessToken: string;
@@ -142,7 +144,7 @@ function checkAuthTokenEmail(context: functions.https.CallableContext) {
   }
 }
 
-export const submitTextToEsa = functions.https.onCall(async (
+export const submitTextToEsa = functions.region(region).https.onCall(async (
   req,
   context: functions.https.CallableContext,
 ) => {
@@ -161,7 +163,7 @@ export const submitTextToEsa = functions.https.onCall(async (
   return result;
 });
 
-export const dailyReport = functions.https.onCall(async (
+export const dailyReport = functions.region(region).https.onCall(async (
   req,
   context: functions.https.CallableContext,
 ) => {
@@ -173,7 +175,7 @@ export const dailyReport = functions.https.onCall(async (
   return result;
 });
 
-export const tagList = functions.https.onCall(async (
+export const tagList = functions.region(region).https.onCall(async (
   req,
   context: functions.https.CallableContext,
 ) => {

@@ -6,7 +6,7 @@ import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/funct
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
-import { makeDefaultEsaCategory } from '../../util';
+import { makeDefaultEsaCategory, functionsRegion } from '../../util';
 
 export type EsaSubmitFormProps = {
   category: string;
@@ -78,6 +78,8 @@ export const submitTextToEsa = (
   text: string,
 ): Promise<HttpsCallableResult<submitTextToEsaResponseType>> => {
   const functions = getFunctions();
+  functions.region = functionsRegion;
+
   const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
     functions,
     'submitTextToEsa',
