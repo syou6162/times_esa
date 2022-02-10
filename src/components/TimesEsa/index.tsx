@@ -4,7 +4,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
-import { makeDefaultEsaCategory } from '../../util';
+import { functionsRegion, makeDefaultEsaCategory } from '../../util';
 
 export type Tag = {
   name: string;
@@ -66,6 +66,7 @@ const TimesEsa: React.FC<{}> = () => {
     setfetchErrorMessage('');
 
     const functions = getFunctions();
+    functions.region = functionsRegion;
     const getDailyReport = httpsCallable<dailyReportRequestType, dailyReportResponseType>(functions, 'dailyReport');
     // ローカルで試したいときはこれを使う
     // const functions = firebase.functions();
@@ -100,6 +101,8 @@ const TimesEsa: React.FC<{}> = () => {
     setfetchErrorMessage('');
 
     const functions = getFunctions();
+    functions.region = functionsRegion;
+
     const getTagList = httpsCallable<tagListRequestType, tagListResponseType>(functions, 'tagList');
     const data = getTagList();
 
