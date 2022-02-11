@@ -20,5 +20,4 @@ const SignInDialog: React.FC = () => {
   );
 };
 
-
 export default SignInDialog;
