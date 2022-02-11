@@ -121,6 +121,10 @@ const TimesEsa: React.FC<{}> = () => {
   useEffect(() => {
     loadDailyReport();
     loadTagList();
+
+    return () => {
+      setFetching(false); // To avoid memory leak
+    };
   }, []);
 
   return (
