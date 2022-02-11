@@ -27,7 +27,7 @@ const SignInDialog: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
+const Body: React.FC = () => {
   const [hasUserLanded, setHasUserLanded] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
@@ -41,15 +41,22 @@ const App: React.FC = () => {
         setHasUserLanded(true);
         return;
       }
-      setHasUserLanded(true);
       setIsSignedIn(true);
+      setHasUserLanded(true);
     });
   }, []);
 
+  if (isShowSignedInDialog()) {
+    return (<SignInDialog />);
+  }
+  return (<TimesEsa />);
+};
+
+const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        { isShowSignedInDialog() ? <SignInDialog /> : <TimesEsa /> }
+        <Body />
       </header>
     </div>
   );
