@@ -1,9 +1,13 @@
 import React from 'react';
 import { GoogleAuthProvider } from 'firebase/auth';
+import firebase from 'firebase/compat/app';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { firebaseAuth } from '../../firebase/index';
 
-const SignInDialog: React.FC = () => {
+export type SignInDialogProps = {
+  firebaseAuth: firebase.auth.Auth | null;
+}
+
+const SignInDialog: React.FC<SignInDialogProps> = (props: SignInDialogProps) => {
   const uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl: '/',
@@ -15,7 +19,7 @@ const SignInDialog: React.FC = () => {
   return (
     <div>
       ログインが必要です
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={props.firebaseAuth} />
     </div>
   );
 };

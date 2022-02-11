@@ -19,7 +19,11 @@ export const Body: React.FC<BodyProps> = (props: BodyProps) => {
   };
 
   if (isShowSignedInDialog()) {
-    return (<SignInDialog />);
+    return (
+      <SignInDialog
+        firebaseAuth={props.firebaseAuth}
+      />
+    );
   }
   if (props.hasUserLanded && props.isSignedIn && !isValidEmail(props.user.email)) {
     return (
