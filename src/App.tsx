@@ -195,14 +195,12 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Body
-          key={`times_esa_body_${hasUserLanded}_${isSignedIn}_${user}`}
-          hasUserLanded={hasUserLanded}
-          isSignedIn={isSignedIn}
-          user={user}
-        />
-      </header>
+      <Body
+        key={`times_esa_body_${hasUserLanded}_${isSignedIn}_${user}`}
+        hasUserLanded={hasUserLanded}
+        isSignedIn={isSignedIn}
+        user={user}
+      />
       <Footer
         isSignedIn={isSignedIn}
         user={user}
