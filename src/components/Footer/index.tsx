@@ -1,14 +1,16 @@
 import React from 'react';
+import firebase from 'firebase/compat/app';
 import WelcomeMessage from '../WelcomeMessage';
 import SignOutButton from '../SignOutButton';
 import { GoogleUser, isValidEmail } from '../../util';
 
-type FooterProps = {
+export type FooterProps = {
   isSignedIn: boolean;
   user: GoogleUser;
+  firebaseAuth: firebase.auth.Auth | null;
 }
 
-const Footer: React.FC<FooterProps> = (props: FooterProps) => {
+export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
   const hr = (
     <hr style={{
       borderTop: '2px dashed #bbb',
@@ -57,11 +59,11 @@ const Footer: React.FC<FooterProps> = (props: FooterProps) => {
         displayName={props.user.displayName}
         photoURL={props.user.photoURL}
       />
-      <SignOutButton />
+      <SignOutButton
+        firebaseAuth={props.firebaseAuth}
+      />
       {hr}
       {credit}
     </footer>
   );
 };
-
-export default Footer;

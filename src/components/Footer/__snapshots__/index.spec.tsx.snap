@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footerが正しく表示される invalidなユーザーでログインしている状態 1`] = `
+<DocumentFragment>
+  <footer>
+    <hr
+      style="border-top: 2px dashed #bbb; clear: both;"
+    />
+    <div>
+      <a
+        href="https://github.com/syou6162/times_esa"
+      >
+        times_esa
+      </a>
+       made by 
+      <a
+        href="https://twitter.com/syou6162"
+      >
+        Yasuhisa Yoshida
+      </a>
+      .
+    </div>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Footerが正しく表示される validなユーザーでログインしている状態 1`] = `
+<DocumentFragment>
+  <footer>
+    <hr
+      style="border-top: 2px dashed #bbb; clear: both;"
+    />
+    <div>
+      ようこそ valid (
+      <img
+        alt="valid"
+        height="20px"
+        src="valid"
+        title="valid@example.com"
+      />
+      valid@example.com) さん!
+    </div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Sign-out
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <hr
+      style="border-top: 2px dashed #bbb; clear: both;"
+    />
+    <div>
+      <a
+        href="https://github.com/syou6162/times_esa"
+      >
+        times_esa
+      </a>
+       made by 
+      <a
+        href="https://twitter.com/syou6162"
+      >
+        Yasuhisa Yoshida
+      </a>
+      .
+    </div>
+  </footer>
+</DocumentFragment>
+`;
+
+exports[`Footerが正しく表示される サインインしていない状態 1`] = `
+<DocumentFragment>
+  <footer>
+    <hr
+      style="border-top: 2px dashed #bbb; clear: both;"
+    />
+    <div>
+      <a
+        href="https://github.com/syou6162/times_esa"
+      >
+        times_esa
+      </a>
+       made by 
+      <a
+        href="https://twitter.com/syou6162"
+      >
+        Yasuhisa Yoshida
+      </a>
+      .
+    </div>
+  </footer>
+</DocumentFragment>
+`;

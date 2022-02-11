@@ -9,7 +9,7 @@ import { firebaseAuth } from './firebase/index';
 import TimesEsa from './components/TimesEsa';
 import SignInDialog from './components/SignInDialog';
 import WelcomeMessage from './components/WelcomeMessage';
-import Footer from './components/Footer';
+import { Footer } from './components/Footer';
 import SignOutButton from './components/SignOutButton';
 import { GoogleUser, isValidEmail } from './util';
 
@@ -38,7 +38,9 @@ const Body: React.FC<BodyProps> = (props: BodyProps) => {
         <div>
           Error: 有効なメールアドレスではありません。
         </div>
-        <SignOutButton />
+        <SignOutButton
+          firebaseAuth={firebaseAuth}
+        />
       </div>
     );
   }
@@ -89,6 +91,7 @@ const App: React.FC = () => {
       <Footer
         isSignedIn={isSignedIn}
         user={user}
+        firebaseAuth={firebaseAuth}
       />
     </div>
   );

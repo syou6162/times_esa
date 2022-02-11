@@ -1,15 +1,19 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { firebaseAuth } from '../../firebase/index';
+import firebase from 'firebase/compat/app';
 
-const SignOutButton: React.FC = () => {
+type SignOutButtonProps = {
+  firebaseAuth: firebase.auth.Auth | null;
+}
+
+const SignOutButton: React.FC<SignOutButtonProps> = (props: SignOutButtonProps) => {
   return (
     <Button
       type="button"
       variant="contained"
       color="primary"
       onClick={() => {
-        firebaseAuth.signOut();
+        props.firebaseAuth?.signOut();
         window.location.reload();
       }}
     >

@@ -26,6 +26,6 @@ export type GoogleUser = {
   photoURL: string;
 }
 
-export const isValidEmail = (email: string, validationEmail: string = (process.env.REACT_APP_VALID_MAIL_ADDRESSES || '')): boolean => {
-  return email === validationEmail;
+export const isValidEmail = (email: string): boolean => {
+  return email === process.env.REACT_APP_VALID_MAIL_ADDRESSES;
 };
