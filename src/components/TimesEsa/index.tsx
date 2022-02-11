@@ -37,7 +37,11 @@ const getPostsCount = (md: string): number => {
   return md.split('---').length - 1;
 };
 
-const TimesEsa: React.FC<{}> = () => {
+type TimesEsaProps = {
+  canFetchCloudFunctionEndpoints: boolean;
+};
+
+const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   const [fetching, setFetching] = useState(false);
   const [fetchErrorMessage, setfetchErrorMessage] = useState<string>('');
 
@@ -119,8 +123,14 @@ const TimesEsa: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    loadDailyReport();
-    loadTagList();
+    if (props.canFetchCloudFunctionEndpoints) {
+      loadDailyReport();
+      loadTagList();
+    }
+
+    return () => {
+      setFetching(false); // To avoid memory leak
+    };
   }, []);
 
   return (
