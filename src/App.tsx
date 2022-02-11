@@ -49,7 +49,12 @@ const Body: React.FC = () => {
   if (isShowSignedInDialog()) {
     return (<SignInDialog />);
   }
-  return (<TimesEsa />);
+  return (
+    <TimesEsa
+      key={`canFetchCloudFunctionEndpoints_${isSignedIn}`}
+      canFetchCloudFunctionEndpoints={isSignedIn}
+    />
+  );
 };
 
 const App: React.FC = () => {
