@@ -6,51 +6,9 @@ import {
 } from 'firebase/auth';
 import 'firebase/compat/auth';
 import { firebaseAuth } from './firebase/index';
-import TimesEsa from './components/TimesEsa';
-import SignInDialog from './components/SignInDialog';
-import WelcomeMessage from './components/WelcomeMessage';
+import { Body } from './components/Body';
 import { Footer } from './components/Footer';
-import SignOutButton from './components/SignOutButton';
-import { GoogleUser, isValidEmail } from './util';
-
-type BodyProps = {
-  hasUserLanded: boolean;
-  isSignedIn: boolean;
-  user: GoogleUser;
-}
-
-const Body: React.FC<BodyProps> = (props: BodyProps) => {
-  const isShowSignedInDialog = (): boolean => {
-    return props.hasUserLanded && !props.isSignedIn;
-  };
-
-  if (isShowSignedInDialog()) {
-    return (<SignInDialog />);
-  }
-  if (props.hasUserLanded && props.isSignedIn && !isValidEmail(props.user.email)) {
-    return (
-      <div>
-        <WelcomeMessage
-          email={props.user.email}
-          displayName={props.user.displayName}
-          photoURL={props.user.photoURL}
-        />
-        <div>
-          Error: 有効なメールアドレスではありません。
-        </div>
-        <SignOutButton
-          firebaseAuth={firebaseAuth}
-        />
-      </div>
-    );
-  }
-  return (
-    <TimesEsa
-      key={`canFetchCloudFunctionEndpoints_${props.isSignedIn}`}
-      canFetchCloudFunctionEndpoints={props.isSignedIn}
-    />
-  );
-};
+import { GoogleUser } from './util';
 
 const App: React.FC = () => {
   // firebaseのonAuthStateChangedを通過したか
@@ -87,6 +45,7 @@ const App: React.FC = () => {
         hasUserLanded={hasUserLanded}
         isSignedIn={isSignedIn}
         user={user}
+        firebaseAuth={firebaseAuth}
       />
       <Footer
         isSignedIn={isSignedIn}
