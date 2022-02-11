@@ -3,66 +3,55 @@ import './App.css';
 
 import {
   onAuthStateChanged,
-  GoogleAuthProvider,
 } from 'firebase/auth';
 import 'firebase/compat/auth';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { firebaseAuth } from './firebase/index';
-import TimesEsa from './components/TimesEsa';
+import { Body } from './components/Body';
+import { Footer } from './components/Footer';
+import { GoogleUser } from './util';
 
-const SignInDialog: React.FC = () => {
-  const uiConfig = {
-    signInFlow: 'popup',
-    signInSuccessUrl: '/',
-    signInOptions: [
-      GoogleAuthProvider.PROVIDER_ID,
-    ],
-  };
-
-  return (
-    <div>
-      ログインが必要です
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
-    </div>
-  );
-};
-
-const Body: React.FC = () => {
+const App: React.FC = () => {
+  // firebaseのonAuthStateChangedを通過したか
   const [hasUserLanded, setHasUserLanded] = useState(false);
+  // (validかどうにかに関わらず)ユーザーがサインインしたいか
   const [isSignedIn, setIsSignedIn] = useState(false);
-
-  const isShowSignedInDialog = (): boolean => {
-    return hasUserLanded && !isSignedIn;
-  };
+  const [user, setUser] = useState<GoogleUser>({
+    email: '',
+    displayName: '',
+    photoURL: '',
+  });
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
-      if (!user || (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES)) {
+    onAuthStateChanged(firebaseAuth, (user_) => {
+      if (!user_) {
         setHasUserLanded(true);
         return;
       }
+      const u: GoogleUser = {
+        email: user_.email || '',
+        displayName: user_.displayName || '',
+        photoURL: user_.photoURL || '',
+      };
+      setUser(u);
       setIsSignedIn(true);
       setHasUserLanded(true);
     });
   }, []);
 
-  if (isShowSignedInDialog()) {
-    return (<SignInDialog />);
-  }
-  return (
-    <TimesEsa
-      key={`canFetchCloudFunctionEndpoints_${isSignedIn}`}
-      canFetchCloudFunctionEndpoints={isSignedIn}
-    />
-  );
-};
-
-const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <Body />
-      </header>
+      <Body
+        key={`times_esa_body_${hasUserLanded}_${isSignedIn}_${user}`}
+        hasUserLanded={hasUserLanded}
+        isSignedIn={isSignedIn}
+        user={user}
+        firebaseAuth={firebaseAuth}
+      />
+      <Footer
+        isSignedIn={isSignedIn}
+        user={user}
+        firebaseAuth={firebaseAuth}
+      />
     </div>
   );
 };
