@@ -10,9 +10,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { firebaseAuth } from './firebase/index';
 import TimesEsa from './components/TimesEsa';
 
-const App: React.FC = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
+const SignInDialog: React.FC = () => {
   const uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl: '/',
@@ -21,10 +19,29 @@ const App: React.FC = () => {
     ],
   };
 
+  return (
+    <div>
+      ログインが必要です
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  const [hasUserLanded, setHasUserLanded] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const isShowSignedInDialog = (): boolean => {
+    return hasUserLanded && !isSignedIn;
+  };
+
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
-      if (!user) return;
-      if (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES) return;
+      if (!user || (user.email !== process.env.REACT_APP_VALID_MAIL_ADDRESSES)) {
+        setHasUserLanded(true);
+        return;
+      }
+      setHasUserLanded(true);
       setIsSignedIn(true);
     });
   }, []);
@@ -32,13 +49,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        { !isSignedIn ? (
-          <div>
-            ログインが必要です
-            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
-          </div>
-        )
-          : <TimesEsa />}
+        { isShowSignedInDialog() ? <SignInDialog /> : <TimesEsa /> }
       </header>
     </div>
   );
