@@ -43,7 +43,7 @@
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.1.1",
     "@types/jest": "27.4.1",
-    "@types/react": "17.0.44",
+    "@types/react": "18.0.8",
     "@types/react-copy-to-clipboard": "5.0.2",
     "@types/react-dom": "17.0.15",
     "@typescript-eslint/eslint-plugin": "5.20.0",
