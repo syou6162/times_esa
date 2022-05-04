@@ -93,7 +93,6 @@ async function createOrUpdatePost(
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
     }).catch((err: AxiosError<EsaErrorResponse>) => {
-      err.response?.statusText
       throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
