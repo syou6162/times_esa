@@ -45,12 +45,12 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     const { getByTitle, asFragment } = render(
       <EsaSubmitForm {...props} />
     );
+    fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      fireEvent.click(getByTitle("esa_submit_form_button"));
+      expect(submitMock).toBeCalledTimes(0);
+      expect(asFragment()).toMatchSnapshot();
     });
-    expect(submitMock).toBeCalledTimes(0);
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('投稿する日時とcategory名の日時が一致していないとボタンが押せない', async () => {
@@ -66,12 +66,12 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     const { getByTitle, asFragment } = render(
       <EsaSubmitForm {...props} />
     );
+    fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      fireEvent.click(getByTitle("esa_submit_form_button"));
+      expect(submitMock).toBeCalledTimes(0);
+      expect(asFragment()).toMatchSnapshot();
     });
-    expect(submitMock).toBeCalledTimes(0);
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('投稿後の内容が画面に正しく反映される', async () => {
@@ -91,15 +91,15 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     expect(asFragment()).toMatchSnapshot();
     const before = asFragment();
     
-    await waitFor(() => {
-      fireEvent.click(getByTitle("esa_submit_form_button"));
-    });
+    fireEvent.click(getByTitle("esa_submit_form_button"));
 
-    expect(submitMock).toBeCalledTimes(1);
-    expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
-    expect(getByText("BigQuery")).toBeDefined();
-    expect(getByText(modifiedTitle)).toBeDefined();
-    expect(asFragment()).not.toStrictEqual(before);
+    await waitFor(() => {
+      expect(submitMock).toBeCalledTimes(1);
+      expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
+      expect(getByText("BigQuery")).toBeDefined();
+      expect(getByText(modifiedTitle)).toBeDefined();
+      expect(asFragment()).not.toStrictEqual(before);
+    });
   });
 });
 
@@ -141,16 +141,16 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
     );
     const before = asFragment();
 
+    fireEvent.click(getByTitle("esa_submit_form_button"));
+
     await waitFor(() => {
-      fireEvent.click(getByTitle("esa_submit_form_button"));
+      expect(submitMock).toBeCalledTimes(1);
+      expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
+      expect(alertMock).toBeCalledTimes(1);
+
+      // 変更に失敗したので、DOMに変わりはない
+      expect(asFragment()).toStrictEqual(before);
+      expect(asFragment()).toMatchSnapshot();
     });
-
-    expect(submitMock).toBeCalledTimes(1);
-    expect(submitMock.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)]);
-    expect(alertMock).toBeCalledTimes(1);
-
-    // 変更に失敗したので、DOMに変わりはない
-    expect(asFragment()).toStrictEqual(before);
-    expect(asFragment()).toMatchSnapshot();
   });
 });
