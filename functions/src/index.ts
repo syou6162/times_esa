@@ -52,6 +52,12 @@ export type EsaTags = {
   tags: Tag[]
 }
 
+// ref: https://docs.esa.io/posts/102#%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9
+type EsaErrorResponse = {
+  error: string;
+  message: string;
+}
+
 function transformTitle(oldTitle: string, newTitle: string): string {
   const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))));
   if (JSON.stringify(result) === JSON.stringify(['日報'])) {
@@ -86,7 +92,8 @@ async function createOrUpdatePost(
       },
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
-    }).catch((err: AxiosError) => {
+    }).catch((err: AxiosError<EsaErrorResponse>) => {
+      err.response?.statusText
       throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
@@ -102,7 +109,7 @@ async function createOrUpdatePost(
       },
     }).then((res: AxiosResponse<EsaPost>) => {
       return res.data;
-    }).catch((err: AxiosError) => {
+    }).catch((err: AxiosError<EsaErrorResponse>) => {
       throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
