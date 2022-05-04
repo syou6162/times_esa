@@ -3,7 +3,7 @@ name: Firebase Cloud Function部分の確認
 on: [push]
 
 jobs:
-  check_firebase_hosting:
+  check_firebase_cloud_function:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
