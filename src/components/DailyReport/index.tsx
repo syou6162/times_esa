@@ -91,7 +91,7 @@ const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportSha
   );
 };
 
-type DailyReportProps = {
+export type DailyReportProps = {
   fetching: boolean;
   fetchErrorMessage: string;
 
@@ -110,7 +110,7 @@ enum DailyReportType {
   SHARE = 'SHARE',
 }
 
-const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
+export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   const [dailyReportType, setDailyReportType] = useState<DailyReportType>(DailyReportType.HTML);
 
   const getDailyReportByType = (t: DailyReportType) => {
