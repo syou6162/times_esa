@@ -41,4 +41,25 @@ describe('DailyReportが正しく表示される', () => {
       expect(renderResult.queryByText("hello world")).toBeNull();
     });
   });
+  
+  it('tweetをクリックするとtweet用の画面が表示される', async () => {
+    const props: DailyReportProps = {
+      fetching: false,
+      fetchErrorMessage: "",
+
+      esaText: "12:34 RAW TEXT\n\n---\n\n13:15 hoge\n\n---",
+      esaHtml: "<span>hello world!<span>",
+      reloadDailyReport: () => { }
+    }
+    const renderResult = render(
+      <DailyReport {...props} />
+    );
+
+    fireEvent.click(renderResult.getByText("tweet"));
+    await waitFor(() => {
+      expect(renderResult.asFragment()).toMatchSnapshot();
+      expect(renderResult.getAllByText("コピーする")).toHaveLength(2);
+      expect(renderResult.queryByText("hello world")).toBeNull();
+    });
+  });
 }); 
