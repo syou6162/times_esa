@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-type CopyButtonProps = {
+export type CopyButtonProps = {
   text: string;
 };
 
