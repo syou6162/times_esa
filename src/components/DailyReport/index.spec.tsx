@@ -42,7 +42,7 @@ describe('DailyReportが正しく表示される', () => {
     });
   });
   
-  it('tweetをクリックするとtweet用の画面が表示される', async () => {
+  it('shareをクリックすると共有用の画面が表示される', async () => {
     const props: DailyReportProps = {
       fetching: false,
       fetchErrorMessage: "",
