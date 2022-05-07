@@ -232,7 +232,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         <span
           class="MuiButton-label"
         >
-          tweet
+          share
         </span>
         <span
           class="MuiTouchRipple-root"
