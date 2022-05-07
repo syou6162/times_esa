@@ -286,9 +286,6 @@ exports[`Bodyが正しく表示される firebaseの認証を通過していな�
 <DocumentFragment>
   <div>
     ログインが必要です
-    <div
-      id="firebaseui_container"
-    />
   </div>
 </DocumentFragment>
 `;
