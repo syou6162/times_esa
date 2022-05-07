@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from 'firebase/compat/app';
+import { Auth } from 'firebase/auth';
 import { GoogleUser, isValidEmail } from '../../util';
 import TimesEsa from '../TimesEsa';
 import SignInDialog from '../SignInDialog';
@@ -10,7 +10,7 @@ export type BodyProps = {
   hasUserLanded: boolean;
   isSignedIn: boolean;
   user: GoogleUser;
-  firebaseAuth: firebase.auth.Auth | null;
+  firebaseAuth: Auth | null;
 }
 
 export const Body: React.FC<BodyProps> = (props: BodyProps) => {
