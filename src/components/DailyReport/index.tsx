@@ -144,7 +144,7 @@ const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTwe
   );
 };
 
-type DailyReportProps = {
+export type DailyReportProps = {
   fetching: boolean;
   fetchErrorMessage: string;
 
@@ -163,7 +163,7 @@ enum DailyReportType {
   TWEET = 'TWEET',
 }
 
-const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
+export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   const [dailyReportType, setDailyReportType] = useState<DailyReportType>(DailyReportType.HTML);
 
   const getDailyReportByType = (t: DailyReportType) => {

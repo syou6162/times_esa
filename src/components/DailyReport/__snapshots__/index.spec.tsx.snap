@@ -1,0 +1,309 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DailyReportが正しく表示される textをクリックするとtextが表示される 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Update
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        html
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        text
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        tweet
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <div>
+      <div
+        style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+      >
+        RAW TEXT
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`DailyReportが正しく表示される tweetをクリックするとtweet用の画面が表示される 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Update
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        html
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        text
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        tweet
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <div>
+      <div>
+        <div>
+          <div
+            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+          >
+            12:34 RAW TEXT
+          </div>
+          <div>
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              href="https://twitter.com/intent/tweet?text=RAW%20TEXT"
+              style="margin: 5px; text-transform: none; float: right;"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Tweetする
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              style="margin: 5px; text-transform: none; float: right;"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                コピーする
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <hr
+            style="clear: both;"
+          />
+        </div>
+        <div>
+          <div
+            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+          >
+            13:15 hoge
+          </div>
+          <div>
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              href="https://twitter.com/intent/tweet?text=hoge"
+              style="margin: 5px; text-transform: none; float: right;"
+              tabindex="0"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Tweetする
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              style="margin: 5px; text-transform: none; float: right;"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                コピーする
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <hr
+            style="clear: both;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`DailyReportが正しく表示される ディフォルトではhtmlが表示される 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Update
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        html
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        text
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        tweet
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <div>
+      <div
+        style="white-space: normal; overflow: hidden; text-align: left; justify-content: left; align-items: left;"
+      >
+        <span>
+          HTML TEXT
+          <span />
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
