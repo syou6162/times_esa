@@ -4,7 +4,6 @@ import './App.css';
 import {
   onAuthStateChanged,
 } from 'firebase/auth';
-import 'firebase/compat/auth';
 import { firebaseAuth } from './firebase/index';
 import { Body } from './components/Body';
 import { Footer } from './components/Footer';
