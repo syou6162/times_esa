@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import firebase from 'firebase/compat/app';
+import { Auth } from 'firebase/auth';
 
 type SignOutButtonProps = {
-  firebaseAuth: firebase.auth.Auth | null;
+  firebaseAuth: Auth | null;
 }
 
 const SignOutButton: React.FC<SignOutButtonProps> = (props: SignOutButtonProps) => {
