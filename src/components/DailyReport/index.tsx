@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyButton } from './share_button/copy_button';
+import { TweetButton } from './share_button/tweet_button';
 
 type DailyReportHtmlProps = {
   esaHtml: string;
@@ -41,65 +42,11 @@ const DailyReportText: React.FC<DailyReportTextProps> = (props: DailyReportTextP
   );
 };
 
-type CopyButtonProps = {
-  text: string;
-};
-
-const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) => {
-  const [isCopied, setIsCopied] = useState(false);
-
-  return (
-    <CopyToClipboard
-      text={props.text}
-      onCopy={() => {
-        setIsCopied(true);
-        setTimeout(() => {
-          setIsCopied(false);
-        }, 2000);
-      }}
-    >
-      <Button
-        style={{
-          margin: '5px',
-          textTransform: 'none',
-          float: 'right',
-        }}
-        variant="contained"
-        color={isCopied ? 'secondary' : 'primary'}
-      >
-        {isCopied ? 'コピーしました!' : 'コピーする'}
-      </Button>
-    </CopyToClipboard>
-  );
-};
-
-type TweetButtonProps = {
-  text: string;
-};
-
-const TweetButton: React.FC<TweetButtonProps> = (props: TweetButtonProps) => {
-  const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(props.text)}`;
-  return (
-    <Button
-      style={{
-        margin: '5px',
-        textTransform: 'none',
-        float: 'right',
-      }}
-      variant="contained"
-      color="primary"
-      href={tweet}
-    >
-      Tweetする
-    </Button>
-  );
-};
-
-type DailyReportTweetProps = {
+type DailyReportShareProps = {
   esaText: string;
 }
 
-const DailyReportTweet: React.FC<DailyReportTweetProps> = (props: DailyReportTweetProps) => {
+const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportShareProps) => {
   const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n').split('\n---\n\n').slice(0, -1).map((t) => {
     const regex = /^(?<time>\d\d:\d\d)?\s?(?<tweet>[\s\S]*?)\s?$/;
     const match = t.match(regex);
@@ -160,7 +107,7 @@ enum DailyReportType {
   // eslint-disable-next-line no-unused-vars
   TEXT = 'TEXT',
   // eslint-disable-next-line no-unused-vars
-  TWEET = 'TWEET',
+  SHARE = 'SHARE',
 }
 
 export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
@@ -172,8 +119,8 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
         return (<DailyReportText esaText={props.esaText} />);
       case DailyReportType.HTML:
         return (<DailyReportHtml esaHtml={props.esaHtml} />);
-      case DailyReportType.TWEET:
-        return (<DailyReportTweet esaText={props.esaText} />);
+      case DailyReportType.SHARE:
+        return (<DailyReportShare esaText={props.esaText} />);
       default:
         return (<DailyReportHtml esaHtml={props.esaHtml} />);
     }
@@ -219,7 +166,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
       </Button>
       { getDailyReportTypeButton('html', DailyReportType.HTML) }
       { getDailyReportTypeButton('text', DailyReportType.TEXT) }
-      { getDailyReportTypeButton('tweet', DailyReportType.TWEET) }
+      { getDailyReportTypeButton('share', DailyReportType.SHARE) }
       { /* eslint no-nested-ternary: 0 */ }
       <div>
         { getDailyReport() }

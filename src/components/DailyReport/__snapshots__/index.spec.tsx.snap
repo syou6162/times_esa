@@ -57,7 +57,7 @@ exports[`DailyReportが正しく表示される textをクリックするとtext
       <span
         class="MuiButton-label"
       >
-        tweet
+        share
       </span>
       <span
         class="MuiTouchRipple-root"
@@ -131,7 +131,7 @@ exports[`DailyReportが正しく表示される tweetをクリックするとtwe
       <span
         class="MuiButton-label"
       >
-        tweet
+        share
       </span>
       <span
         class="MuiTouchRipple-root"
@@ -288,7 +288,7 @@ exports[`DailyReportが正しく表示される ディフォルトではhtmlが�
       <span
         class="MuiButton-label"
       >
-        tweet
+        share
       </span>
       <span
         class="MuiTouchRipple-root"

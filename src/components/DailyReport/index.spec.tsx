@@ -42,7 +42,7 @@ describe('DailyReportが正しく表示される', () => {
     });
   });
   
-  it('tweetをクリックするとtweet用の画面が表示される', async () => {
+  it('shareをクリックすると共有用の画面が表示される', async () => {
     const props: DailyReportProps = {
       fetching: false,
       fetchErrorMessage: "",
@@ -55,7 +55,7 @@ describe('DailyReportが正しく表示される', () => {
       <DailyReport {...props} />
     );
 
-    fireEvent.click(renderResult.getByText("tweet"));
+    fireEvent.click(renderResult.getByText("share"));
     await waitFor(() => {
       expect(renderResult.asFragment()).toMatchSnapshot();
       expect(renderResult.getAllByText("コピーする")).toHaveLength(2);
