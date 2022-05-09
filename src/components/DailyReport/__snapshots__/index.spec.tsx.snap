@@ -1,80 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DailyReportが正しく表示される textをクリックするとtextが表示される 1`] = `
-<DocumentFragment>
-  <div>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        Update
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        html
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        text
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        share
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
-    <div>
-      <div
-        style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
-      >
-        RAW TEXT
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`DailyReportが正しく表示される tweetをクリックするとtweet用の画面が表示される 1`] = `
+exports[`DailyReportが正しく表示される shareをクリックすると共有用の画面が表示される 1`] = `
 <DocumentFragment>
   <div>
     <button
@@ -225,6 +151,80 @@ exports[`DailyReportが正しく表示される tweetをクリックするとtwe
             style="clear: both;"
           />
         </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`DailyReportが正しく表示される textをクリックするとtextが表示される 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Update
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        html
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        text
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      style="margin: 3px; text-transform: none;"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        share
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <div>
+      <div
+        style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+      >
+        RAW TEXT
       </div>
     </div>
   </div>
