@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import DailyReport from '../DailyReport';

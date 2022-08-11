@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export type CopyButtonProps = {

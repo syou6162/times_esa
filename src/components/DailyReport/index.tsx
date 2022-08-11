@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
 

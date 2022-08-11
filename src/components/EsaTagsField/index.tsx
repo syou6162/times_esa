@@ -1,7 +1,11 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails, AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
+import { TextField } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import Autocomplete, {
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
+  AutocompleteRenderInputParams,
+} from '@mui/material/Autocomplete';
 
 export type EsaTagsFieldProps = {
   sending: boolean;
