@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@jest/globals": "^28.1.3",
     "@material-ui/core": "4.12.4",
     "@material-ui/lab": "4.0.0-alpha.61",
     "date-fns": "2.29.1",
