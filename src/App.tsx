@@ -46,6 +46,9 @@ const App: React.FC = () => {
       secondary: {
         main: '#e0e0e0',
       },
+      success: {
+        main: '#c51162',
+      },
     },
   });
 

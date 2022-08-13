@@ -26,7 +26,7 @@ export const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) =>
           float: 'right',
         }}
         variant="contained"
-        color={isCopied ? 'secondary' : 'primary'}
+        color={isCopied ? 'success' : 'primary'}
       >
         {isCopied ? 'コピーしました!' : 'コピーする'}
       </Button>
