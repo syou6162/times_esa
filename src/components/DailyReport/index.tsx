@@ -134,6 +134,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
           textTransform: 'none',
         }}
         variant="contained"
+        color="secondary"
         size="small"
         onClick={() => { setDailyReportType(t); }}
       >
@@ -160,6 +161,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
         }}
         variant="contained"
         size="small"
+        color="secondary"
         onClick={props.reloadDailyReport}
       >
         Update
