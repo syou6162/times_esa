@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { outlinedInputClasses, TextField } from '@mui/material';
+import { styled } from '@mui/system';
 
 import { moveCursorToEnd } from '../../util';
 
@@ -12,37 +12,28 @@ type EsaTitleFieldProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-const useStyles = makeStyles(() => {
-  return ({
-    multilineColor: {
-      color: 'white',
-    },
-    notchedOutline: {
-      borderWidth: '1px',
-      margin: '10px',
-      borderColor: 'white',
-    },
-  });
+const TitleTextField = styled(TextField)({
+  [`& .${outlinedInputClasses.input}`]: {
+    color: 'white',
+  },
+  [`& .${outlinedInputClasses.notchedOutline}`]: {
+    borderWidth: '1px',
+    margin: '10px',
+    borderColor: 'white',
+  },
 });
 
 const EsaTitleField: React.FC<EsaTitleFieldProps> = (props: EsaTitleFieldProps) => {
-  const classes = useStyles();
   return (
-    <TextField
+    <TitleTextField
       fullWidth
       multiline
       maxRows={3}
       required
       placeholder="日報のタイトルを記入しましょう"
       variant="outlined"
-      InputProps={{
-        classes: {
-          root: classes.multilineColor,
-          notchedOutline: classes.notchedOutline,
-        },
-        disabled: props.sending || props.fetching,
-      }}
       value={props.title}
+      disabled={props.sending || props.fetching}
       onChange={props.onChange}
       onFocus={moveCursorToEnd}
     />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export type CopyButtonProps = {
@@ -26,7 +26,7 @@ export const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) =>
           float: 'right',
         }}
         variant="contained"
-        color={isCopied ? 'secondary' : 'primary'}
+        color={isCopied ? 'success' : 'primary'}
       >
         {isCopied ? 'コピーしました!' : 'コピーする'}
       </Button>

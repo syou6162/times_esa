@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
 
@@ -134,6 +134,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
           textTransform: 'none',
         }}
         variant="contained"
+        color="secondary"
         size="small"
         onClick={() => { setDailyReportType(t); }}
       >
@@ -160,6 +161,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
         }}
         variant="contained"
         size="small"
+        color="secondary"
         onClick={props.reloadDailyReport}
       >
         Update

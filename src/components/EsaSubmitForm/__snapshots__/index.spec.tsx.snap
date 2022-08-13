@@ -4,38 +4,38 @@ exports[`times_esaのフォームが正しく機能する(正常系) 不正な�
 <DocumentFragment>
   <form>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-1 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r0:"
           placeholder="日報のタイトルを記入しましょう"
           required=""
-          rows="1"
           style="height: 0px; overflow: hidden;"
         >
           にっぽー
         </textarea>
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-2"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-4"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -43,67 +43,38 @@ exports[`times_esaのフォームが正しく機能する(正常系) 不正な�
       </div>
     </div>
     <div
-      aria-expanded="false"
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon"
-      role="combobox"
+      class="MuiAutocomplete-root css-16awh2u-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-7 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-autocomplete="list"
+            aria-expanded="false"
             aria-invalid="false"
             autocapitalize="none"
             autocomplete="off"
-            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
             id="esa_tags_field"
             placeholder="タグを記入しましょう"
+            role="combobox"
             spellcheck="false"
             type="text"
             value=""
           />
-          <div
-            class="MuiAutocomplete-endAdornment"
-          >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <span
-                class="MuiIconButton-label"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-8"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-4"
-              style="width: 0.01px;"
+              class="css-hdw1oc"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -112,35 +83,35 @@ exports[`times_esaのフォームが正しく機能する(正常系) 不正な�
       </div>
     </div>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-9 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r3:"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
-          rows="6"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-10"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-4"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -148,17 +119,13 @@ exports[`times_esaのフォームが正しく機能する(正常系) 不正な�
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+      class="MuiButtonBase-root Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
       disabled=""
       tabindex="-1"
       title="esa_submit_form_button"
       type="submit"
     >
-      <span
-        class="MuiButton-label"
-      >
-        つぶやく
-      </span>
+      つぶやく
     </button>
   </form>
 </DocumentFragment>
@@ -168,38 +135,38 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿す�
 <DocumentFragment>
   <form>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-11 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r4:"
           placeholder="日報のタイトルを記入しましょう"
           required=""
-          rows="1"
           style="height: 0px; overflow: hidden;"
         >
           にっぽー
         </textarea>
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-13 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-12"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-14"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -207,67 +174,38 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿す�
       </div>
     </div>
     <div
-      aria-expanded="false"
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon"
-      role="combobox"
+      class="MuiAutocomplete-root css-16awh2u-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-17 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-autocomplete="list"
+            aria-expanded="false"
             aria-invalid="false"
             autocapitalize="none"
             autocomplete="off"
-            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
             id="esa_tags_field"
             placeholder="タグを記入しましょう"
+            role="combobox"
             spellcheck="false"
             type="text"
             value=""
           />
-          <div
-            class="MuiAutocomplete-endAdornment"
-          >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <span
-                class="MuiIconButton-label"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-13 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-18"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-14"
-              style="width: 0.01px;"
+              class="css-hdw1oc"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -276,35 +214,35 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿す�
       </div>
     </div>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-19 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r7:"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
-          rows="6"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-13 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-20"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-14"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -312,17 +250,13 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿す�
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+      class="MuiButtonBase-root Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
       disabled=""
       tabindex="-1"
       title="esa_submit_form_button"
       type="submit"
     >
-      <span
-        class="MuiButton-label"
-      >
-        つぶやく
-      </span>
+      つぶやく
     </button>
   </form>
 </DocumentFragment>
@@ -332,38 +266,38 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
 <DocumentFragment>
   <form>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-21 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r8:"
           placeholder="日報のタイトルを記入しましょう"
           required=""
-          rows="1"
           style="height: 0px; overflow: hidden;"
         >
           こんにちは
         </textarea>
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-23 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-22"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-24"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -371,30 +305,29 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
       </div>
     </div>
     <div
-      aria-expanded="false"
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon"
-      role="combobox"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-16awh2u-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-27 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
-            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
             data-tag-index="0"
             role="button"
             tabindex="-1"
           >
             <span
-              class="MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
             >
               日報
             </span>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+              data-testid="CancelIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -404,19 +337,20 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
             </svg>
           </div>
           <div
-            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
             data-tag-index="1"
             role="button"
             tabindex="-1"
           >
             <span
-              class="MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
             >
               BigQuery
             </span>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+              data-testid="CancelIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -427,55 +361,54 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
           </div>
           <input
             aria-autocomplete="list"
+            aria-expanded="false"
             aria-invalid="false"
             autocapitalize="none"
             autocomplete="off"
-            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedStart MuiOutlinedInput-inputAdornedStart MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-152mnda-MuiInputBase-input-MuiOutlinedInput-input"
             id="esa_tags_field"
             placeholder="タグを記入しましょう"
+            role="combobox"
             spellcheck="false"
             type="text"
             value=""
           />
           <div
-            class="MuiAutocomplete-endAdornment"
+            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
               aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
               tabindex="-1"
               title="Clear"
               type="button"
             >
-              <span
-                class="MuiIconButton-label"
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="CloseIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
               <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </div>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-23 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-28"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-24"
-              style="width: 0.01px;"
+              class="css-hdw1oc"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -484,35 +417,35 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
       </div>
     </div>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-29 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":rb:"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
-          rows="6"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-23 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-30"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-24"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -520,18 +453,14 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       title="esa_submit_form_button"
       type="submit"
     >
+      つぶやく
       <span
-        class="MuiButton-label"
-      >
-        つぶやく
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
   </form>
@@ -542,38 +471,38 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
 <DocumentFragment>
   <form>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-31 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":rc:"
           placeholder="日報のタイトルを記入しましょう"
           required=""
-          rows="1"
           style="height: 0px; overflow: hidden;"
         >
           こんにちは
         </textarea>
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-33 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-32"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-34"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -581,30 +510,29 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
       </div>
     </div>
     <div
-      aria-expanded="false"
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon"
-      role="combobox"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-16awh2u-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-37 MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
-            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
             data-tag-index="0"
             role="button"
             tabindex="-1"
           >
             <span
-              class="MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
             >
               日報
             </span>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+              data-testid="CancelIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -614,19 +542,20 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
             </svg>
           </div>
           <div
-            class="MuiChip-root MuiAutocomplete-tag MuiChip-deletable"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
             data-tag-index="1"
             role="button"
             tabindex="-1"
           >
             <span
-              class="MuiChip-label"
+              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
             >
               BigQuery
             </span>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiChip-deleteIcon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+              data-testid="CancelIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -637,55 +566,54 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
           </div>
           <input
             aria-autocomplete="list"
+            aria-expanded="false"
             aria-invalid="false"
             autocapitalize="none"
             autocomplete="off"
-            class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedStart MuiOutlinedInput-inputAdornedStart MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-152mnda-MuiInputBase-input-MuiOutlinedInput-input"
             id="esa_tags_field"
             placeholder="タグを記入しましょう"
+            role="combobox"
             spellcheck="false"
             type="text"
             value=""
           />
           <div
-            class="MuiAutocomplete-endAdornment"
+            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
               aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
               tabindex="-1"
               title="Clear"
               type="button"
             >
-              <span
-                class="MuiIconButton-label"
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="CloseIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
               <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </div>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-33 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-38"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-34"
-              style="width: 0.01px;"
+              class="css-hdw1oc"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -694,35 +622,35 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
       </div>
     </div>
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1os9qaz-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-39 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":rf:"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
-          rows="6"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-33 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-40"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-34"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -730,18 +658,14 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       title="esa_submit_form_button"
       type="submit"
     >
+      つぶやく
       <span
-        class="MuiButton-label"
-      >
-        つぶやく
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
   </form>

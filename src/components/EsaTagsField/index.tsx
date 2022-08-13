@@ -1,7 +1,12 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Autocomplete, { AutocompleteChangeReason, AutocompleteChangeDetails, AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
+import { TextField } from '@mui/material';
+import { styled } from '@mui/system';
+import Autocomplete, {
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
+  AutocompleteRenderInputParams,
+} from '@mui/material/Autocomplete';
+import Chip from '@mui/material/Chip';
 
 export type EsaTagsFieldProps = {
   sending: boolean;
@@ -20,21 +25,18 @@ export type EsaTagsFieldProps = {
   ) => void;
 };
 
-const useStyles = makeStyles(() => {
-  return ({
-    multilineColor: {
-      color: 'white',
-    },
-    notchedOutline: {
-      borderWidth: '1px',
-      margin: '9px',
-      borderColor: 'white',
-    },
-  });
+const TagTextField = styled(TextField)({
+  '& .MuiOutlinedInput-input': {
+    color: 'white',
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderWidth: '1px',
+    margin: '9px',
+    borderColor: 'white',
+  },
 });
 
 export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => {
-  const classes = useStyles();
   return (
     <Autocomplete
       id="esa_tags_field"
@@ -46,7 +48,7 @@ export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldPro
       /* eslint-disable no-unused-vars, react/jsx-props-no-spreading */
       renderInput={(params: AutocompleteRenderInputParams) => {
         return (
-          <TextField
+          <TagTextField
             {...params}
             variant="outlined"
             fullWidth
@@ -56,14 +58,20 @@ export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldPro
               className: params.InputProps.className,
               startAdornment: params.InputProps.startAdornment,
               endAdornment: params.InputProps.endAdornment,
-              // 独自の設定
-              classes: {
-                root: classes.multilineColor,
-                notchedOutline: classes.notchedOutline,
-              },
             }}
           />
         );
+      }}
+      renderTags={(tagValue, getTagProps) => {
+        return tagValue.map((tag, index) => {
+          return (
+            <Chip
+              label={tag}
+              color="secondary"
+              {...getTagProps({ index })}
+            />
+          );
+        });
       }}
       disabled={props.sending || props.fetching}
       onChange={props.onChange}

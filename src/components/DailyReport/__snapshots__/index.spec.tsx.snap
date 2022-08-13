@@ -4,63 +4,47 @@ exports[`DailyReportが正しく表示される shareをクリックすると共
 <DocumentFragment>
   <div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      Update
       <span
-        class="MuiButton-label"
-      >
-        Update
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      html
       <span
-        class="MuiButton-label"
-      >
-        html
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      text
       <span
-        class="MuiButton-label"
-      >
-        text
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      share
       <span
-        class="MuiButton-label"
-      >
-        share
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <div>
@@ -73,34 +57,25 @@ exports[`DailyReportが正しく表示される shareをクリックすると共
           </div>
           <div>
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
               href="https://twitter.com/intent/tweet?text=RAW%20TEXT"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
             >
+              Tweetする
               <span
-                class="MuiButton-label"
-              >
-                Tweetする
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </a>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
               type="button"
             >
+              コピーする
               <span
-                class="MuiButton-label"
-              >
-                コピーする
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </div>
@@ -116,34 +91,25 @@ exports[`DailyReportが正しく表示される shareをクリックすると共
           </div>
           <div>
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
               href="https://twitter.com/intent/tweet?text=hoge"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
             >
+              Tweetする
               <span
-                class="MuiButton-label"
-              >
-                Tweetする
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </a>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
               type="button"
             >
+              コピーする
               <span
-                class="MuiButton-label"
-              >
-                コピーする
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </div>
@@ -161,63 +127,47 @@ exports[`DailyReportが正しく表示される textをクリックするとtext
 <DocumentFragment>
   <div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      Update
       <span
-        class="MuiButton-label"
-      >
-        Update
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      html
       <span
-        class="MuiButton-label"
-      >
-        html
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      text
       <span
-        class="MuiButton-label"
-      >
-        text
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      share
       <span
-        class="MuiButton-label"
-      >
-        share
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <div>
@@ -235,63 +185,47 @@ exports[`DailyReportが正しく表示される ディフォルトではhtmlが�
 <DocumentFragment>
   <div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      Update
       <span
-        class="MuiButton-label"
-      >
-        Update
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      html
       <span
-        class="MuiButton-label"
-      >
-        html
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      text
       <span
-        class="MuiButton-label"
-      >
-        text
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
       style="margin: 3px; text-transform: none;"
       tabindex="0"
       type="button"
     >
+      share
       <span
-        class="MuiButton-label"
-      >
-        share
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <div>

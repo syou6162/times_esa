@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { format } from 'date-fns';
 import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
 
