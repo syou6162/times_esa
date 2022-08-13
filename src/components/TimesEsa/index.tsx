@@ -134,7 +134,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   }, []);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth={false}>
       <a
         href={esaUrl}
         target="_blank"
