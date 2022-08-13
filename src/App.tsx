@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 
 import {
@@ -37,21 +38,34 @@ const App: React.FC = () => {
     });
   }, []);
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#3f51b5',
+      },
+      secondary: {
+        main: '#e0e0e0',
+      },
+    },
+  });
+
   return (
-    <div className="App">
-      <Body
-        key={`times_esa_body_${hasUserLanded}_${isSignedIn}_${user}`}
-        hasUserLanded={hasUserLanded}
-        isSignedIn={isSignedIn}
-        user={user}
-        firebaseAuth={firebaseAuth}
-      />
-      <Footer
-        isSignedIn={isSignedIn}
-        user={user}
-        firebaseAuth={firebaseAuth}
-      />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Body
+          key={`times_esa_body_${hasUserLanded}_${isSignedIn}_${user}`}
+          hasUserLanded={hasUserLanded}
+          isSignedIn={isSignedIn}
+          user={user}
+          firebaseAuth={firebaseAuth}
+        />
+        <Footer
+          isSignedIn={isSignedIn}
+          user={user}
+          firebaseAuth={firebaseAuth}
+        />
+      </div>
+    </ThemeProvider>
   );
 };
 
