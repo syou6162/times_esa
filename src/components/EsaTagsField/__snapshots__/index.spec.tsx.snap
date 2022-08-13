@@ -188,42 +188,39 @@ exports[`esaのタグが正しく表示される tagsもtagCandidatesも空の�
 exports[`esaのタグが正しく表示される 取得中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    aria-expanded="false"
-    class="MuiAutocomplete-root"
-    role="combobox"
+    class="MuiAutocomplete-root css-16awh2u-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-19 MuiAutocomplete-inputRoot Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-autocomplete="list"
+          aria-expanded="false"
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
+          role="combobox"
           spellcheck="false"
           type="text"
           value=""
         />
-        <div
-          class="MuiAutocomplete-endAdornment"
-        />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-20"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-22"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
@@ -237,42 +234,39 @@ exports[`esaのタグが正しく表示される 取得中は入力できない 
 exports[`esaのタグが正しく表示される 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    aria-expanded="false"
-    class="MuiAutocomplete-root"
-    role="combobox"
+    class="MuiAutocomplete-root css-16awh2u-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root makeStyles-multilineColor-13 MuiAutocomplete-inputRoot Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-autocomplete="list"
+          aria-expanded="false"
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
+          role="combobox"
           spellcheck="false"
           type="text"
           value=""
         />
-        <div
-          class="MuiAutocomplete-endAdornment"
-        />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-15 MuiOutlinedInput-notchedOutline makeStyles-notchedOutline-14"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-16"
-            style="width: 0.01px;"
+            class="css-hdw1oc"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
