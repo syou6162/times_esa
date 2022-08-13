@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npm install --legacy-peer-deps
+      - run: npm install
       - name: Build React app
         env:
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
