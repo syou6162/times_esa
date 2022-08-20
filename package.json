@@ -9,7 +9,7 @@
     "@mui/lab": "5.0.0-alpha.95",
     "@mui/material": "5.10.1",
     "@mui/system": "5.10.1",
-    "date-fns": "2.29.1",
+    "date-fns": "2.29.2",
     "firebase": "9.9.3",
     "react": "18.2.0",
     "react-copy-to-clipboard": "5.1.0",
