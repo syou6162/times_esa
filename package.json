@@ -9,6 +9,7 @@
     "@mui/lab": "5.0.0-alpha.102",
     "@mui/material": "5.10.8",
     "@mui/system": "5.10.8",
+    "@types/node": "^18.11.18",
     "date-fns": "2.29.3",
     "firebase": "9.15.0",
     "react": "18.2.0",
