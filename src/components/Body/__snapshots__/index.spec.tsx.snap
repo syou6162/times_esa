@@ -42,7 +42,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
             class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-hdw1oc"
+              class="css-ihdtdm"
             >
               <span
                 class="notranslate"
@@ -54,7 +54,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         </div>
       </div>
       <div
-        class="MuiAutocomplete-root css-16awh2u-MuiAutocomplete-root"
+        class="MuiAutocomplete-root css-1qqsdnr-MuiAutocomplete-root"
       >
         <div
           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -81,7 +81,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-hdw1oc"
+                class="css-ihdtdm"
               >
                 <span
                   class="notranslate"
@@ -118,7 +118,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
             class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-hdw1oc"
+              class="css-ihdtdm"
             >
               <span
                 class="notranslate"
@@ -130,7 +130,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         </div>
       </div>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         title="esa_submit_form_button"
         type="submit"
@@ -146,7 +146,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
     />
     <div>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
         style="margin: 3px; text-transform: none;"
         tabindex="0"
         type="button"
@@ -157,7 +157,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         />
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
         style="margin: 3px; text-transform: none;"
         tabindex="0"
         type="button"
@@ -168,7 +168,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         />
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
         style="margin: 3px; text-transform: none;"
         tabindex="0"
         type="button"
@@ -179,7 +179,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
         />
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-9aa3p4-MuiButtonBase-root-MuiButton-root"
         style="margin: 3px; text-transform: none;"
         tabindex="0"
         type="button"
@@ -216,7 +216,7 @@ exports[`Bodyが正しく表示される firebaseの認証が通ったが、inva
       Error: 有効なメールアドレスではありません。
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
