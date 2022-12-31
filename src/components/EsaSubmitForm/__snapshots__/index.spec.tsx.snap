@@ -314,7 +314,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
-            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
             data-tag-index="0"
             role="button"
             tabindex="-1"
@@ -337,7 +337,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
             </svg>
           </div>
           <div
-            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
             data-tag-index="1"
             role="button"
             tabindex="-1"
@@ -519,7 +519,7 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
-            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
             data-tag-index="0"
             role="button"
             tabindex="-1"
@@ -542,7 +542,7 @@ exports[`times_esaのフォームが正しく機能する(異常系) 投稿後�
             </svg>
           </div>
           <div
-            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e38q1n-MuiButtonBase-root-MuiChip-root"
+            class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
             data-tag-index="1"
             role="button"
             tabindex="-1"
