@@ -21,10 +21,9 @@
     "web-vitals": "3.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject"
+    "start": "vite --config vite.config.ts",
+    "build": "vite --config vite.config.ts build",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": [
