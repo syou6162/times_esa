@@ -11,7 +11,7 @@ jest.mock("firebase/auth", () => ({
   GoogleAuthProvider: jest.fn(),
 }));
 const mockecdGetAuth = getAuth;
-jest.mock('react-firebaseui/StyledFirebaseAuth');
+jest.mock('../StyledFirebaseAuth', () => jest.fn());
 
 describe('Bodyが正しく表示される', () => {
   it('firebaseの認証が表示されていない状態', () => {
