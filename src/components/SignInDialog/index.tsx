@@ -1,6 +1,6 @@
 import React from 'react';
 import { Auth, GoogleAuthProvider } from 'firebase/auth';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import StyledFirebaseAuth from '../StyledFirebaseAuth';
 
 export type SignInDialogProps = {
   firebaseAuth: Auth | null;
