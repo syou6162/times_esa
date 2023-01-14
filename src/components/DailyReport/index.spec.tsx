@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { DailyReport, DailyReportProps } from '.'

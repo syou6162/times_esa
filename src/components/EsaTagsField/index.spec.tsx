@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { EsaTagsField, EsaTagsFieldProps } from '.'
