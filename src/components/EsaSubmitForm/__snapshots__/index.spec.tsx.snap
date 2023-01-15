@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`times_esaのフォームが正しく機能する(正常系) 不正なカテゴリ名だとボタンが押せない 1`] = `
+exports[`times_esaのフォームが正しく機能する(正常系) > 不正なカテゴリ名だとボタンが押せない 1`] = `
 <DocumentFragment>
   <form>
     <div
@@ -131,7 +131,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 不正な�
 </DocumentFragment>
 `;
 
-exports[`times_esaのフォームが正しく機能する(正常系) 投稿する日時とcategory名の日時が一致していないとボタンが押せない 1`] = `
+exports[`times_esaのフォームが正しく機能する(正常系) > 投稿する日時とcategory名の日時が一致していないとボタンが押せない 1`] = `
 <DocumentFragment>
   <form>
     <div
@@ -262,7 +262,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿す�
 </DocumentFragment>
 `;
 
-exports[`times_esaのフォームが正しく機能する(正常系) 投稿後の内容が画面に正しく反映される 1`] = `
+exports[`times_esaのフォームが正しく機能する(正常系) > 投稿後の内容が画面に正しく反映される 1`] = `
 <DocumentFragment>
   <form>
     <div
@@ -467,7 +467,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) 投稿後�
 </DocumentFragment>
 `;
 
-exports[`times_esaのフォームが正しく機能する(異常系) 投稿後の内容が画面に正しく反映される 1`] = `
+exports[`times_esaのフォームが正しく機能する(異常系) > 投稿後の内容が画面に正しく反映される 1`] = `
 <DocumentFragment>
   <form>
     <div

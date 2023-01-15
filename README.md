@@ -8,7 +8,7 @@ slackの分報likeに投稿しつつ、検索しやすいようにesa.ioに投�
 - Firebaseを中心に使っています
 - APIKEYなどの情報を`.env`に記述しましょう
   - [サンプルファイル](.env.sample)があります
-  - `REACT_APP_VALID_MAIL_ADDRESSES`は閲覧や書き込みを許可したいユーザーのメールアドレスです
+  - `VITE_VALID_MAIL_ADDRESSES`は閲覧や書き込みを許可したいユーザーのメールアドレスです
 - `npm run-script start`で起動します
 
 ### backend

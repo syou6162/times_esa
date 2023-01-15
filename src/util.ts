@@ -27,5 +27,5 @@ export type GoogleUser = {
 }
 
 export const isValidEmail = (email: string): boolean => {
-  return email === process.env.REACT_APP_VALID_MAIL_ADDRESSES;
+  return email === import.meta.env.VITE_VALID_MAIL_ADDRESSES;
 };

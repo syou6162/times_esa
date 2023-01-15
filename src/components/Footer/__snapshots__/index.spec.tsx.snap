@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Footerが正しく表示される invalidなユーザーでログインしている状態 1`] = `
+exports[`Footerが正しく表示される > invalidなユーザーでログインしている状態 1`] = `
 <DocumentFragment>
   <footer>
     <hr
@@ -24,7 +24,7 @@ exports[`Footerが正しく表示される invalidなユーザーでログイン
 </DocumentFragment>
 `;
 
-exports[`Footerが正しく表示される validなユーザーでログインしている状態 1`] = `
+exports[`Footerが正しく表示される > validなユーザーでログインしている状態 1`] = `
 <DocumentFragment>
   <footer>
     <hr
@@ -71,7 +71,7 @@ exports[`Footerが正しく表示される validなユーザーでログイン�
 </DocumentFragment>
 `;
 
-exports[`Footerが正しく表示される サインインしていない状態 1`] = `
+exports[`Footerが正しく表示される > サインインしていない状態 1`] = `
 <DocumentFragment>
   <footer>
     <hr
