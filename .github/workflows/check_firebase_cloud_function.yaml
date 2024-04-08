@@ -12,7 +12,6 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
-      - run: npm install
         working-directory: ./functions
       - run: npm --prefix functions run lint
       - run: npm --prefix functions run build
