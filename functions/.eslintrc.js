@@ -21,4 +21,5 @@ module.exports = {
   ],
   rules: {
   },
+  ignorePatterns: ["src/index.js"],
 };
