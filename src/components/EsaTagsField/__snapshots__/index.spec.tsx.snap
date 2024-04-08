@@ -3,7 +3,7 @@
 exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1qqsdnr-MuiAutocomplete-root"
+    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-clttge-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -12,7 +12,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
         class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
           data-tag-index="0"
           role="button"
           tabindex="-1"
@@ -35,7 +35,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           </svg>
         </div>
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
           data-tag-index="1"
           role="button"
           tabindex="-1"
@@ -58,7 +58,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           </svg>
         </div>
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1e2nyz6-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
           data-tag-index="2"
           role="button"
           tabindex="-1"
@@ -95,7 +95,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           value=""
         />
         <div
-          class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+          class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
         >
           <button
             aria-label="Clear"
@@ -143,7 +143,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
 exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1qqsdnr-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -188,7 +188,7 @@ exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の
 exports[`esaのタグが正しく表示される > 取得中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1qqsdnr-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -234,7 +234,7 @@ exports[`esaのタグが正しく表示される > 取得中は入力できな�
 exports[`esaのタグが正しく表示される > 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1qqsdnr-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"

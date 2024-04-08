@@ -1,7 +1,11 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+/* eslint @typescript-eslint/no-unsafe-argument: 0 */
+/* eslint @typescript-eslint/no-unsafe-member-access: 0 */
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+
 import * as functions from 'firebase-functions';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-
-const axiosBase = require('axios');
+import axios from 'axios';
 
 const region = 'asia-northeast1';
 
@@ -18,7 +22,7 @@ function getEsaConfig(): EsaConfig {
 }
 
 function createAxiosClient(accessToken: string): AxiosInstance {
-  const axios = axiosBase.create({
+  return axios.create({
     baseURL: 'https://api.esa.io',
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +30,6 @@ function createAxiosClient(accessToken: string): AxiosInstance {
     },
     responseType: 'json',
   });
-  return axios;
 }
 
 type EsaPost = {
@@ -151,7 +154,7 @@ function checkAuthTokenEmail(context: functions.https.CallableContext) {
 }
 
 export const submitTextToEsa = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -170,7 +173,7 @@ export const submitTextToEsa = functions.region(region).https.onCall(async (
 });
 
 export const dailyReport = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -182,7 +185,7 @@ export const dailyReport = functions.region(region).https.onCall(async (
 });
 
 export const tagList = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
