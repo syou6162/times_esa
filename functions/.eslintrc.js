@@ -1,71 +1,24 @@
 module.exports = {
+  root: true,
   env: {
-    browser: true,
     es6: true,
     node: true,
   },
-  extends: [
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-  ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: "tsconfig.json",
-    sourceType: "module",
+    sourceType: 'module',
+    ecmaVersion: 2019, // Node.js 12の場合は2019、他のバージョンのNode.jsを利用している場合は場合は適宜変更する
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.eslint.json']
   },
   plugins: [
-    "@typescript-eslint",
-    "import",
+    '@typescript-eslint',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   rules: {
-    "@typescript-eslint/adjacent-overload-signatures": "error",
-    "@typescript-eslint/no-empty-function": "error",
-    "@typescript-eslint/no-empty-interface": "warn",
-    "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/no-namespace": "error",
-    "@typescript-eslint/no-unnecessary-type-assertion": "error",
-    "@typescript-eslint/prefer-for-of": "warn",
-    "@typescript-eslint/triple-slash-reference": "error",
-    "@typescript-eslint/unified-signatures": "warn",
-    "comma-dangle": ["error", "always-multiline"],
-    "constructor-super": "error",
-    eqeqeq: ["warn", "always"],
-    "import/no-deprecated": "warn",
-    "import/no-extraneous-dependencies": "error",
-    "import/no-unassigned-import": "warn",
-    "no-cond-assign": "error",
-    "no-duplicate-case": "error",
-    "no-duplicate-imports": "error",
-    "no-empty": [
-      "error",
-      {
-        allowEmptyCatch: true,
-      },
-    ],
-    "no-invalid-this": "error",
-    "no-new-wrappers": "error",
-    "no-param-reassign": "error",
-    "no-redeclare": "error",
-    "no-sequences": "error",
-    "no-shadow": [
-      "error",
-      {
-        hoist: "all",
-      },
-    ],
-    "no-throw-literal": "error",
-    "no-unsafe-finally": "error",
-    "no-unused-labels": "error",
-    "no-var": "warn",
-    "no-void": "error",
-    "prefer-const": "warn",
-  },
-  settings: {
-    jsdoc: {
-      tagNamePreference: {
-        returns: "return",
-      },
-    },
   },
 };
