@@ -3,6 +3,7 @@
   "scripts": {
     "lint": "eslint \"src/**/*\"",
     "build": "tsc",
+    "gcp-build":"",
     "watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
