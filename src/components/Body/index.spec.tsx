@@ -2,7 +2,7 @@
 process.env.VITE_VALID_MAIL_ADDRESSES = 'valid@example.com';
 
 import { render } from '@testing-library/react'
-import { vi } from "vitest";
+import { describe, it, expect, vi } from "vitest"
 import { Body, BodyProps } from '.'
 import { getAuth } from 'firebase/auth';
 
@@ -27,7 +27,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: '',
         photoURL: '',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     }
     const renderResult = render(
       <Body {...props} />
@@ -44,7 +44,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: '',
         photoURL: '',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     };
     const renderResult = render(
       <Body {...props} />
@@ -60,7 +60,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: 'invalid',
         photoURL: 'invalid',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     }
     const renderResult = render(
       <Body {...props} />
@@ -80,7 +80,7 @@ describe('Bodyが正しく表示される', () => {
   //       displayName: 'valid',
   //       photoURL: 'valid',
   //     },
-  //     firebaseAuth: mockecdGetAuth(), 
+  //     firebaseAuth: mockecdGetAuth(),
   //   }
   //   const renderResult = render(
   //     <Body {...props} />

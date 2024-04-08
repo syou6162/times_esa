@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { render } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect } from "vitest"
 import { EsaTagsField, EsaTagsFieldProps } from '.'
 
 describe('esaのタグが正しく表示される', () => {
@@ -18,7 +18,7 @@ describe('esaのタグが正しく表示される', () => {
 
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
-  
+
   it('tagCandidatesも空の状態', () => {
     const props: EsaTagsFieldProps = {
       sending: false,
@@ -46,11 +46,11 @@ describe('esaのタグが正しく表示される', () => {
     const renderResult = render(
       <EsaTagsField {...props} />
     );
-    
+
     expect(renderResult.getByRole("combobox")).toBeDisabled();
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
-  
+
   it('取得中は入力できない', async () => {
     const props: EsaTagsFieldProps = {
       sending: false,
@@ -62,7 +62,7 @@ describe('esaのタグが正しく表示される', () => {
     const renderResult = render(
       <EsaTagsField {...props} />
     );
-    
+
     expect(renderResult.getByRole("combobox")).toBeDisabled();
     expect(renderResult.asFragment()).toMatchSnapshot();
   });

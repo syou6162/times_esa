@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect, vi, SpyInstance, beforeEach, afterEach } from "vitest"
 import * as EsaSubmitFormModule from '.'
 import { EsaSubmitForm, EsaSubmitFormProps, getDay } from '.'
 import { makeDefaultEsaCategory } from '../../util';
@@ -20,9 +20,9 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     },
   };
 
-  let submitMock: jest.SpyInstance; 
+  let submitMock: SpyInstance;
   beforeEach(() => {
-    submitMock = jest.spyOn(EsaSubmitFormModule, 'submitTextToEsa').mockImplementation((): any => {
+    submitMock = vi.spyOn(EsaSubmitFormModule, 'submitTextToEsa').mockImplementation((): any => {
       return new Promise((resolve, reject) => {
         return resolve(responseData);
       });
@@ -30,8 +30,8 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('不正なカテゴリ名だとボタンが押せない', async () => {
@@ -91,7 +91,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     expect(submitMock).toBeCalledTimes(0)
     expect(asFragment()).toMatchSnapshot();
     const before = asFragment();
-    
+
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
@@ -105,16 +105,16 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
 });
 
 describe('times_esaのフォームが正しく機能する(異常系)', () => {
-  let alertMock: jest.SpyInstance;
-  let submitMock: jest.SpyInstance; 
+  let alertMock: SpyInstance;
+  let submitMock: SpyInstance;
 
   const originalWindowAlert = window.alert;
 
   beforeEach(() => {
-    alertMock = jest.fn();
+    alertMock = vi.fn();
     window.alert = (alertMock as any);
 
-    submitMock = jest.spyOn(EsaSubmitFormModule, 'submitTextToEsa').mockImplementation((): any => {
+    submitMock = vi.spyOn(EsaSubmitFormModule, 'submitTextToEsa').mockImplementation((): any => {
       return new Promise((resolve, reject) => {
         return reject(new Error("Internal Error"));
       });
@@ -122,12 +122,12 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
-    jest.clearAllMocks();
-    
+    vi.clearAllMocks();
+    vi.clearAllMocks();
+
     window.alert = originalWindowAlert;
   });
-  
+
   it('投稿後の内容が画面に正しく反映される', async () => {
     const props: EsaSubmitFormProps = {
       category: "",

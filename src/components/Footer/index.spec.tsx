@@ -2,7 +2,7 @@
 import.meta.env.VITE_VALID_MAIL_ADDRESSES = 'valid@example.com';
 
 import { render } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect } from "vitest"
 import { Footer, FooterProps } from '.'
 
 describe('Footerが正しく表示される', () => {

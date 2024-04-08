@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect } from "vitest"
 import { DailyReport, DailyReportProps } from '.'
 
 describe('DailyReportが正しく表示される', () => {
@@ -42,7 +42,7 @@ describe('DailyReportが正しく表示される', () => {
       expect(renderResult.queryByText("hello world")).toBeNull();
     });
   });
-  
+
   it('shareをクリックすると共有用の画面が表示される', async () => {
     const props: DailyReportProps = {
       fetching: false,
@@ -63,4 +63,4 @@ describe('DailyReportが正しく表示される', () => {
       expect(renderResult.queryByText("hello world")).toBeNull();
     });
   });
-}); 
+});
