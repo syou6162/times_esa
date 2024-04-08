@@ -1,3 +1,11 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+/* eslint @typescript-eslint/no-unsafe-argument: 0 */
+/* eslint @typescript-eslint/no-unsafe-member-access: 0 */
+/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
+/* eslint @typescript-eslint/no-var-requires: 0 */
+/* eslint @typescript-eslint/no-unsafe-call: 0 */
+/* eslint @typescript-eslint/no-unsafe-return: 0 */
+
 import * as functions from 'firebase-functions';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
@@ -151,7 +159,7 @@ function checkAuthTokenEmail(context: functions.https.CallableContext) {
 }
 
 export const submitTextToEsa = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -170,7 +178,7 @@ export const submitTextToEsa = functions.region(region).https.onCall(async (
 });
 
 export const dailyReport = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -182,7 +190,7 @@ export const dailyReport = functions.region(region).https.onCall(async (
 });
 
 export const tagList = functions.region(region).https.onCall(async (
-  req,
+  req: any,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
