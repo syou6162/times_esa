@@ -47,7 +47,7 @@ describe('esaのタグが正しく表示される', () => {
       <EsaTagsField {...props} />
     );
 
-    expect(renderResult.getByRole("combobox")).toBeDisabled();
+    expect(renderResult.getByRole("combobox")).toHaveProperty('disabled', true);
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
 
@@ -63,7 +63,7 @@ describe('esaのタグが正しく表示される', () => {
       <EsaTagsField {...props} />
     );
 
-    expect(renderResult.getByRole("combobox")).toBeDisabled();
+    expect(renderResult.getByRole("combobox")).toHaveProperty('disabled', true);
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
 })
