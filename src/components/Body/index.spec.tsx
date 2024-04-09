@@ -1,17 +1,21 @@
-process.env.REACT_APP_VALID_MAIL_ADDRESSES = 'valid@example.com';
+// @vitest-environment jsdom
+process.env.VITE_VALID_MAIL_ADDRESSES = 'valid@example.com';
 
 import { render } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { describe, it, expect, vi } from "vitest"
 import { Body, BodyProps } from '.'
 import { getAuth } from 'firebase/auth';
 
 // 認証の画面をmock
-jest.mock("firebase/auth", () => ({
-  getAuth: jest.fn(),
-  GoogleAuthProvider: jest.fn(),
-}));
+vi.mock("firebase/auth", () => {
+  return {
+    getAuth: vi.fn(),
+    GoogleAuthProvider: vi.fn(),
+  }
+});
 const mockecdGetAuth = getAuth;
-jest.mock('../StyledFirebaseAuth', () => jest.fn());
+
+vi.mock('../StyledFirebaseAuth');
 
 describe('Bodyが正しく表示される', () => {
   it('firebaseの認証が表示されていない状態', () => {
@@ -23,7 +27,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: '',
         photoURL: '',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     }
     const renderResult = render(
       <Body {...props} />
@@ -40,7 +44,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: '',
         photoURL: '',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     };
     const renderResult = render(
       <Body {...props} />
@@ -56,7 +60,7 @@ describe('Bodyが正しく表示される', () => {
         displayName: 'invalid',
         photoURL: 'invalid',
       },
-      firebaseAuth: mockecdGetAuth(), 
+      firebaseAuth: mockecdGetAuth(),
     }
     const renderResult = render(
       <Body {...props} />
@@ -76,7 +80,7 @@ describe('Bodyが正しく表示される', () => {
   //       displayName: 'valid',
   //       photoURL: 'valid',
   //     },
-  //     firebaseAuth: mockecdGetAuth(), 
+  //     firebaseAuth: mockecdGetAuth(),
   //   }
   //   const renderResult = render(
   //     <Body {...props} />
