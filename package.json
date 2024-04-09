@@ -20,8 +20,8 @@
     "web-vitals": "3.5.2"
   },
   "scripts": {
-    "start": "vite --config vite.config.ts",
-    "build": "vite --config vite.config.ts build",
+    "start": "vite --config vite.config.mts",
+    "build": "vite --config vite.config.mts build",
     "test": "vitest"
   },
   "browserslist": {
