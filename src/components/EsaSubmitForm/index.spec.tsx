@@ -111,11 +111,18 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
 });
 
 describe('times_esaのフォームが正しく機能する(異常系)', () => {
+  const alertMock = vi.fn();
+  const originalWindowAlert = window.alert;
+
   beforeEach(() => {
+    window.alert = alertMock;
+
     mockHttpsCallable.mockResolvedValue(new Error("Internal Error"));
   });
 
   afterEach(() => {
+    window.alert = originalWindowAlert;
+
     vi.clearAllMocks();
   });
 
@@ -132,7 +139,6 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
       <EsaSubmitForm {...props} />
     );
 
-    const alertMock = vi.spyOn(window, 'alert');
     const before = asFragment();
 
     fireEvent.click(getByTitle("esa_submit_form_button"));
