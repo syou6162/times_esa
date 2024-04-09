@@ -1,8 +1,3 @@
-/* eslint @typescript-eslint/no-explicit-any: 0 */
-/* eslint @typescript-eslint/no-unsafe-argument: 0 */
-/* eslint @typescript-eslint/no-unsafe-member-access: 0 */
-/* eslint @typescript-eslint/no-unsafe-assignment: 0 */
-
 import * as functions from 'firebase-functions';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
@@ -15,8 +10,8 @@ type EsaConfig = {
 }
 
 function getEsaConfig(): EsaConfig {
-  const teamName = functions.config().esa.team_name;
-  const accessToken = functions.config().esa.access_token;
+  const teamName = functions.config().esa.team_name as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const accessToken = functions.config().esa.access_token as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
@@ -39,6 +34,13 @@ type EsaPost = {
   number: number;
   name: string;
   tags: string[];
+}
+
+type TimesEsaPostRequest = {
+  category: string;
+  tags: string[];
+  title: string;
+  text: string;
 }
 
 export type EsaSearchResult = {
@@ -148,13 +150,14 @@ async function getTagList(
 }
 
 function checkAuthTokenEmail(context: functions.https.CallableContext) {
-  if (!context.auth || context.auth.token.email !== functions.config().context.valid_email) {
+  const valid_email = functions.config().context.valid_email as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
 }
 
 export const submitTextToEsa = functions.region(region).https.onCall(async (
-  req: any,
+  req:  TimesEsaPostRequest,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -172,8 +175,12 @@ export const submitTextToEsa = functions.region(region).https.onCall(async (
   return result;
 });
 
+type TimesEsaDailyReportRequest = {
+  category: string;
+}
+
 export const dailyReport = functions.region(region).https.onCall(async (
-  req: any,
+  req: TimesEsaDailyReportRequest,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
@@ -185,7 +192,7 @@ export const dailyReport = functions.region(region).https.onCall(async (
 });
 
 export const tagList = functions.region(region).https.onCall(async (
-  req: any,
+  _: unknown,
   context: functions.https.CallableContext,
 ) => {
   checkAuthTokenEmail(context);
