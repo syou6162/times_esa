@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`esaのタグが正しく表示される tagCandidatesも空の状態 1`] = `
+exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
     class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-clttge-MuiAutocomplete-root"
@@ -140,7 +140,7 @@ exports[`esaのタグが正しく表示される tagCandidatesも空の状態 1`
 </DocumentFragment>
 `;
 
-exports[`esaのタグが正しく表示される tagsもtagCandidatesも空の状態 1`] = `
+exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
     class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
@@ -185,7 +185,7 @@ exports[`esaのタグが正しく表示される tagsもtagCandidatesも空の�
 </DocumentFragment>
 `;
 
-exports[`esaのタグが正しく表示される 取得中は入力できない 1`] = `
+exports[`esaのタグが正しく表示される > 取得中は入力できない 1`] = `
 <DocumentFragment>
   <div
     class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
@@ -231,7 +231,7 @@ exports[`esaのタグが正しく表示される 取得中は入力できない 
 </DocumentFragment>
 `;
 
-exports[`esaのタグが正しく表示される 送信中は入力できない 1`] = `
+exports[`esaのタグが正しく表示される > 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div
     class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"

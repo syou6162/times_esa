@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Bodyが正しく表示される firebaseの認証が表示されていない状態 1`] = `
+exports[`Bodyが正しく表示される > firebaseの認証が表示されていない状態 1`] = `
 <DocumentFragment>
   <div
     class="MuiContainer-root css-ur2jdm-MuiContainer-root"
@@ -199,7 +199,7 @@ exports[`Bodyが正しく表示される firebaseの認証が表示されてい�
 </DocumentFragment>
 `;
 
-exports[`Bodyが正しく表示される firebaseの認証が通ったが、invalidなユーザー 1`] = `
+exports[`Bodyが正しく表示される > firebaseの認証が通ったが、invalidなユーザー 1`] = `
 <DocumentFragment>
   <div>
     <div>
@@ -229,7 +229,7 @@ exports[`Bodyが正しく表示される firebaseの認証が通ったが、inva
 </DocumentFragment>
 `;
 
-exports[`Bodyが正しく表示される firebaseの認証を通過していない状態 1`] = `
+exports[`Bodyが正しく表示される > firebaseの認証を通過していない状態 1`] = `
 <DocumentFragment>
   <div>
     ログインが必要です
