@@ -8,7 +8,7 @@
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.15",
     "@mui/system": "5.15.15",
-    "@types/node": "20.0.0",
+    "@types/node": "20.12.6",
     "@vitejs/plugin-react": "4.2.1",
     "date-fns": "3.6.0",
     "firebase": "10.10.0",
@@ -54,7 +54,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "jsdom": "24.0.0",
     "prettier": "2.8.8",
-    "vite": "4.5.3",
+    "vite": "5.2.8",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.4.0"
   }
