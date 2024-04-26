@@ -11,7 +11,7 @@
     "@types/node": "20.12.7",
     "@vitejs/plugin-react": "4.2.1",
     "date-fns": "3.6.0",
-    "firebase": "10.11.0",
+    "firebase": "10.11.1",
     "firebaseui": "6.1.0",
     "react": "18.2.0",
     "react-copy-to-clipboard": "5.1.0",
