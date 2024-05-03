@@ -21,7 +21,7 @@
     "axios": "1.6.8",
     "esa-node": "0.2.2",
     "firebase-admin": "12.1.0",
-    "firebase-functions": "4.9.0",
+    "firebase-functions": "5.0.1",
     "request": "2.88.2"
   },
   "devDependencies": {
