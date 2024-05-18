@@ -3,7 +3,7 @@
 exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-clttge-MuiAutocomplete-root"
+    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1tw9w9k-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -143,7 +143,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
 exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-1tw9w9k-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -188,7 +188,7 @@ exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の
 exports[`esaのタグが正しく表示される > 取得中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-1tw9w9k-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -234,7 +234,7 @@ exports[`esaのタグが正しく表示される > 取得中は入力できな�
 exports[`esaのタグが正しく表示される > 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-clttge-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-1tw9w9k-MuiAutocomplete-root"
   >
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
