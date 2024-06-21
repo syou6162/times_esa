@@ -25,12 +25,12 @@
     "request": "2.88.2"
   },
   "devDependencies": {
-    "@types/express-serve-static-core": "4.19.3",
-    "@typescript-eslint/eslint-plugin": "7.13.0",
-    "@typescript-eslint/parser": "7.13.0",
+    "@types/express-serve-static-core": "4.19.5",
+    "@typescript-eslint/eslint-plugin": "7.13.1",
+    "@typescript-eslint/parser": "7.13.1",
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.29.1",
-    "typescript": "5.4.5"
+    "typescript": "5.5.2"
   },
   "private": true
 }
