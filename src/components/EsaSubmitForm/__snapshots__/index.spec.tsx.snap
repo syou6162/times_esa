@@ -43,7 +43,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 不正な
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root css-1tw9w9k-MuiAutocomplete-root"
+      class="MuiAutocomplete-root css-1x6bjyf-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -174,7 +174,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿す
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root css-1tw9w9k-MuiAutocomplete-root"
+      class="MuiAutocomplete-root css-1x6bjyf-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -305,7 +305,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿後
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1tw9w9k-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1x6bjyf-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
@@ -510,7 +510,7 @@ exports[`times_esaのフォームが正しく機能する(異常系) > 投稿後
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1tw9w9k-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1x6bjyf-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
