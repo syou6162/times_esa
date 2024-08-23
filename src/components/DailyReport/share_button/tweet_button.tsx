@@ -6,7 +6,7 @@ export type TweetButtonProps = {
 };
 
 export const TweetButton: React.FC<TweetButtonProps> = (props: TweetButtonProps) => {
-  const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(props.text)}`;
+  const tweet = `https://x.com/intent/post?text=${encodeURIComponent(props.text)}`;
   return (
     <Button
       style={{

@@ -58,7 +58,7 @@ exports[`DailyReportが正しく表示される > shareをクリックすると�
           <div>
             <a
               class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
-              href="https://twitter.com/intent/tweet?text=RAW%20TEXT"
+              href="https://x.com/intent/post?text=RAW%20TEXT"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
             >
@@ -92,7 +92,7 @@ exports[`DailyReportが正しく表示される > shareをクリックすると�
           <div>
             <a
               class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
-              href="https://twitter.com/intent/tweet?text=hoge"
+              href="https://x.com/intent/post?text=hoge"
               style="margin: 5px; text-transform: none; float: right;"
               tabindex="0"
             >
