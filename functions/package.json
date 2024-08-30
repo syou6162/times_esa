@@ -16,7 +16,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/node": "20.16.1",
+    "@types/node": "20.16.2",
     "@types/request": "2.48.12",
     "axios": "1.7.5",
     "esa-node": "0.2.2",
