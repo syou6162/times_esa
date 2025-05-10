@@ -1,8 +1,10 @@
 import * as functions from 'firebase-functions';
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
+import { setGlobalOptions } from 'firebase-functions/v2'
+import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 
-const region = 'asia-northeast1';
+setGlobalOptions({ region: 'asia-northeast1' })
 
 type EsaConfig = {
   teamName: string;
@@ -149,28 +151,27 @@ async function getTagList(
   return response.data;
 }
 
-function checkAuthTokenEmail(context: functions.https.CallableContext) {
+function checkAuthTokenEmail(context: CallableRequest): void {
   const valid_email = functions.config().context.valid_email as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
 }
 
-export const submitTextToEsa = functions.region(region).https.onCall(async (
-  req:  TimesEsaPostRequest,
-  context: functions.https.CallableContext,
+export const submitTextToEsa = onCall(async (
+  req: CallableRequest<TimesEsaPostRequest>,
 ) => {
-  checkAuthTokenEmail(context);
+  checkAuthTokenEmail(req);
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
   const result = await createOrUpdatePost(
     axios,
     esaConfig,
-    req.category,
-    req.tags,
-    req.title,
-    req.text,
+    req.data.category,
+    req.data.tags,
+    req.data.title,
+    req.data.text,
   );
   return result;
 });
@@ -179,23 +180,21 @@ type TimesEsaDailyReportRequest = {
   category: string;
 }
 
-export const dailyReport = functions.region(region).https.onCall(async (
-  req: TimesEsaDailyReportRequest,
-  context: functions.https.CallableContext,
+export const dailyReport = onCall(async (
+  req: CallableRequest<TimesEsaDailyReportRequest>,
 ) => {
-  checkAuthTokenEmail(context);
+  checkAuthTokenEmail(req);
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getDailyReport(axios, esaConfig, req.category);
+  const result = await getDailyReport(axios, esaConfig, req.data.category);
   return result;
 });
 
-export const tagList = functions.region(region).https.onCall(async (
-  _: unknown,
-  context: functions.https.CallableContext,
+export const tagList = onCall(async (
+  req: CallableRequest,
 ) => {
-  checkAuthTokenEmail(context);
+  checkAuthTokenEmail(req);
 
   const esaConfig = getEsaConfig();
   const axios = createAxiosClient(esaConfig.accessToken);
