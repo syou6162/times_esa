@@ -18,7 +18,7 @@
   "dependencies": {
     "@types/node": "20.17.46",
     "@types/request": "2.48.12",
-    "axios": "1.7.7",
+    "axios": "1.9.0",
     "esa-node": "0.2.2",
     "firebase-admin": "12.5.0",
     "firebase-functions": "6.3.2",
