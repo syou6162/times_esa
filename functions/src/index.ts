@@ -152,6 +152,7 @@ async function getTagList(
 }
 
 function checkAuthTokenEmail(context: CallableRequest): void {
+  console.log('process.env', process.env);
   const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   console.log('valid_email', valid_email);
   console.log('context', context);
