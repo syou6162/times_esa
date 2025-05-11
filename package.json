@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "11.13.3",
-    "@emotion/styled": "11.13.0",
-    "@mui/lab": "5.0.0-alpha.173",
-    "@mui/material": "5.16.7",
-    "@mui/system": "5.16.7",
-    "@types/node": "20.17.46",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "@mui/lab": "5.0.0-alpha.176",
+    "@mui/material": "5.17.1",
+    "@mui/system": "5.17.1",
+    "@types/node": "22.15.17",
     "@vitejs/plugin-react": "4.4.1",
     "date-fns": "4.1.0",
-    "firebase": "10.14.1",
+    "firebase": "11.7.1",
     "firebaseui": "6.1.0",
     "react": "18.3.1",
     "react-copy-to-clipboard": "5.1.0",
     "react-dom": "18.3.1",
-    "typescript": "5.6.3",
-    "web-vitals": "4.2.4"
+    "typescript": "5.8.3",
+    "web-vitals": "5.0.0"
   },
   "scripts": {
     "start": "vite --config vite.config.mts",
@@ -52,10 +52,10 @@
     "eslint-plugin-prettier": "5.4.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "4.6.2",
-    "jsdom": "25.0.1",
+    "jsdom": "26.1.0",
     "prettier": "3.5.3",
-    "vite": "5.4.19",
+    "vite": "6.3.5",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "2.1.9"
+    "vitest": "3.1.3"
   }
 }

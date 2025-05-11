@@ -12,20 +12,20 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/node": "20.17.46",
+    "@types/node": "22.15.17",
     "@types/request": "2.48.12",
-    "axios": "1.7.7",
+    "axios": "1.9.0",
     "esa-node": "0.2.2",
-    "firebase-admin": "12.5.0",
+    "firebase-admin": "13.3.0",
     "firebase-functions": "6.3.2",
     "request": "2.88.2"
   },
   "devDependencies": {
-    "@types/express-serve-static-core": "4.19.6",
+    "@types/express-serve-static-core": "5.0.6",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "eslint": "8.57.1",
