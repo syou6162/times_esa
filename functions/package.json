@@ -12,11 +12,11 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/node": "20.17.46",
+    "@types/node": "22.15.17",
     "@types/request": "2.48.12",
     "axios": "1.9.0",
     "esa-node": "0.2.2",
