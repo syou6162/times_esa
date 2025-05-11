@@ -183,15 +183,21 @@ type TimesEsaDailyReportRequest = {
   category: string;
 }
 
-export const dailyReport = onCall(async (
-  req: CallableRequest<TimesEsaDailyReportRequest>,
-) => {
-  checkAuthTokenEmail(req);
+export const dailyReport = onCall(
+  { secrets: [
+    "ESA_TEAM_NAME",
+    "ESA_ACCESS_TOKEN",
+    "VALID_EMAIL",
+  ] },
+  async (
+    req: CallableRequest<TimesEsaDailyReportRequest>,
+  ) => {
+    checkAuthTokenEmail(req);
 
-  const esaConfig = getEsaConfig();
-  const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getDailyReport(axios, esaConfig, req.data.category);
-  return result;
+    const esaConfig = getEsaConfig();
+    const axios = createAxiosClient(esaConfig.accessToken);
+    const result = await getDailyReport(axios, esaConfig, req.data.category);
+    return result;
 });
 
 export const tagList = onCall(async (
