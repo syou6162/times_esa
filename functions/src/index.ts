@@ -11,6 +11,12 @@ type EsaConfig = {
   accessToken: string;
 }
 
+const ESA_SECRETS = [
+  "ESA_TEAM_NAME",
+  "ESA_ACCESS_TOKEN",
+  "VALID_EMAIL",
+];
+
 function getEsaConfig(): EsaConfig {
   const teamName = process.env.ESA_TEAM_NAME as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   const accessToken = process.env.ESA_ACCESS_TOKEN as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
@@ -152,43 +158,39 @@ async function getTagList(
 }
 
 function checkAuthTokenEmail(context: CallableRequest): void {
-  console.log('process.env', process.env);
   const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
-  console.log('valid_email', valid_email);
-  console.log('context', context);
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
 }
 
-export const submitTextToEsa = onCall(async (
-  req: CallableRequest<TimesEsaPostRequest>,
-) => {
-  checkAuthTokenEmail(req);
+export const submitTextToEsa = onCall(
+  { secrets: ESA_SECRETS},
+  async (
+    req: CallableRequest<TimesEsaPostRequest>,
+  ) => {
+    checkAuthTokenEmail(req);
 
-  const esaConfig = getEsaConfig();
-  const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await createOrUpdatePost(
-    axios,
-    esaConfig,
-    req.data.category,
-    req.data.tags,
-    req.data.title,
-    req.data.text,
-  );
-  return result;
-});
+    const esaConfig = getEsaConfig();
+    const axios = createAxiosClient(esaConfig.accessToken);
+    const result = await createOrUpdatePost(
+      axios,
+      esaConfig,
+      req.data.category,
+      req.data.tags,
+      req.data.title,
+      req.data.text,
+    );
+    return result;
+  }
+);
 
 type TimesEsaDailyReportRequest = {
   category: string;
 }
 
 export const dailyReport = onCall(
-  { secrets: [
-    "ESA_TEAM_NAME",
-    "ESA_ACCESS_TOKEN",
-    "VALID_EMAIL",
-  ] },
+  { secrets: ESA_SECRETS},
   async (
     req: CallableRequest<TimesEsaDailyReportRequest>,
   ) => {
@@ -198,15 +200,19 @@ export const dailyReport = onCall(
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getDailyReport(axios, esaConfig, req.data.category);
     return result;
-});
+  }
+);
 
-export const tagList = onCall(async (
-  req: CallableRequest,
-) => {
-  checkAuthTokenEmail(req);
+export const tagList = onCall(
+  { secrets: ESA_SECRETS},
+  async (
+    req: CallableRequest,
+  ) => {
+    checkAuthTokenEmail(req);
 
-  const esaConfig = getEsaConfig();
-  const axios = createAxiosClient(esaConfig.accessToken);
-  const result = await getTagList(axios, esaConfig);
-  return result;
-});
+    const esaConfig = getEsaConfig();
+    const axios = createAxiosClient(esaConfig.accessToken);
+    const result = await getTagList(axios, esaConfig);
+    return result;
+  }
+);
