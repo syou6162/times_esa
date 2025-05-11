@@ -156,7 +156,6 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
         onChange={(event, value, reason, detail) => { setTags(value); }}
       />
       <EsaTextField
-        fetching={props.fetching}
         sending={sending}
         text={text}
         onChange={(e) => { setText(e.target.value); }}
