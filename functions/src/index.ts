@@ -12,8 +12,8 @@ type EsaConfig = {
 }
 
 function getEsaConfig(): EsaConfig {
-  const teamName = functions.config().esa.team_name as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
-  const accessToken = functions.config().esa.access_token as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const teamName = process.env.ESA_TEAM_NAME as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const accessToken = process.env.ESA_ACCESS_TOKEN as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
@@ -152,7 +152,7 @@ async function getTagList(
 }
 
 function checkAuthTokenEmail(context: CallableRequest): void {
-  const valid_email = functions.config().context.valid_email as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
