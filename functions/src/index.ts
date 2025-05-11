@@ -153,6 +153,8 @@ async function getTagList(
 
 function checkAuthTokenEmail(context: CallableRequest): void {
   const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  console.log('valid_email', valid_email);
+  console.log('context', context);
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
