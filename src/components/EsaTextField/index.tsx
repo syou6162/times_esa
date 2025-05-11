@@ -4,7 +4,6 @@ import { styled } from '@mui/system';
 
 type EsaTextFieldProps = {
   sending: boolean;
-  fetching: boolean;
   text: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -31,7 +30,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       minRows={6}
       maxRows={30}
       value={props.text}
-      disabled={props.sending || props.fetching}
+      disabled={props.sending}
       onChange={props.onChange}
     />
   );
