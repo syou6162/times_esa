@@ -23,7 +23,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
           <textarea
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r0:"
+            id="«r0»"
             placeholder="日報のタイトルを記入しましょう"
             required=""
             style="height: 0px; overflow: hidden;"
@@ -104,7 +104,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
           <textarea
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r3:"
+            id="«r3»"
             placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
             style="height: 0px; overflow: hidden;"
           />

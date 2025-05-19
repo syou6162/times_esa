@@ -12,7 +12,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 不正な
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r0:"
+          id="«r0»"
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
@@ -93,7 +93,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 不正な
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r3:"
+          id="«r3»"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
           style="height: 0px; overflow: hidden;"
         />
@@ -146,7 +146,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿す
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r5:"
+          id="«r5»"
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
@@ -227,7 +227,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿す
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r8:"
+          id="«r8»"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
           style="height: 0px; overflow: hidden;"
         />
@@ -280,7 +280,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿後
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":ra:"
+          id="«ra»"
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
@@ -430,7 +430,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿後
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":re:"
+          id="«re»"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
           style="height: 0px; overflow: hidden;"
         />
@@ -482,7 +482,7 @@ exports[`times_esaのフォームが正しく機能する(異常系) > 投稿後
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":rh:"
+          id="«rh»"
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
@@ -632,7 +632,7 @@ exports[`times_esaのフォームが正しく機能する(異常系) > 投稿後
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":rl:"
+          id="«rl»"
           placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
           style="height: 0px; overflow: hidden;"
         />
