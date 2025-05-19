@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { format } from 'date-fns';
 import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
@@ -102,6 +102,18 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
   const [text, setText] = useState<string>('');
   const [tags, setTags] = useState<string[]>(props.tags);
 
+  useEffect(() => {
+    setCategory(props.category);
+  }, [props.category]);
+
+  useEffect(() => {
+    setTitle(props.title);
+  }, [props.title]);
+
+  useEffect(() => {
+    setTags(props.tags);
+  }, [props.tags]);
+
   const isSameCategory = (): boolean => {
     if (category === '') { // 今日の日報がまだ作成されていない
       return true;
@@ -114,16 +126,17 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
     e.preventDefault();
     setSending(true);
     const date = new Date();
-    await submitTextToEsa(
-      makeDefaultEsaCategory(date),
-      tags.concat(getDay(date)),
-      transformTitle(title),
-      text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
-    ).then((data) => {
+    try {
+      const data = await submitTextToEsa(
+        makeDefaultEsaCategory(date),
+        tags.concat(getDay(date)),
+        transformTitle(title),
+        text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
+      );
       setCategory(data.data.category);
       setTitle(data.data.name);
-      setText('');
       setTags(data.data.tags);
+      setText('');
       props.onSubmit(
         data.data.category,
         data.data.name,
@@ -131,12 +144,12 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
         data.data.body_html,
         data.data.tags,
       );
-    }).catch((err: Error) => {
+    } catch (err: any) {
       // eslint-disable-next-line no-alert
       alert(`${err.name}: ${err.message}`);
-    }).finally(() => {
+    } finally {
       setSending(false);
-    });
+    }
   };
 
   return (
