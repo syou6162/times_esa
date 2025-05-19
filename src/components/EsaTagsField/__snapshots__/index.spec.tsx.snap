@@ -3,28 +3,28 @@
 exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1x6bjyf-MuiAutocomplete-root"
+    class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-o5oj2-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-e4sgrv-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1e3qgpi-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-op0f79-MuiButtonBase-root-MuiChip-root"
           data-tag-index="0"
           role="button"
           tabindex="-1"
         >
           <span
-            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
           >
             日報
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-1umw9bq-MuiSvgIcon-root"
             data-testid="CancelIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -35,19 +35,19 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           </svg>
         </div>
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-op0f79-MuiButtonBase-root-MuiChip-root"
           data-tag-index="1"
           role="button"
           tabindex="-1"
         >
           <span
-            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
           >
             BigQuery
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-1umw9bq-MuiSvgIcon-root"
             data-testid="CancelIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -58,19 +58,19 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           </svg>
         </div>
         <div
-          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-17pj9rt-MuiButtonBase-root-MuiChip-root"
+          class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSecondary MuiChip-deletable MuiChip-deletableColorSecondary MuiChip-filledSecondary MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-op0f79-MuiButtonBase-root-MuiChip-root"
           data-tag-index="2"
           role="button"
           tabindex="-1"
         >
           <span
-            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+            class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
           >
             月曜日
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiChip-deleteIcon MuiChip-deleteIconMedium MuiChip-deleteIconColorSecondary MuiChip-deleteIconFilledColorSecondary css-1umw9bq-MuiSvgIcon-root"
             data-testid="CancelIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-152mnda-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-qve9l1-MuiInputBase-input-MuiOutlinedInput-input"
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
           role="combobox"
@@ -95,18 +95,18 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
           value=""
         />
         <div
-          class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+          class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
         >
           <button
             aria-label="Clear"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1x7n7v0-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
             tabindex="-1"
             title="Clear"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
               data-testid="CloseIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -115,19 +115,17 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
                 d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-ihdtdm"
+            class="css-w4cd9x"
           >
             <span
+              aria-hidden="true"
               class="notranslate"
             >
               ​
@@ -143,13 +141,13 @@ exports[`esaのタグが正しく表示される > tagCandidatesも空の状態 
 exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の状態 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1x6bjyf-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-o5oj2-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-e4sgrv-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-autocomplete="list"
@@ -157,7 +155,7 @@ exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input"
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
           role="combobox"
@@ -167,12 +165,13 @@ exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-ihdtdm"
+            class="css-w4cd9x"
           >
             <span
+              aria-hidden="true"
               class="notranslate"
             >
               ​
@@ -188,13 +187,13 @@ exports[`esaのタグが正しく表示される > tagsもtagCandidatesも空の
 exports[`esaのタグが正しく表示される > 取得中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1x6bjyf-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-o5oj2-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-e4sgrv-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-autocomplete="list"
@@ -202,7 +201,7 @@ exports[`esaのタグが正しく表示される > 取得中は入力できな�
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
@@ -213,12 +212,13 @@ exports[`esaのタグが正しく表示される > 取得中は入力できな�
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-ihdtdm"
+            class="css-w4cd9x"
           >
             <span
+              aria-hidden="true"
               class="notranslate"
             >
               ​
@@ -234,13 +234,13 @@ exports[`esaのタグが正しく表示される > 取得中は入力できな�
 exports[`esaのタグが正しく表示される > 送信中は入力できない 1`] = `
 <DocumentFragment>
   <div
-    class="MuiAutocomplete-root css-1x6bjyf-MuiAutocomplete-root"
+    class="MuiAutocomplete-root css-o5oj2-MuiAutocomplete-root"
   >
     <div
-      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-zvwh9k-MuiFormControl-root-MuiTextField-root"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-e4sgrv-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiAutocomplete-inputRoot css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-autocomplete="list"
@@ -248,7 +248,7 @@ exports[`esaのタグが正しく表示される > 送信中は入力できな�
           aria-invalid="false"
           autocapitalize="none"
           autocomplete="off"
-          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiAutocomplete-input MuiAutocomplete-inputFocused css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
           id="esa_tags_field"
           placeholder="タグを記入しましょう"
@@ -259,12 +259,13 @@ exports[`esaのタグが正しく表示される > 送信中は入力できな�
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-ihdtdm"
+            class="css-w4cd9x"
           >
             <span
+              aria-hidden="true"
               class="notranslate"
             >
               ​
