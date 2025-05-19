@@ -3,6 +3,9 @@ name: Firebase Hostingでのdeployを実行する
 on:
   push:
     branches: [ master ]
+concurrency:
+  group: firebase-hosting-deploy-production
+  cancel-in-progress: false
 
 jobs:
   build:
