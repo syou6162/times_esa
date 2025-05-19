@@ -32,6 +32,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       value={props.text}
       disabled={props.sending}
       onChange={props.onChange}
+      inputProps={{ title: 'esa_submit_text_field' }}
     />
   );
 };

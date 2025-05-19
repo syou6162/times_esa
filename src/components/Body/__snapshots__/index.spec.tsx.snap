@@ -107,6 +107,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
             id="«r3»"
             placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
             style="height: 0px; overflow: hidden;"
+            title="esa_submit_text_field"
           />
           <textarea
             aria-hidden="true"

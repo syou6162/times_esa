@@ -144,7 +144,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       </a>
       {`: 今日は${getPostsCount(esaText)}個つぶやいたよ`}
       <EsaSubmitForm
-        key={`esa_form_${esaUpdatedAt}_${esaTitle}_${esaCategory}_${esaTags.join(',')}`}
+        key="esa_form"
         category={esaCategory}
         title={esaTitle}
         tags={esaTags}
