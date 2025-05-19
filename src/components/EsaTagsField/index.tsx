@@ -64,11 +64,13 @@ export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldPro
       }}
       renderTags={(tagValue, getTagProps) => {
         return tagValue.map((tag, index) => {
+          const { key, ...tagProps } = getTagProps({ index });
           return (
             <Chip
+              key={key}
               label={tag}
               color="secondary"
-              {...getTagProps({ index })}
+              {...tagProps}
             />
           );
         });
