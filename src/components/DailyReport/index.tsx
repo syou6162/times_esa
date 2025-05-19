@@ -47,14 +47,16 @@ type DailyReportShareProps = {
 }
 
 const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportShareProps) => {
-  const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n').split('\n---\n\n').slice(0, -1).map((t) => {
-    const regex = /^(?<time>\d\d:\d\d)?\s?(?<tweet>[\s\S]*?)\s?$/;
-    const match = t.match(regex);
-    if (match != null && match.groups) {
-      return [match.groups.time, match.groups.tweet];
-    }
-    return ['', ''];
-  });
+  const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n')
+    .split('\n---\n\n').slice(0, -1).map((t) => {
+      const anchorRegex = /^<a id="\d{4}" href="#\d{4}">(?<time>\d\d:\d\d)<\/a>\s?(?<tweet>[\s\S]*?)\s?$/;
+      const plainRegex = /^(?<time>\d\d:\d\d)?\s?(?<tweet>[\s\S]*?)\s?$/;
+      const match = t.match(anchorRegex) || t.match(plainRegex);
+      if (match != null && match.groups) {
+        return [match.groups.time, match.groups.tweet];
+      }
+      return ['', ''];
+    });
   return (
     <div>
       {texts.map(([time, t]) => {

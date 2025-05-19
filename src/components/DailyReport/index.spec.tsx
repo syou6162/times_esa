@@ -48,7 +48,7 @@ describe('DailyReportが正しく表示される', () => {
       fetching: false,
       fetchErrorMessage: "",
 
-      esaText: "12:34 RAW TEXT\n\n---\n\n13:15 hoge\n\n---",
+      esaText: "<a id=\"1234\" href=\"#1234\">12:34</a> RAW TEXT\n\n---\n\n<a id=\"1315\" href=\"#1315\">13:15</a> hoge\n\n---",
       esaHtml: "<span>hello world!<span>",
       reloadDailyReport: () => { }
     }

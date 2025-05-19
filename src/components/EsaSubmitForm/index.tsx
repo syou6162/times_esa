@@ -121,11 +121,16 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
     setSending(true);
     const date = new Date();
     try {
+      const timeStr = format(date, 'HH:mm');
+      const anchorId = format(date, 'HHmm');
+      const content = text !== ''
+        ? `<a id="${anchorId}" href="#${anchorId}">${timeStr}</a> ${text}\n\n---\n`
+        : '';
       const data = await submitTextToEsa(
         makeDefaultEsaCategory(date),
         tags.concat(getDay(date)),
         transformTitle(title),
-        text !== '' ? `${format(date, 'HH:mm')} ${text}\n\n---\n` : '',
+        content,
       );
       setCategory(data.data.category);
       setTitle(data.data.name);
