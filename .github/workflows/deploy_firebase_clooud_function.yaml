@@ -3,6 +3,9 @@ name: Firebase Cloud Functionsでのdeployを実行する
 on:
   push:
     branches: [ master ]
+concurrency:
+  group: firebase-functions-deploy-production
+  cancel-in-progress: false
 
 jobs:
   build:
