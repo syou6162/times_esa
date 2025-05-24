@@ -92,8 +92,21 @@ describe('EsaTextField', () => {
       fireEvent.click(textField);
     });
 
-    // イベントハンドラが正しく動作することを確認（内部状態のテストは困難なため、エラーが発生しないことを確認）
-    expect(textField).toBeTruthy();
+    // 設定したカーソル位置を確認
+    expect(textField.selectionStart).toBe(3);
+    expect(textField.selectionEnd).toBe(7);
+
+    // フォーカスを外して戻す（カーソル位置が記録・復元されるかテスト）
+    await act(async () => {
+      fireEvent.blur(textField);
+      await new Promise(resolve => setTimeout(resolve, 0));
+      fireEvent.focus(textField);
+    });
+
+    // カーソル位置が復元されていることを確認
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(textField.selectionStart).toBe(3);
+    expect(textField.selectionEnd).toBe(7);
   });
 
   it('テキスト変更時にonChangeが呼ばれること', () => {

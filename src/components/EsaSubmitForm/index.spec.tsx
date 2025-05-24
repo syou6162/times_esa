@@ -298,6 +298,13 @@ describe('EsaSubmitForm - フォーカス・カーソル位置維持テスト', 
   });
 
   it('送信中（sending=true）でもテキストフィールドのフォーカス・カーソル位置は維持されること', async () => {
+    // submit処理が完了しないようにPromiseを返却するがresolveしないmockを作成
+    mockHttpsCallable.mockImplementation(() => {
+      return new Promise(() => {
+        // resolveしないPromise
+      });
+    });
+
     const { getByTitle } = render(
       <EsaSubmitForm
         category={makeDefaultEsaCategory(new Date())}
@@ -320,17 +327,17 @@ describe('EsaSubmitForm - フォーカス・カーソル位置維持テスト', 
     });
 
     const initialStart = textField.selectionStart;
+    const initialEnd = textField.selectionEnd;
 
     // 送信ボタンクリック（sending状態になる）
     await act(async () => {
       fireEvent.click(submitButton);
+      await new Promise(resolve => setTimeout(resolve, 10));
     });
 
     // 送信中でもテキストフィールドにフォーカスがあることを確認
-    await waitFor(() => {
-      expect(document.activeElement).toBe(textField);
-      expect(textField.selectionStart).toBe(initialStart);
-    });
-  });
+    expect(document.activeElement).toBe(textField);
+    expect(textField.selectionStart).toBe(initialStart);
+    expect(textField.selectionEnd).toBe(initialEnd);
   });
 });
