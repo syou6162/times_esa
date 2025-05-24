@@ -182,3 +182,143 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
     });
   });
 });
+
+describe('EsaSubmitForm - フォーカス・カーソル位置維持テスト', () => {
+  const mockOnSubmit = vi.fn();
+
+  beforeEach(() => {
+    const responseData = {
+      data: {
+        updated_at: "2022-01-01 00:00",
+        url: "https://docs.esa.io/posts/100",
+        body_md: "hello!",
+        body_html: "hello!",
+        tags: ["日報", "BigQuery", getDay(new Date)],
+        name: "更新されたタイトル",
+        category: makeDefaultEsaCategory(new Date()),
+      },
+    };
+    mockHttpsCallable.mockResolvedValue(responseData);
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+    mockOnSubmit.mockClear();
+  });
+
+  it('フェッチ中にpropsが更新されてもテキストフィールドのフォーカス・カーソル位置が維持されること', async () => {
+    const { rerender } = render(
+      <EsaSubmitForm
+        category=""
+        title=""
+        tags={[]}
+        tagCandidates={['タグ1']}
+        fetching={true}  // フェッチ中
+        onSubmit={mockOnSubmit}
+      />
+    );
+
+    const textField = document.querySelector('[title="esa_submit_text_field"]') as HTMLTextAreaElement;
+
+    // テキスト入力とカーソル位置設定
+    fireEvent.change(textField, { target: { value: 'hello world' } });
+    textField.focus();
+    textField.setSelectionRange(6, 6);
+
+    expect(document.activeElement).toBe(textField);
+    expect(textField.selectionStart).toBe(6);
+
+    // フェッチ完了をシミュレート（propsの更新）
+    rerender(
+      <EsaSubmitForm
+        category={makeDefaultEsaCategory(new Date())}  // 更新されたカテゴリ
+        title="更新されたタイトル"  // 更新されたタイトル
+        tags={['新しいタグ']}  // 更新されたタグ
+        tagCandidates={['タグ1', 'タグ2']}
+        fetching={false}  // フェッチ完了
+        onSubmit={mockOnSubmit}
+      />
+    );
+
+    // 少し待つ（非同期処理のため）
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // テキストフィールドにフォーカスが戻っていることを確認
+    expect(document.activeElement).toBe(textField);
+    // カーソル位置も維持されていることを確認
+    expect(textField.selectionStart).toBe(6);
+    expect(textField.selectionEnd).toBe(6);
+    // テキスト内容は保持されていることを確認
+    expect(textField.value).toBe('hello world');
+  });
+
+  it('テキストフィールドからタイトルフィールドにフォーカス移動後、テキストフィールドに戻ってもカーソル位置が維持されること', async () => {
+    render(
+      <EsaSubmitForm
+        category=""
+        title=""
+        tags={[]}
+        tagCandidates={['タグ1', 'タグ2']}
+        fetching={false}
+        onSubmit={mockOnSubmit}
+      />
+    );
+
+    const textField = document.querySelector('[title="esa_submit_text_field"]') as HTMLTextAreaElement;
+    const titleField = document.querySelector('[title="esa_submit_title_field"]') as HTMLInputElement;
+
+    // テキストフィールドに文字を入力してカーソル位置を設定
+    fireEvent.change(textField, { target: { value: 'hello world' } });
+    textField.focus();
+    textField.setSelectionRange(5, 5);
+
+    const initialStart = textField.selectionStart;
+    const initialEnd = textField.selectionEnd;
+
+    // タイトルフィールドにフォーカス移動
+    titleField.focus();
+    expect(document.activeElement).toBe(titleField);
+
+    // テキストフィールドに戻る
+    textField.focus();
+
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // カーソル位置が維持されていることを確認
+    expect(document.activeElement).toBe(textField);
+    expect(textField.selectionStart).toBe(initialStart);
+    expect(textField.selectionEnd).toBe(initialEnd);
+  });
+
+  it('送信中（sending=true）でもテキストフィールドのフォーカス・カーソル位置は維持されること', async () => {
+    const { getByTitle } = render(
+      <EsaSubmitForm
+        category={makeDefaultEsaCategory(new Date())}
+        title="テスト日報"
+        tags={['日報']}
+        tagCandidates={['日報', 'テスト']}
+        fetching={false}
+        onSubmit={mockOnSubmit}
+      />
+    );
+
+    const textField = document.querySelector('[title="esa_submit_text_field"]') as HTMLTextAreaElement;
+    const submitButton = getByTitle("esa_submit_form_button");
+
+    // テキスト入力とカーソル位置設定
+    fireEvent.change(textField, { target: { value: 'sending test' } });
+    textField.focus();
+    textField.setSelectionRange(7, 7);
+
+    const initialStart = textField.selectionStart;
+
+    // 送信ボタンクリック（sending状態になる）
+    fireEvent.click(submitButton);
+
+    // 送信中でもテキストフィールドにフォーカスがあることを確認
+    await waitFor(() => {
+      expect(document.activeElement).toBe(textField);
+      expect(textField.selectionStart).toBe(initialStart);
+    });
+  });
+});

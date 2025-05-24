@@ -16,6 +16,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 不正な
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
+          title="esa_submit_title_field"
         >
           にっぽー
         </textarea>
@@ -151,6 +152,7 @@ exports[`times_esaのフォームが正しく機能する(正常系) > 投稿す
           placeholder="日報のタイトルを記入しましょう"
           required=""
           style="height: 0px; overflow: hidden;"
+          title="esa_submit_title_field"
         >
           にっぽー
         </textarea>
