@@ -6,17 +6,18 @@ import EsaTextField from "./index";
 
 describe('EsaTextField', () => {
   const mockOnChange = vi.fn();
+  const testContent = "test content";
 
   it('正しいpropsでテキストフィールドがレンダリングされること', () => {
     render(
       <EsaTextField
         sending={false}
-        text="test content"
+        text={testContent}
         onChange={mockOnChange}
       />
     );
 
-    const textField = screen.getByDisplayValue('test content');
+    const textField = screen.getByDisplayValue(testContent);
     expect(textField).toBeTruthy();
     expect(textField.getAttribute('disabled')).toBeNull();
   });
