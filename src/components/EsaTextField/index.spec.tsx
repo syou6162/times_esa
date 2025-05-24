@@ -31,7 +31,7 @@ describe('EsaTextField', () => {
       />
     );
 
-    const textField = screen.getByRole('textbox');
+    const textField = screen.getByTitle('esa_submit_text_field');
     expect(textField.getAttribute('disabled')).toBe('');
   });
 
@@ -44,7 +44,7 @@ describe('EsaTextField', () => {
       />
     );
 
-    const textField = screen.getByRole('textbox') as HTMLTextAreaElement;
+    const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
 
     // カーソルを特定位置に移動
     textField.focus();
@@ -74,7 +74,7 @@ describe('EsaTextField', () => {
       />
     );
 
-    const textField = screen.getByRole('textbox') as HTMLTextAreaElement;
+    const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
     textField.focus();
     textField.setSelectionRange(3, 7);
 
@@ -96,7 +96,7 @@ describe('EsaTextField', () => {
       />
     );
 
-    const textField = screen.getByRole('textbox');
+    const textField = screen.getByTitle('esa_submit_text_field');
     fireEvent.change(textField, { target: { value: 'new content' } });
 
     expect(mockOnChange).toHaveBeenCalledTimes(1);
