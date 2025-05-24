@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import EsaTextField from "./index";
 
@@ -46,16 +46,21 @@ describe('EsaTextField', () => {
 
     const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
 
-    // カーソルを特定位置に移動
-    textField.focus();
-    textField.setSelectionRange(5, 5);
+    await act(async () => {
+      // カーソルを特定位置に移動
+      textField.focus();
+      textField.setSelectionRange(5, 5);
+    });
 
     const initialStart = textField.selectionStart;
     const initialEnd = textField.selectionEnd;
 
-    // フォーカスを外してから戻す
-    fireEvent.blur(textField);
-    fireEvent.focus(textField);
+    await act(async () => {
+      // フォーカスを外してから戻す
+      fireEvent.blur(textField);
+      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
+      fireEvent.focus(textField);
+    });
 
     // カーソル位置が復元されることを確認
     // setTimeoutが使われているので少し待つ
@@ -65,7 +70,7 @@ describe('EsaTextField', () => {
     expect(textField.selectionEnd).toBe(initialEnd);
   });
 
-  it('選択範囲変更イベントでカーソル位置が記録されること', () => {
+  it('選択範囲変更イベントでカーソル位置が記録されること', async () => {
     render(
       <EsaTextField
         sending={false}
@@ -75,13 +80,17 @@ describe('EsaTextField', () => {
     );
 
     const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
-    textField.focus();
-    textField.setSelectionRange(3, 7);
 
-    // selection change をトリガー
-    fireEvent.select(textField);
-    fireEvent.keyUp(textField);
-    fireEvent.click(textField);
+    await act(async () => {
+      textField.focus();
+      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
+      textField.setSelectionRange(3, 7);
+
+      // selection change をトリガー
+      fireEvent.select(textField);
+      fireEvent.keyUp(textField);
+      fireEvent.click(textField);
+    });
 
     // イベントハンドラが正しく動作することを確認（内部状態のテストは困難なため、エラーが発生しないことを確認）
     expect(textField).toBeTruthy();
