@@ -19,7 +19,7 @@ describe('EsaTextField', () => {
 
     const textField = screen.getByDisplayValue(testContent);
     expect(textField).toBeTruthy();
-    expect(textField.getAttribute('disabled')).toBeNull();
+    expect(textField.hasAttribute('disabled')).toBe(false);
   });
 
   it('sending=trueの時にdisabledになること', () => {
@@ -32,7 +32,7 @@ describe('EsaTextField', () => {
     );
 
     const textField = screen.getByTitle('esa_submit_text_field');
-    expect(textField.getAttribute('disabled')).toBe('');
+    expect(textField.hasAttribute('disabled')).toBe(true);
   });
 
   it('フォーカス/ブラー後にカーソル位置が維持されること', async () => {
