@@ -27,6 +27,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
             placeholder="日報のタイトルを記入しましょう"
             required=""
             style="height: 0px; overflow: hidden;"
+            title="esa_submit_title_field"
           >
             日報
           </textarea>
