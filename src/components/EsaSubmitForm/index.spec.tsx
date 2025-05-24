@@ -81,6 +81,29 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     });
   });
 
+  it('propsが更新されても入力中のテキストは保持される', async () => {
+    const props: EsaSubmitFormProps = {
+      category: '',
+      title: 'こんにちは',
+      tags: [],
+      tagCandidates: [],
+      fetching: false,
+      onSubmit: () => { },
+    }
+    const { rerender, getByTitle } = render(
+      <EsaSubmitForm {...props} />
+    );
+
+    const textArea = getByTitle('esa_submit_text_field');
+    fireEvent.change(textArea, { target: { value: 'keep' } });
+
+    rerender(
+      <EsaSubmitForm {...props} title="更新後" tags={["new"]} />
+    );
+
+    expect((getByTitle('esa_submit_text_field') as HTMLInputElement).value).toBe('keep');
+  });
+
   it('投稿後の内容が画面に正しく反映される', async () => {
     const props: EsaSubmitFormProps = {
       category: "",
@@ -95,8 +118,10 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     );
 
     expect(mockHttpsCallable).toBeCalledTimes(0)
-    expect(asFragment()).toMatchSnapshot();
     const before = asFragment();
+
+    const textArea = getByTitle('esa_submit_text_field');
+    fireEvent.change(textArea, { target: { value: 'hello' } });
 
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
@@ -106,6 +131,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
       expect(getByText("BigQuery")).toBeDefined();
       expect(getByText(modifiedTitle)).toBeDefined();
       expect(asFragment()).not.toStrictEqual(before);
+      expect((getByTitle('esa_submit_text_field') as HTMLInputElement).value).toBe('');
     });
   });
 });
@@ -117,7 +143,7 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
   beforeEach(() => {
     window.alert = alertMock;
 
-    mockHttpsCallable.mockResolvedValue(new Error("Internal Error"));
+    mockHttpsCallable.mockRejectedValue(new Error("Internal Error"));
   });
 
   afterEach(() => {
@@ -139,6 +165,8 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
       <EsaSubmitForm {...props} />
     );
 
+    const textArea = getByTitle('esa_submit_text_field');
+    fireEvent.change(textArea, { target: { value: 'fail' } });
     const before = asFragment();
 
     fireEvent.click(getByTitle("esa_submit_form_button"));
@@ -150,7 +178,7 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
 
       // 変更に失敗したので、DOMに変わりはない
       expect(asFragment()).toStrictEqual(before);
-      expect(asFragment()).toMatchSnapshot();
+      expect((getByTitle('esa_submit_text_field') as HTMLInputElement).value).toBe('fail');
     });
   });
 });
