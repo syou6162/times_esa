@@ -20,7 +20,10 @@ const ContentTextField = styled(TextField)({
   },
 });
 
-const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => {
+const EsaTextField = React.forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  EsaTextFieldProps
+>((props: EsaTextFieldProps, ref) => {
   return (
     <ContentTextField
       fullWidth
@@ -32,9 +35,12 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       value={props.text}
       disabled={props.sending}
       inputProps={{ title: 'esa_submit_text_field' }}
+      inputRef={ref}
       onChange={props.onChange}
     />
   );
-};
+});
+
+EsaTextField.displayName = 'EsaTextField';
 
 export default EsaTextField;

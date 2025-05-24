@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import { format } from 'date-fns';
 import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
@@ -97,6 +97,7 @@ export const submitTextToEsa = (
 
 export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);
+  const textFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const [category, setCategory] = useState<string>(props.category);
   const [title, setTitle] = useState<string>(props.title);
   const [text, setText] = useState<string>('');
@@ -148,6 +149,7 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
       alert(`${err.name}: ${err.message}`);
     } finally {
       setSending(false);
+      textFieldRef.current?.focus();
     }
   };
 
@@ -168,6 +170,7 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
         onChange={(event, value, reason, detail) => { setTags(value); }}
       />
       <EsaTextField
+        ref={textFieldRef}
         sending={sending}
         text={text}
         onChange={(e) => { setText(e.target.value); }}
