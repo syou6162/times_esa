@@ -35,12 +35,13 @@ describe('EsaTextField', () => {
     expect(textField.hasAttribute('disabled')).toBe(true);
   });
 
-  it('フォーカス/ブラー後にカーソル位置が維持されること', async () => {
-    render(
+  it('フェッチ中にカーソル位置が維持されること', async () => {
+    const { rerender } = render(
       <EsaTextField
         sending={false}
         text="hello world"
         onChange={mockOnChange}
+        fetching={false}
       />
     );
 
@@ -55,57 +56,67 @@ describe('EsaTextField', () => {
     const initialStart = textField.selectionStart;
     const initialEnd = textField.selectionEnd;
 
+    // フェッチ中状態に変更
     await act(async () => {
-      // フォーカスを外してから戻す
-      fireEvent.blur(textField);
-      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
-      fireEvent.focus(textField);
+      rerender(
+        <EsaTextField
+          sending={false}
+          text="hello world"
+          onChange={mockOnChange}
+          fetching={true}
+        />
+      );
+    });
+
+    // フェッチ完了状態に戻す
+    await act(async () => {
+      rerender(
+        <EsaTextField
+          sending={false}
+          text="hello world"
+          onChange={mockOnChange}
+          fetching={false}
+        />
+      );
+      await new Promise(resolve => setTimeout(resolve, 10));
     });
 
     // カーソル位置が復元されることを確認
-    // setTimeoutが使われているので少し待つ
-    await new Promise(resolve => setTimeout(resolve, 10));
-
     expect(textField.selectionStart).toBe(initialStart);
     expect(textField.selectionEnd).toBe(initialEnd);
   });
 
-  it('選択範囲変更イベントでカーソル位置が記録されること', async () => {
+  it('通常のフォーカス移動ではカーソル位置が変更されないこと', async () => {
     render(
       <EsaTextField
         sending={false}
         text="hello world"
         onChange={mockOnChange}
+        fetching={false}
       />
     );
 
     const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
 
+    // 初期フォーカス・カーソル位置設定
     await act(async () => {
       textField.focus();
-      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
-      textField.setSelectionRange(3, 7);
-
-      // selection change をトリガー
-      fireEvent.select(textField);
-      fireEvent.keyUp(textField);
-      fireEvent.click(textField);
+      textField.setSelectionRange(3, 3);
     });
 
-    // 設定したカーソル位置を確認
-    expect(textField.selectionStart).toBe(3);
-    expect(textField.selectionEnd).toBe(7);
-
-    // フォーカスを外して戻す（カーソル位置が記録・復元されるかテスト）
+    // 一度フォーカスを外す
     await act(async () => {
       fireEvent.blur(textField);
-      await new Promise(resolve => setTimeout(resolve, 0));
-      fireEvent.focus(textField);
     });
 
-    // カーソル位置が復元されていることを確認
-    await new Promise(resolve => setTimeout(resolve, 10));
-    expect(textField.selectionStart).toBe(3);
+    // 新しい位置でフォーカスを当てる（ユーザーがクリックした状態をシミュレート）
+    await act(async () => {
+      textField.focus();
+      textField.setSelectionRange(7, 7);
+    });
+
+    // フォーカスを当てた新しい位置が維持されることを確認
+    expect(textField.selectionStart).toBe(7);
     expect(textField.selectionEnd).toBe(7);
   });
 

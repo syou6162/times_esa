@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { outlinedInputClasses, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
@@ -7,6 +7,7 @@ type EsaTextFieldProps = {
   text: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  fetching?: boolean;
 };
 
 const ContentTextField = styled(TextField)({
@@ -30,38 +31,31 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
     end: null,
   });
 
-  // フォーカス状態を追跡するref
-  const wasFocusedRef = useRef(false);
-
-  // カーソル位置を記録する関数
-  const handleSelectionChange = useCallback(() => {
-    if (textInputRef.current) {
-      caretRef.current.start = textInputRef.current.selectionStart;
-      caretRef.current.end = textInputRef.current.selectionEnd;
-    }
-  }, []);
-
-  // フォーカスが外れた時の処理
-  const handleBlur = useCallback(() => {
-    wasFocusedRef.current = true;
-    handleSelectionChange(); // 最新のカーソル位置を記録
-  }, [handleSelectionChange]);
-
-  // フォーカスが戻った時の処理
-  const handleFocus = useCallback(() => {
-    // 以前フォーカスがあった場合のみカーソル位置を復元
-    if (wasFocusedRef.current && textInputRef.current) {
+  // フェッチ状態の変化を監視
+  useEffect(() => {
+    if (props.fetching) {
+      // フェッチ中になった時、カーソル位置を記録
+      if (textInputRef.current && document.activeElement === textInputRef.current) {
+        caretRef.current.start = textInputRef.current.selectionStart;
+        caretRef.current.end = textInputRef.current.selectionEnd;
+      }
+    } else {
+      // フェッチが終了した時、記録したカーソル位置があれば復元
       const { start, end } = caretRef.current;
-      if (typeof start === 'number' && typeof end === 'number') {
-        // 少し遅延を入れてカーソル位置を復元
+      if (textInputRef.current && typeof start === 'number' && typeof end === 'number') {
+        textInputRef.current.focus();
         setTimeout(() => {
           if (textInputRef.current) {
             textInputRef.current.setSelectionRange(start, end);
           }
         }, 0);
+
+        // 使用後はカーソル位置をリセット
+        caretRef.current.start = null;
+        caretRef.current.end = null;
       }
     }
-  }, []);
+  }, [props.fetching]);
 
   return (
     <ContentTextField
@@ -76,13 +70,13 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       inputProps={{ title: 'esa_submit_text_field' }}
       inputRef={textInputRef}
       onChange={props.onChange}
-      onSelect={handleSelectionChange}
-      onKeyUp={handleSelectionChange}
-      onClick={handleSelectionChange}
-      onBlur={handleBlur}
-      onFocus={handleFocus}
     />
   );
+};
+
+// デフォルトプロップス
+EsaTextField.defaultProps = {
+  fetching: false
 };
 
 export default EsaTextField;
