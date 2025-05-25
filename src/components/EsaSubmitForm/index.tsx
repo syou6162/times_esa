@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import { format } from 'date-fns';
 import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
-import EsaTextField from '../EsaTextField';
+import EsaTextField, { EsaTextFieldRef } from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
 import { makeDefaultEsaCategory, functionsRegion } from '../../util';
 
@@ -101,12 +101,35 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
   const [title, setTitle] = useState<string>(props.title);
   const [text, setText] = useState<string>('');
   const [tags, setTags] = useState<string[]>(props.tags);
+  const textFieldRef = useRef<EsaTextFieldRef>(null);
 
   useEffect(() => {
     setCategory(props.category);
     setTitle(props.title);
     setTags(props.tags);
   }, [props.category, props.title, props.tags]);
+
+  // 前回のフェッチ状態を記録するためのref
+  const prevFetchingRef = useRef(props.fetching);
+
+  // フェッチ状態の変化を監視してカーソル位置を保存/復元
+  useEffect(() => {
+    // フェッチが開始された時（falseからtrueに変わった時）
+    if (props.fetching && !prevFetchingRef.current) {
+      // カーソル位置を保存（テキスト入力があるときのみ）
+      if (text.length > 0) {
+        textFieldRef.current?.saveCaretPosition();
+      }
+    }
+    // フェッチが完了した時（trueからfalseに変わった時）
+    else if (!props.fetching && prevFetchingRef.current) {
+      // カーソル位置を復元
+      textFieldRef.current?.restoreCaretPosition();
+    }
+
+    // 現在のフェッチ状態を保存
+    prevFetchingRef.current = props.fetching;
+  }, [props.fetching, text]);
 
   const isSameCategory = (): boolean => {
     if (category === '') { // 今日の日報がまだ作成されていない
@@ -168,6 +191,7 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
         onChange={(event, value, reason, detail) => { setTags(value); }}
       />
       <EsaTextField
+        ref={textFieldRef}
         sending={sending}
         text={text}
         onChange={(e) => { setText(e.target.value); }}

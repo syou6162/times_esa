@@ -27,6 +27,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
             placeholder="日報のタイトルを記入しましょう"
             required=""
             style="height: 0px; overflow: hidden;"
+            title="esa_submit_title_field"
           >
             日報
           </textarea>
@@ -99,7 +100,8 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-grz519-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl MuiInputBase-multiline css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root"
+          title="esa-submit-text-field"
         >
           <textarea
             aria-invalid="false"
@@ -107,7 +109,6 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
             id="«r3»"
             placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
             style="height: 0px; overflow: hidden;"
-            title="esa_submit_text_field"
           />
           <textarea
             aria-hidden="true"

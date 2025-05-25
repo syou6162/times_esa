@@ -34,6 +34,7 @@ const EsaTitleField: React.FC<EsaTitleFieldProps> = (props: EsaTitleFieldProps) 
       variant="outlined"
       value={props.title}
       disabled={props.sending || props.fetching}
+      inputProps={{ title: 'esa_submit_title_field' }}
       onChange={props.onChange}
       onFocus={moveCursorToEnd}
     />
