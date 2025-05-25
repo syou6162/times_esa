@@ -1,13 +1,17 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { outlinedInputClasses, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+
+export interface EsaTextFieldRef {
+  saveCaretPosition: () => void;
+  restoreCaretPosition: () => void;
+}
 
 type EsaTextFieldProps = {
   sending: boolean;
   text: string;
   // eslint-disable-next-line no-unused-vars
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  fetching?: boolean;
 };
 
 const ContentTextField = styled(TextField)({
@@ -21,7 +25,7 @@ const ContentTextField = styled(TextField)({
   },
 });
 
-const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => {
+const EsaTextField = forwardRef<EsaTextFieldRef, EsaTextFieldProps>((props, ref) => {
   // テキストフィールドのDOM参照用ref
   const textInputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -31,16 +35,15 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
     end: null,
   });
 
-  // フェッチ状態の変化を監視
-  useEffect(() => {
-    if (props.fetching) {
-      // フェッチ中になった時、カーソル位置を記録
+  // 外部から呼び出せるメソッドを公開
+  useImperativeHandle(ref, () => ({
+    saveCaretPosition: () => {
       if (textInputRef.current && document.activeElement === textInputRef.current) {
         caretRef.current.start = textInputRef.current.selectionStart;
         caretRef.current.end = textInputRef.current.selectionEnd;
       }
-    } else {
-      // フェッチが終了した時、記録したカーソル位置があれば復元
+    },
+    restoreCaretPosition: () => {
       const { start, end } = caretRef.current;
       if (textInputRef.current && typeof start === 'number' && typeof end === 'number') {
         textInputRef.current.focus();
@@ -55,7 +58,7 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
         caretRef.current.end = null;
       }
     }
-  }, [props.fetching]);
+  }));
 
   return (
     <ContentTextField
@@ -72,11 +75,6 @@ const EsaTextField: React.FC<EsaTextFieldProps> = (props: EsaTextFieldProps) => 
       onChange={props.onChange}
     />
   );
-};
-
-// デフォルトプロップス
-EsaTextField.defaultProps = {
-  fetching: false
-};
+});
 
 export default EsaTextField;

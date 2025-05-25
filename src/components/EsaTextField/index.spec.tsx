@@ -2,7 +2,8 @@
 
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import EsaTextField from "./index";
+import EsaTextField, { EsaTextFieldRef } from "./index";
+import React from "react";
 
 describe('EsaTextField', () => {
   const mockOnChange = vi.fn();
@@ -35,13 +36,12 @@ describe('EsaTextField', () => {
     expect(textField.hasAttribute('disabled')).toBe(true);
   });
 
-  it('フェッチ中にカーソル位置が維持されること', async () => {
-    const { rerender } = render(
+  it('フォーカス/ブラー後にカーソル位置が維持されること', async () => {
+    render(
       <EsaTextField
         sending={false}
         text="hello world"
         onChange={mockOnChange}
-        fetching={false}
       />
     );
 
@@ -56,67 +56,57 @@ describe('EsaTextField', () => {
     const initialStart = textField.selectionStart;
     const initialEnd = textField.selectionEnd;
 
-    // フェッチ中状態に変更
     await act(async () => {
-      rerender(
-        <EsaTextField
-          sending={false}
-          text="hello world"
-          onChange={mockOnChange}
-          fetching={true}
-        />
-      );
-    });
-
-    // フェッチ完了状態に戻す
-    await act(async () => {
-      rerender(
-        <EsaTextField
-          sending={false}
-          text="hello world"
-          onChange={mockOnChange}
-          fetching={false}
-        />
-      );
-      await new Promise(resolve => setTimeout(resolve, 10));
+      // フォーカスを外してから戻す
+      fireEvent.blur(textField);
+      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
+      fireEvent.focus(textField);
     });
 
     // カーソル位置が復元されることを確認
+    // setTimeoutが使われているので少し待つ
+    await new Promise(resolve => setTimeout(resolve, 10));
+
     expect(textField.selectionStart).toBe(initialStart);
     expect(textField.selectionEnd).toBe(initialEnd);
   });
 
-  it('通常のフォーカス移動ではカーソル位置が変更されないこと', async () => {
+  it('選択範囲変更イベントでカーソル位置が記録されること', async () => {
     render(
       <EsaTextField
         sending={false}
         text="hello world"
         onChange={mockOnChange}
-        fetching={false}
       />
     );
 
     const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
 
-    // 初期フォーカス・カーソル位置設定
     await act(async () => {
       textField.focus();
-      textField.setSelectionRange(3, 3);
+      await new Promise(resolve => setTimeout(resolve, 0)); // マイクロタスクを待つ
+      textField.setSelectionRange(3, 7);
+
+      // selection change をトリガー
+      fireEvent.select(textField);
+      fireEvent.keyUp(textField);
+      fireEvent.click(textField);
     });
 
-    // 一度フォーカスを外す
+    // 設定したカーソル位置を確認
+    expect(textField.selectionStart).toBe(3);
+    expect(textField.selectionEnd).toBe(7);
+
+    // フォーカスを外して戻す（カーソル位置が記録・復元されるかテスト）
     await act(async () => {
       fireEvent.blur(textField);
+      await new Promise(resolve => setTimeout(resolve, 0));
+      fireEvent.focus(textField);
     });
 
-    // 新しい位置でフォーカスを当てる（ユーザーがクリックした状態をシミュレート）
-    await act(async () => {
-      textField.focus();
-      textField.setSelectionRange(7, 7);
-    });
-
-    // フォーカスを当てた新しい位置が維持されることを確認
-    expect(textField.selectionStart).toBe(7);
+    // カーソル位置が復元されていることを確認
+    await new Promise(resolve => setTimeout(resolve, 10));
+    expect(textField.selectionStart).toBe(3);
     expect(textField.selectionEnd).toBe(7);
   });
 
@@ -133,5 +123,74 @@ describe('EsaTextField', () => {
     fireEvent.change(textField, { target: { value: 'new content' } });
 
     expect(mockOnChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('命令型APIでカーソル位置を保存・復元できること', async () => {
+    // レンダリング用のテスト関数コンポーネントを作成
+    const TestComponent = () => {
+      const ref = React.useRef<EsaTextFieldRef>(null);
+
+      const savePosition = () => {
+        ref.current?.saveCaretPosition();
+      };
+
+      const restorePosition = () => {
+        ref.current?.restoreCaretPosition();
+      };
+
+      return (
+        <>
+          <EsaTextField
+            ref={ref}
+            sending={false}
+            text="hello imperative world"
+            onChange={mockOnChange}
+          />
+          <button onClick={savePosition} data-testid="save-btn">Save</button>
+          <button onClick={restorePosition} data-testid="restore-btn">Restore</button>
+        </>
+      );
+    };
+
+    render(<TestComponent />);
+
+    const textField = screen.getByTitle('esa_submit_text_field') as HTMLTextAreaElement;
+    const saveButton = screen.getByTestId('save-btn');
+    const restoreButton = screen.getByTestId('restore-btn');
+
+    // カーソル位置を設定
+    await act(async () => {
+      textField.focus();
+      textField.setSelectionRange(6, 16); // "imperative" を選択
+    });
+
+    // カーソル位置が正しく設定されていることを確認
+    expect(textField.selectionStart).toBe(6);
+    expect(textField.selectionEnd).toBe(16);
+
+    // 保存ボタンをクリック
+    fireEvent.click(saveButton);
+
+    // フォーカスを外す
+    fireEvent.blur(textField);
+
+    // 違うカーソル位置に設定
+    await act(async () => {
+      textField.focus();
+      textField.setSelectionRange(0, 5); // "hello" を選択
+    });
+
+    expect(textField.selectionStart).toBe(0);
+    expect(textField.selectionEnd).toBe(5);
+
+    // 復元ボタンをクリック
+    fireEvent.click(restoreButton);
+
+    // 少し待つ（非同期処理のため）
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    // 元のカーソル位置（"imperative" を選択）が復元されていることを確認
+    expect(textField.selectionStart).toBe(6);
+    expect(textField.selectionEnd).toBe(16);
   });
 });
