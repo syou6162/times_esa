@@ -109,16 +109,27 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
     setTags(props.tags);
   }, [props.category, props.title, props.tags]);
 
+  // 前回のフェッチ状態を記録するためのref
+  const prevFetchingRef = useRef(props.fetching);
+
   // フェッチ状態の変化を監視してカーソル位置を保存/復元
   useEffect(() => {
-    if (props.fetching) {
-      // フェッチ開始時にカーソル位置を保存
-      textFieldRef.current?.saveCaretPosition();
-    } else {
-      // フェッチ完了時にカーソル位置を復元
+    // フェッチが開始された時（falseからtrueに変わった時）
+    if (props.fetching && !prevFetchingRef.current) {
+      // カーソル位置を保存（テキスト入力があるときのみ）
+      if (text.length > 0) {
+        textFieldRef.current?.saveCaretPosition();
+      }
+    }
+    // フェッチが完了した時（trueからfalseに変わった時）
+    else if (!props.fetching && prevFetchingRef.current) {
+      // カーソル位置を復元
       textFieldRef.current?.restoreCaretPosition();
     }
-  }, [props.fetching]);
+
+    // 現在のフェッチ状態を保存
+    prevFetchingRef.current = props.fetching;
+  }, [props.fetching, text]);
 
   const isSameCategory = (): boolean => {
     if (category === '') { // 今日の日報がまだ作成されていない
