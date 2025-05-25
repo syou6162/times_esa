@@ -70,6 +70,7 @@ const EsaTextField = forwardRef<EsaTextFieldRef, EsaTextFieldProps>((props, ref)
       maxRows={30}
       value={props.text}
       disabled={props.sending}
+      autoFocus
       inputProps={{ title: 'esa_submit_text_field' }}
       inputRef={textInputRef}
       onChange={props.onChange}
