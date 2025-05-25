@@ -71,7 +71,7 @@ const EsaTextField = forwardRef<EsaTextFieldRef, EsaTextFieldProps>((props, ref)
       value={props.text}
       disabled={props.sending}
       autoFocus
-      inputProps={{ title: 'esa_submit_text_field' }}
+      slotProps={{ input: { title: 'esa-submit-text-field' } }}
       inputRef={textInputRef}
       onChange={props.onChange}
     />

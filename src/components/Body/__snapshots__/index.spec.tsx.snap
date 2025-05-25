@@ -101,6 +101,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
       >
         <div
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl MuiInputBase-multiline css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root"
+          title="esa-submit-text-field"
         >
           <textarea
             aria-invalid="false"
@@ -108,7 +109,6 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
             id="«r3»"
             placeholder="ここにつぶやいた内容がesa.ioに追記されていきます"
             style="height: 0px; overflow: hidden;"
-            title="esa_submit_text_field"
           />
           <textarea
             aria-hidden="true"
