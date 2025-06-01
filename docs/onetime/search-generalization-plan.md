@@ -411,6 +411,63 @@ async function getDailyReport(
    - APIレスポンスの形式を維持
    - 非推奨の警告を追加（必要に応じて）
 
+## CI/CD設定
+
+### GitHub Actionsの設定
+
+既存の`check_firebase_cloud_function.yaml`を拡張して、テストも実行するように設定：
+
+```yaml
+name: Firebase Cloud Function部分の確認
+
+on: [push]
+
+jobs:
+  check_firebase_cloud_function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+        working-directory: ./functions
+      - run: npm --prefix functions run lint
+      - run: npm --prefix functions run build
+      # テストステップを追加
+      - run: npm --prefix functions run test
+        env:
+          # Firebase関連の環境変数（必要に応じて）
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+```
+
+### テストスクリプトの追加
+
+`functions/package.json`に以下を追加：
+
+```json
+{
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+### CI/CDパイプラインのメリット
+
+1. **継続的な品質保証**
+   - プッシュ時に自動でテスト実行
+   - 破壊的変更の早期発見
+   - マージ前の品質チェック
+
+2. **開発効率の向上**
+   - ローカルでのテスト忘れを防止
+   - 複数人開発での品質維持
+   - リファクタリング時の安心感
+
 ## 今後の拡張可能性
 
 1. **高度な検索機能**
