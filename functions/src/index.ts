@@ -151,7 +151,7 @@ async function createOrUpdatePost(
   throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
 }
 
-async function getDailyReport(
+export async function getDailyReport(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,

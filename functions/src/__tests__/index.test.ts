@@ -5,7 +5,8 @@ import { CallableRequest } from 'firebase-functions/v2/https';
 jest.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport } from '../index';
+import { AxiosInstance } from 'axios';
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
@@ -211,6 +212,138 @@ describe('Firebase Functions Tests', () => {
       } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(invalidContext)).toThrow();
+    });
+  });
+
+  describe('getDailyReport', () => {
+    // Axiosモックのタイプ定義
+    const mockAxios = {
+      get: jest.fn(),
+    };
+
+    const mockEsaConfig = {
+      teamName: 'test-team',
+      accessToken: 'test-token',
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should return post data when exactly one daily report exists', async () => {
+      // 検索APIのレスポンス（1件の日報）
+      const searchResponse = {
+        data: {
+          posts: [{ number: 123 }],
+          total_count: 1,
+        },
+      };
+
+      // 詳細取得APIのレスポンス
+      const detailResponse = {
+        data: {
+          body_md: '# 日報\n\n今日の作業内容',
+          body_html: '<h1>日報</h1><p>今日の作業内容</p>',
+          number: 123,
+          name: '日報 2024-06-20',
+          tags: ['日報', '開発'],
+        },
+      };
+
+      // モックの設定
+      mockAxios.get
+        .mockResolvedValueOnce(searchResponse) // 最初の呼び出し（検索）
+        .mockResolvedValueOnce(detailResponse); // 2回目の呼び出し（詳細取得）
+
+      // 実行
+      const result = await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20');
+
+      // 検証
+      expect(mockAxios.get).toHaveBeenCalledTimes(2);
+      
+      // 検索API呼び出しの検証
+      expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
+        params: {
+          q: 'category:日報/2024/06/20',
+        },
+      });
+
+      // 詳細取得API呼び出しの検証
+      expect(mockAxios.get).toHaveBeenNthCalledWith(2, '/v1/teams/test-team/posts/123');
+
+      // 結果の検証
+      expect(result).toEqual(detailResponse.data);
+    });
+
+    it('should throw not-found error when no daily report exists', async () => {
+      // 検索APIのレスポンス（0件）
+      const searchResponse = {
+        data: {
+          posts: [],
+          total_count: 0,
+        },
+      };
+
+      mockAxios.get.mockResolvedValueOnce(searchResponse);
+
+      // 実行と検証
+      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20'))
+        .rejects
+        .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
+
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw already-exists error when multiple daily reports exist', async () => {
+      // 検索APIのレスポンス（複数件）
+      const searchResponse = {
+        data: {
+          posts: [{ number: 123 }, { number: 124 }],
+          total_count: 2,
+        },
+      };
+
+      mockAxios.get.mockResolvedValueOnce(searchResponse);
+
+      // 実行と検証
+      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20'))
+        .rejects
+        .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
+
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('should correctly build request parameters with special characters in category', async () => {
+      const searchResponse = {
+        data: {
+          posts: [{ number: 125 }],
+          total_count: 1,
+        },
+      };
+
+      const detailResponse = {
+        data: {
+          body_md: 'test',
+          body_html: '<p>test</p>',
+          number: 125,
+          name: 'test',
+          tags: [],
+        },
+      };
+
+      mockAxios.get
+        .mockResolvedValueOnce(searchResponse)
+        .mockResolvedValueOnce(detailResponse);
+
+      // カテゴリに特殊文字を含む場合
+      await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20 (金)');
+
+      // パラメータが正しく設定されることを確認
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+        params: {
+          q: 'category:日報/2024/06/20 (金)',
+        },
+      });
     });
   });
 });
