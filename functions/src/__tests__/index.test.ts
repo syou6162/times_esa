@@ -5,7 +5,7 @@ import { CallableRequest } from 'firebase-functions/v2/https';
 jest.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, type EsaSearchResult, type EsaPost } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 // Helper function to create a mock EsaPost
@@ -720,6 +720,59 @@ describe('Firebase Functions Tests', () => {
         expect(mockAxios.post).not.toHaveBeenCalled();
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('getTagList', () => {
+    let mockAxios: jest.Mocked<AxiosInstance>;
+    const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
+
+    beforeEach(() => {
+      // Create a mock axios instance
+      mockAxios = {
+        get: jest.fn(),
+        defaults: { headers: { common: {} } },
+        interceptors: {
+          request: { use: jest.fn() },
+          response: { use: jest.fn() },
+        },
+      } as unknown as jest.Mocked<AxiosInstance>;
+    });
+
+    it('タグ一覧を正常に取得できる', async () => {
+      const mockTags: EsaTags = {
+        tags: [
+          { name: '日報', posts_count: 100 },
+          { name: '開発', posts_count: 50 },
+          { name: 'テスト', posts_count: 30 },
+        ],
+      };
+
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+
+      const result = await getTagList(mockAxios, esaConfig);
+
+      expect(result).toEqual(mockTags);
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+    });
+
+    it('空のタグ一覧を取得できる', async () => {
+      const mockTags: EsaTags = {
+        tags: [],
+      };
+
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+
+      const result = await getTagList(mockAxios, esaConfig);
+
+      expect(result).toEqual(mockTags);
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+    });
+
+    it('APIエラーが発生した場合、エラーがスローされる', async () => {
+      mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
+
+      await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
     });
   });
 });
