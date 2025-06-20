@@ -42,7 +42,7 @@ describe('search', () => {
       mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const options: SearchOption[] = [
-        { query: 'in:日報/2024/06' }
+        { query: 'category:日報/2024/06/20' }
       ];
 
       const result = await searchPosts({ options }, mockAxiosClient);
@@ -51,7 +51,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'in:日報/2024/06',
+            q: 'category:日報/2024/06/20',
             page: 1,
             per_page: 20,
             sort: 'updated',
@@ -71,7 +71,7 @@ describe('search', () => {
       mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const options: SearchOption[] = [
-        { query: 'in:日報/2024/06' },
+        { query: 'category:日報/2024/06/21' },
         { query: 'tag:重要' },
         { query: 'wip:false' }
       ];
@@ -88,7 +88,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'in:日報/2024/06 tag:重要 wip:false',
+            q: 'category:日報/2024/06/21 tag:重要 wip:false',
             page: 2,
             per_page: 50,
             sort: 'created',
