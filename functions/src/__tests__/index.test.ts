@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import { CallableRequest } from 'firebase-functions/v2/https';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock axios before importing the module
-jest.mock('axios');
+vi.mock('axios');
 
 // Import the functions to test
 import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
@@ -11,7 +12,7 @@ import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('transformTitle', () => {
@@ -219,7 +220,7 @@ describe('Firebase Functions Tests', () => {
   describe('getDailyReport', () => {
     // Axiosモックのタイプ定義
     const mockAxios = {
-      get: jest.fn(),
+      get: vi.fn(),
     };
 
     const mockEsaConfig = {
@@ -228,7 +229,7 @@ describe('Firebase Functions Tests', () => {
     };
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('should return post data when exactly one daily report exists', async () => {
@@ -315,7 +316,6 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
 
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -360,7 +360,6 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
 
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -470,21 +469,31 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('createOrUpdatePost', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    type MockAxiosInstance = {
+      get: ReturnType<typeof vi.fn>;
+      post: ReturnType<typeof vi.fn>;
+      patch: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, unknown> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       // Create a mock axios instance
       mockAxios = {
-        get: jest.fn(),
-        post: jest.fn(),
-        patch: jest.fn(),
+        get: vi.fn(),
+        post: vi.fn(),
+        patch: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     describe('新規投稿作成 (total_count === 0)', () => {
@@ -515,13 +524,9 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(newPost);
-        // Jest mockのメソッド参照はthisに依存しないため安全
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           params: { q: 'category:日報/2025/06/20' },
         });
-        // Jest mockのメソッド参照はthisに依存しないため安全
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {
             name: 'テストタイトル',
@@ -533,12 +538,8 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
 
@@ -570,12 +571,8 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('invalid_token: Invalid access token');
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
     });
@@ -615,8 +612,6 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(updatedPost);
-        // Jest mockのメソッド参照はthisに依存しないため安全
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
@@ -628,12 +623,8 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
 
@@ -663,8 +654,6 @@ describe('Firebase Functions Tests', () => {
           '', // 空テキスト
         );
 
-        // Jest mockのメソッド参照はthisに依存しないため安全
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
@@ -676,12 +665,8 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
 
@@ -721,12 +706,8 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('rate_limit: Rate limit exceeded');
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
     });
@@ -762,31 +743,35 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('複数の日報が存在します');
 
         // エンドポイント呼び出し回数を検証
-         
-        // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
     });
   });
 
   describe('getTagList', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    type MockAxiosInstance = {
+      get: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, unknown> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       // Create a mock axios instance
       mockAxios = {
-        get: jest.fn(),
+        get: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     it('タグ一覧を正常に取得できる', async () => {
@@ -804,9 +789,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -821,9 +804,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -831,7 +812,6 @@ describe('Firebase Functions Tests', () => {
       mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
 
       await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
   });
@@ -860,20 +840,30 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('Error handling integration', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    type MockAxiosInstance = {
+      get: ReturnType<typeof vi.fn>;
+      post: ReturnType<typeof vi.fn>;
+      patch: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, unknown> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       mockAxios = {
-        get: jest.fn(),
-        post: jest.fn(),
-        patch: jest.fn(),
+        get: vi.fn(),
+        post: vi.fn(),
+        patch: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     it('AxiosError のエラーレスポンスが正しく変換される', async () => {
