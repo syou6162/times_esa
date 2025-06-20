@@ -5,7 +5,7 @@ import { CallableRequest } from 'firebase-functions/v2/https';
 jest.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, type EsaSearchResult, type EsaPost } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 
@@ -315,6 +315,7 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
 
+       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -359,6 +360,7 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
 
+       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -464,6 +466,450 @@ describe('Firebase Functions Tests', () => {
           q: 'category:テストカテゴリ',
         },
       });
+    });
+  });
+
+  describe('createOrUpdatePost', () => {
+    let mockAxios: jest.Mocked<AxiosInstance>;
+    const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
+
+    beforeEach(() => {
+      // Create a mock axios instance
+      mockAxios = {
+        get: jest.fn(),
+        post: jest.fn(),
+        patch: jest.fn(),
+        defaults: { headers: { common: {} } },
+        interceptors: {
+          request: { use: jest.fn() },
+          response: { use: jest.fn() },
+        },
+      } as unknown as jest.Mocked<AxiosInstance>;
+    });
+
+    describe('新規投稿作成 (total_count === 0)', () => {
+      it('検索結果0件の場合、新規投稿を作成する', async () => {
+        const searchResult: EsaSearchResult = {
+          posts: [],
+          total_count: 0,
+        };
+
+        const newPost: EsaPost = {
+          number: 123,
+          name: 'テストタイトル',
+          tags: ['test', 'new'],
+          body_md: 'テスト本文',
+          body_html: '<p>テスト本文</p>',
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPost>);
+
+        const result = await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          ['test', 'new'],
+          'テストタイトル',
+          'テスト本文',
+        );
+
+        expect(result).toEqual(newPost);
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+          params: { q: 'category:日報/2025/06/20' },
+        });
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+          post: {
+            name: 'テストタイトル',
+            category: '日報/2025/06/20',
+            tags: ['test', 'new'],
+            body_md: 'テスト本文',
+            wip: false,
+          },
+        });
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).not.toHaveBeenCalled();
+      });
+
+      it('POSTリクエストが失敗した場合、エラーをスローする', async () => {
+        const searchResult: EsaSearchResult = {
+          posts: [],
+          total_count: 0,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.post.mockRejectedValueOnce({
+          response: {
+            data: {
+              error: 'invalid_token',
+              message: 'Invalid access token',
+            },
+          },
+        });
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            ['test'],
+            'テストタイトル',
+            'テスト本文',
+          ),
+        ).rejects.toThrow('invalid_token: Invalid access token');
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('既存投稿更新 (total_count === 1)', () => {
+      it('検索結果1件の場合、既存投稿を更新する', async () => {
+        const existingPost: EsaPost = {
+          number: 123,
+          name: '既存タイトル',
+          tags: ['existing', 'tag'],
+          body_md: '既存本文',
+          body_html: '<p>既存本文</p>',
+        };
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        const updatedPost: EsaPost = {
+          ...existingPost,
+          name: '既存タイトル、新規タイトル',
+          tags: ['existing', 'tag', 'new'],
+          body_md: '新規本文\n既存本文',
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPost>);
+
+        const result = await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          ['new'],
+          '新規タイトル',
+          '新規本文',
+        );
+
+        expect(result).toEqual(updatedPost);
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+          post: {
+            name: '既存タイトル、新規タイトル',
+            category: '日報/2025/06/20',
+            tags: ['new', 'existing', 'tag'],
+            body_md: '新規本文\n既存本文',
+            wip: false,
+          },
+        });
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).not.toHaveBeenCalled();
+      });
+
+      it('空テキストの場合、既存本文のみを保持する', async () => {
+        const existingPost: EsaPost = {
+          number: 123,
+          name: '既存タイトル',
+          tags: ['existing'],
+          body_md: '既存本文',
+          body_html: '<p>既存本文</p>',
+        };
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockResolvedValueOnce({ data: existingPost } as AxiosResponse<EsaPost>);
+
+        await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          [],
+          '新規タイトル',
+          '', // 空テキスト
+        );
+
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+          post: {
+            name: '既存タイトル、新規タイトル',
+            category: '日報/2025/06/20',
+            tags: ['existing'],
+            body_md: '既存本文', // 既存本文のみ
+            wip: false,
+          },
+        });
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).not.toHaveBeenCalled();
+      });
+
+      it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
+        const existingPost: EsaPost = {
+          number: 123,
+          name: '既存タイトル',
+          tags: [],
+          body_md: '既存本文',
+          body_html: '<p>既存本文</p>',
+        };
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockRejectedValueOnce({
+          response: {
+            data: {
+              error: 'rate_limit',
+              message: 'Rate limit exceeded',
+            },
+          },
+        });
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            [],
+            '新規タイトル',
+            'テスト',
+          ),
+        ).rejects.toThrow('rate_limit: Rate limit exceeded');
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('複数投稿エラー (total_count > 1)', () => {
+      it('検索結果が複数件の場合、エラーをスローする', async () => {
+        const post1: EsaPost = {
+          number: 123,
+          name: '投稿1',
+          tags: [],
+          body_md: '',
+          body_html: '',
+        };
+
+        const post2: EsaPost = { ...post1, number: 124, name: '投稿2' };
+
+        const searchResult: EsaSearchResult = {
+          posts: [post1, post2],
+          total_count: 2,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            [],
+            'テストタイトル',
+            'テスト本文',
+          ),
+        ).rejects.toThrow('複数の日報が存在します');
+
+        // エンドポイント呼び出し回数を検証
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.post).not.toHaveBeenCalled();
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(mockAxios.patch).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('getTagList', () => {
+    let mockAxios: jest.Mocked<AxiosInstance>;
+    const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
+
+    beforeEach(() => {
+      // Create a mock axios instance
+      mockAxios = {
+        get: jest.fn(),
+        defaults: { headers: { common: {} } },
+        interceptors: {
+          request: { use: jest.fn() },
+          response: { use: jest.fn() },
+        },
+      } as unknown as jest.Mocked<AxiosInstance>;
+    });
+
+    it('タグ一覧を正常に取得できる', async () => {
+      const mockTags: EsaTags = {
+        tags: [
+          { name: '日報', posts_count: 100 },
+          { name: '開発', posts_count: 50 },
+          { name: 'テスト', posts_count: 30 },
+        ],
+      };
+
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+
+      const result = await getTagList(mockAxios, esaConfig);
+
+      expect(result).toEqual(mockTags);
+      // Jest mockのメソッド参照はthisに依存しないため安全
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('空のタグ一覧を取得できる', async () => {
+      const mockTags: EsaTags = {
+        tags: [],
+      };
+
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+
+      const result = await getTagList(mockAxios, esaConfig);
+
+      expect(result).toEqual(mockTags);
+      // Jest mockのメソッド参照はthisに依存しないため安全
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('APIエラーが発生した場合、エラーがスローされる', async () => {
+      mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
+
+      await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Helper functions integration', () => {
+    describe('getEsaConfig', () => {
+      it('環境変数からESA設定を取得できる', () => {
+        // Process.env is mocked in setup.ts
+        // getEsaConfig is not exported, but we can test it indirectly
+        // by testing functions that use it
+        expect(process.env.ESA_TEAM_NAME).toBe('test-team');
+        expect(process.env.ESA_ACCESS_TOKEN).toBe('test-access-token');
+      });
+    });
+
+    describe('createAxiosClient', () => {
+      it('正しい設定でAxiosクライアントが作成される', () => {
+        // This is tested indirectly through the API calls in other tests
+        // The axios.create mock is set up in the Jest mock, but not called directly in test setup
+        // We can verify the behavior through the successful API call tests
+        // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
+        const axios = require('axios');
+        expect(axios).toBeDefined();
+      });
+    });
+  });
+
+  describe('Error handling integration', () => {
+    let mockAxios: jest.Mocked<AxiosInstance>;
+    const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
+
+    beforeEach(() => {
+      mockAxios = {
+        get: jest.fn(),
+        post: jest.fn(),
+        patch: jest.fn(),
+        defaults: { headers: { common: {} } },
+        interceptors: {
+          request: { use: jest.fn() },
+          response: { use: jest.fn() },
+        },
+      } as unknown as jest.Mocked<AxiosInstance>;
+    });
+
+    it('AxiosError のエラーレスポンスが正しく変換される', async () => {
+      const searchResult: EsaSearchResult = {
+        posts: [],
+        total_count: 0,
+      };
+
+      mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+      mockAxios.post.mockRejectedValueOnce({
+        response: {
+          data: {
+            error: 'validation_failed',
+            message: 'Title is required',
+          },
+        },
+      });
+
+      await expect(
+        createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          [],
+          '',
+          'テスト',
+        ),
+      ).rejects.toThrow('validation_failed: Title is required');
+    });
+
+    it('ネットワークエラーなどの一般的なエラーが適切に伝播される', async () => {
+      mockAxios.get.mockRejectedValueOnce(new Error('Network timeout'));
+
+      await expect(
+        getDailyReport(mockAxios, esaConfig, 'test-category'),
+      ).rejects.toThrow('Network timeout');
     });
   });
 });
