@@ -17,14 +17,14 @@ const ESA_SECRETS = [
   "VALID_EMAIL",
 ];
 
-function getEsaConfig(): EsaConfig {
+export function getEsaConfig(): EsaConfig {
   const teamName = process.env.ESA_TEAM_NAME as string;
   const accessToken = process.env.ESA_ACCESS_TOKEN as string;
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
 
-function createAxiosClient(accessToken: string): AxiosInstance {
+export function createAxiosClient(accessToken: string): AxiosInstance {
   return axios.create({
     baseURL: 'https://api.esa.io',
     headers: {
