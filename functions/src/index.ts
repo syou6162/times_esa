@@ -104,7 +104,7 @@ export function transformTitle(oldTitle: string, newTitle: string): string {
   }).join('、');
 }
 
-async function createOrUpdatePost(
+export async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
@@ -172,7 +172,7 @@ export async function getDailyReport(
   }
 }
 
-async function getTagList(
+export async function getTagList(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
 ): Promise<EsaTags> {
