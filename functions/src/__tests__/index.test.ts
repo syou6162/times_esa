@@ -8,6 +8,7 @@ jest.mock('axios');
 import { transformTitle, checkAuthTokenEmail, getDailyReport, type EsaSearchResult, type EsaPost } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
