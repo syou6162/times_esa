@@ -316,7 +316,6 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
 
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -361,7 +360,6 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
 
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -539,7 +537,6 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
         expect(mockAxios.patch).not.toHaveBeenCalled();
@@ -573,7 +570,6 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('invalid_token: Invalid access token');
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
         expect(mockAxios.patch).not.toHaveBeenCalled();
@@ -626,7 +622,6 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).not.toHaveBeenCalled();
@@ -669,7 +664,6 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).not.toHaveBeenCalled();
@@ -711,7 +705,6 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('rate_limit: Rate limit exceeded');
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).not.toHaveBeenCalled();
@@ -749,7 +742,6 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('複数の日報が存在します');
 
         // エンドポイント呼び出し回数を検証
-         
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
         expect(mockAxios.post).not.toHaveBeenCalled();
         expect(mockAxios.patch).not.toHaveBeenCalled();
@@ -795,9 +787,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-       
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -812,9 +802,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-       
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -822,7 +810,6 @@ describe('Firebase Functions Tests', () => {
       mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
 
       await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
-       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
   });
