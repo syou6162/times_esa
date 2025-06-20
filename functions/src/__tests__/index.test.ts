@@ -469,7 +469,7 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('createOrUpdatePost', () => {
-    let mockAxios: {
+    type MockAxiosInstance = {
       get: ReturnType<typeof vi.fn>;
       post: ReturnType<typeof vi.fn>;
       patch: ReturnType<typeof vi.fn>;
@@ -479,6 +479,7 @@ describe('Firebase Functions Tests', () => {
         response: { use: ReturnType<typeof vi.fn> };
       };
     };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
@@ -750,7 +751,7 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('getTagList', () => {
-    let mockAxios: {
+    type MockAxiosInstance = {
       get: ReturnType<typeof vi.fn>;
       defaults: { headers: { common: Record<string, unknown> } };
       interceptors: {
@@ -758,6 +759,7 @@ describe('Firebase Functions Tests', () => {
         response: { use: ReturnType<typeof vi.fn> };
       };
     };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
@@ -838,7 +840,7 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('Error handling integration', () => {
-    let mockAxios: {
+    type MockAxiosInstance = {
       get: ReturnType<typeof vi.fn>;
       post: ReturnType<typeof vi.fn>;
       patch: ReturnType<typeof vi.fn>;
@@ -848,6 +850,7 @@ describe('Firebase Functions Tests', () => {
         response: { use: ReturnType<typeof vi.fn> };
       };
     };
+    let mockAxios: MockAxiosInstance;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
