@@ -71,8 +71,9 @@ type EsaErrorResponse = {
   message: string;
 }
 
-function transformTitle(oldTitle: string, newTitle: string): string {
-  const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))));
+export function transformTitle(oldTitle: string, newTitle: string): string {
+  const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))))
+    .filter(item => item !== ''); // Remove empty strings
   if (JSON.stringify(result) === JSON.stringify(['日報'])) {
     return '日報';
   }
@@ -157,7 +158,7 @@ async function getTagList(
   return response.data;
 }
 
-function checkAuthTokenEmail(context: CallableRequest): void {
+export function checkAuthTokenEmail(context: CallableRequest): void {
   const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
