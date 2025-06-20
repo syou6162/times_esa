@@ -17,14 +17,14 @@ const ESA_SECRETS = [
   "VALID_EMAIL",
 ];
 
-function getEsaConfig(): EsaConfig {
+export function getEsaConfig(): EsaConfig {
   const teamName = process.env.ESA_TEAM_NAME as string;
   const accessToken = process.env.ESA_ACCESS_TOKEN as string;
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
 
-function createAxiosClient(accessToken: string): AxiosInstance {
+export function createAxiosClient(accessToken: string): AxiosInstance {
   return axios.create({
     baseURL: 'https://api.esa.io',
     headers: {
@@ -104,7 +104,7 @@ export function transformTitle(oldTitle: string, newTitle: string): string {
   }).join('、');
 }
 
-async function createOrUpdatePost(
+export async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
@@ -172,7 +172,7 @@ export async function getDailyReport(
   }
 }
 
-async function getTagList(
+export async function getTagList(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
 ): Promise<EsaTags> {
