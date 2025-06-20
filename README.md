@@ -12,4 +12,12 @@ slackの分報likeに投稿しつつ、検索しやすいようにesa.ioに投�
 - `npm run-script start`で起動します
 
 ### backend
-- TBD
+- Firebase Functionsを使用しています
+- 環境変数を`.env`ファイルに設定する必要があります：
+  - `ESA_TEAM_NAME`: esa.ioのチーム名
+  - `ESA_ACCESS_TOKEN`: esa.ioのアクセストークン
+  - `VALID_EMAIL`: 認証で許可するメールアドレス
+- テスト実行：
+  - `cd functions && npm test` - テスト実行
+  - `cd functions && npm run test:watch` - ウォッチモードでテスト実行
+  - `cd functions && npm run test:coverage` - カバレッジ付きでテスト実行
