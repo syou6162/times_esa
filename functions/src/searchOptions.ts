@@ -80,15 +80,3 @@ export function withTitle(title: string): SearchOption {
   // esaの検索では、title:でタイトル検索ができる
   return { query: `title:${title}` };
 }
-
-/**
- * WIP（Work In Progress）状態でフィルタリング
- * @param wip - WIPの状態（true: WIPのみ、false: WIPでないもののみ、undefined: フィルタしない）
- * @returns 検索オプション
- */
-export function withWipStatus(wip?: boolean): SearchOption {
-  if (wip === undefined) {
-    return { query: '' };
-  }
-  return { query: `wip:${wip}` };
-}

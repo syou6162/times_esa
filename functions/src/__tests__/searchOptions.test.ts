@@ -4,7 +4,6 @@ import {
   withTags,
   withDateRange,
   withTitle,
-  withWipStatus,
   combineOptions,
   type SearchOption
 } from '../searchOptions';
@@ -114,20 +113,6 @@ describe('searchOptions', () => {
     });
   });
 
-  describe('withWipStatus', () => {
-    it('WIPステータスがtrueの場合', () => {
-      expect(withWipStatus(true)).toEqual({ query: 'wip:true' });
-    });
-
-    it('WIPステータスがfalseの場合', () => {
-      expect(withWipStatus(false)).toEqual({ query: 'wip:false' });
-    });
-
-    it('WIPステータスが未指定の場合は空のクエリを返す', () => {
-      expect(withWipStatus()).toEqual({ query: '' });
-      expect(withWipStatus(undefined)).toEqual({ query: '' });
-    });
-  });
 
   describe('複合的な使用例', () => {
     it('複数の検索オプションを組み合わせて使用できる', () => {
@@ -135,13 +120,12 @@ describe('searchOptions', () => {
         withCategory('日報/2024/06'),
         withTags(['重要', '緊急']),
         withDateRange('2024-06-01', '2024-06-30'),
-        withTitle('6月20日'),
-        withWipStatus(false)
+        withTitle('6月20日')
       ];
       
       const combinedQuery = combineOptions(options);
       expect(combinedQuery).toBe(
-        'in:日報/2024/06 tag:重要 tag:緊急 created:>=2024-06-01 created:<=2024-06-30 title:6月20日 wip:false'
+        'in:日報/2024/06 tag:重要 tag:緊急 created:>=2024-06-01 created:<=2024-06-30 title:6月20日'
       );
     });
 
@@ -150,8 +134,7 @@ describe('searchOptions', () => {
         withCategory('日報'),
         withTags([]),  // 空のタグ
         withDateRange('2024-06-01'),  // 終了日なし
-        withTitle(''),  // 空のタイトル
-        withWipStatus()  // WIPステータス未指定
+        withTitle('')  // 空のタイトル
       ];
       
       const combinedQuery = combineOptions(options);
