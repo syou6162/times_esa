@@ -284,7 +284,12 @@ export const recentDailyReports = onCall(
     checkAuthTokenEmail(req);
 
     const { getRecentDailyReports } = await import('./recentDailyReports');
-    const days = req.data.days || 10;
+    const days = req.data.days ?? 10; // nullish coalescingで0を許可
+    
+    // daysパラメータのバリデーション（1〜31の範囲）
+    if (days < 1 || days > 31) {
+      throw new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください');
+    }
     
     try {
       const result = await getRecentDailyReports(days);
