@@ -116,7 +116,7 @@ export async function createOrUpdatePost(
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category}`,
+      q: `on:${category}`,
     },
   });
   if (response.data.total_count === 0) {

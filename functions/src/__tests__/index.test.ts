@@ -281,7 +281,7 @@ describe('Firebase Functions Tests', () => {
       // 検索API呼び出しの検証
       expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
-          q: 'category:日報/2024/06/20',
+          q: 'on:日報/2024/06/20',
         },
       });
 
@@ -441,7 +441,7 @@ describe('Firebase Functions Tests', () => {
 
         expect(result).toEqual(newPost);
         expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
-          params: { q: 'category:日報/2025/06/20' },
+          params: { q: 'on:日報/2025/06/20' },
         });
         expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {

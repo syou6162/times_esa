@@ -67,12 +67,12 @@ export async function searchDailyReport(
   const [year, month, day] = date.split('-');
   const category = `日報/${year}/${month}/${day}`;
   
-  // 元の実装と同じく、qパラメータのみを使用
+  // 完全一致検索で特定の日付の日報を取得
   const response = await client.get<EsaSearchResult>(
     `/v1/teams/${config.teamName}/posts`,
     { 
       params: {
-        q: `category:${category}`
+        q: `on:${category}`
       }
     }
   );
