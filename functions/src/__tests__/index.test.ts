@@ -5,9 +5,35 @@ import { CallableRequest } from 'firebase-functions/v2/https';
 jest.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, type EsaSearchResult, type EsaPost } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, type EsaSearchResult, type EsaPost } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
+// Helper function to create a mock EsaPost
+function createMockEsaPost(overrides: Partial<EsaPost> = {}): EsaPost {
+  return {
+    body_md: '本文',
+    body_html: '<p>本文</p>',
+    number: 123,
+    name: 'タイトル',
+    tags: [],
+    category: 'カテゴリ',
+    created_at: '2025-06-20T10:00:00+09:00',
+    updated_at: '2025-06-20T10:00:00+09:00',
+    url: 'https://test.esa.io/posts/123',
+    created_by: { screen_name: 'test-user' },
+    updated_by: { screen_name: 'test-user' },
+    kind: 'flow',
+    wip: false,
+    comments_count: 0,
+    tasks_count: 0,
+    done_tasks_count: 0,
+    stargazers_count: 0,
+    watchers_count: 0,
+    star: false,
+    watch: false,
+    ...overrides,
+  };
+}
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
@@ -233,13 +259,13 @@ describe('Firebase Functions Tests', () => {
 
     it('should return post data when exactly one daily report exists', async () => {
       // 検索APIのレスポンス（1件の日報）
-      const mockPost: EsaPost = {
+      const mockPost = createMockEsaPost({
         body_md: '# 日報\n\n今日の作業内容',
         body_html: '<h1>日報</h1><p>今日の作業内容</p>',
         number: 123,
         name: '日報 2024-06-20',
         tags: ['日報', '開発'],
-      };
+      });
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -321,20 +347,20 @@ describe('Firebase Functions Tests', () => {
     it('should throw already-exists error when multiple daily reports exist', async () => {
       // 検索APIのレスポンス（複数件）
       const mockPosts: EsaPost[] = [
-        {
+        createMockEsaPost({
           body_md: 'post1',
           body_html: '<p>post1</p>',
           number: 123,
           name: '日報1',
           tags: [],
-        },
-        {
+        }),
+        createMockEsaPost({
           body_md: 'post2',
           body_html: '<p>post2</p>',
           number: 124,
           name: '日報2',
           tags: [],
-        },
+        }),
       ];
 
       const searchResult: EsaSearchResult = {
@@ -363,13 +389,13 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should correctly build request parameters with special characters in category', async () => {
-      const mockPost: EsaPost = {
+      const mockPost = createMockEsaPost({
         body_md: 'test',
         body_html: '<p>test</p>',
         number: 125,
         name: 'test',
         tags: [],
-      };
+      });
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -412,13 +438,13 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should fail when incorrect request parameters are used', async () => {
-      const mockPost: EsaPost = {
+      const mockPost = createMockEsaPost({
         body_md: 'test',
         body_html: '<p>test</p>',
         number: 126,
         name: 'test',
         tags: [],
-      };
+      });
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -463,6 +489,302 @@ describe('Firebase Functions Tests', () => {
         params: {
           q: 'category:テストカテゴリ',
         },
+      });
+    });
+  });
+
+  describe('createOrUpdatePost', () => {
+    let mockAxios: jest.Mocked<AxiosInstance>;
+    const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
+
+    beforeEach(() => {
+      // Create a mock axios instance
+      mockAxios = {
+        get: jest.fn(),
+        post: jest.fn(),
+        patch: jest.fn(),
+        defaults: { headers: { common: {} } },
+        interceptors: {
+          request: { use: jest.fn() },
+          response: { use: jest.fn() },
+        },
+      } as unknown as jest.Mocked<AxiosInstance>;
+    });
+
+    describe('新規投稿作成 (total_count === 0)', () => {
+      it('検索結果0件の場合、新規投稿を作成する', async () => {
+        const searchResult: EsaSearchResult = {
+          posts: [],
+          total_count: 0,
+        };
+
+        const newPost = createMockEsaPost({
+          number: 123,
+          name: 'テストタイトル',
+          category: '日報/2025/06/20',
+          tags: ['test', 'new'],
+          body_md: 'テスト本文',
+          body_html: '<p>テスト本文</p>',
+          created_at: '2025-06-20T10:00:00+09:00',
+          updated_at: '2025-06-20T10:00:00+09:00',
+          url: 'https://test-team.esa.io/posts/123',
+        });
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPost>);
+
+        const result = await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          ['test', 'new'],
+          'テストタイトル',
+          'テスト本文',
+        );
+
+        expect(result).toEqual(newPost);
+        expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+          params: { q: 'category:日報/2025/06/20' },
+        });
+        expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+          post: {
+            name: 'テストタイトル',
+            category: '日報/2025/06/20',
+            tags: ['test', 'new'],
+            body_md: 'テスト本文',
+            wip: false,
+          },
+        });
+      });
+
+      it('POSTリクエストが失敗した場合、エラーをスローする', async () => {
+        const searchResult: EsaSearchResult = {
+          posts: [],
+          total_count: 0,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.post.mockRejectedValueOnce({
+          response: {
+            data: {
+              error: 'invalid_token',
+              message: 'Invalid access token',
+            },
+          },
+        });
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            ['test'],
+            'テストタイトル',
+            'テスト本文',
+          ),
+        ).rejects.toThrow('invalid_token: Invalid access token');
+      });
+    });
+
+    describe('既存投稿更新 (total_count === 1)', () => {
+      it('検索結果1件の場合、既存投稿を更新する', async () => {
+        const existingPost = createMockEsaPost({
+          number: 123,
+          name: '既存タイトル',
+          category: '日報/2025/06/20',
+          tags: ['existing', 'tag'],
+          body_md: '既存本文',
+          body_html: '<p>既存本文</p>',
+          created_at: '2025-06-20T09:00:00+09:00',
+          updated_at: '2025-06-20T09:00:00+09:00',
+        });
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        const updatedPost = createMockEsaPost({
+          ...existingPost,
+          name: '既存タイトル、新規タイトル',
+          tags: ['existing', 'tag', 'new'],
+          body_md: '新規本文\\n既存本文',
+          updated_at: '2025-06-20T10:00:00+09:00',
+        });
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPost>);
+
+        const result = await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          ['new'],
+          '新規タイトル',
+          '新規本文',
+        );
+
+        expect(result).toEqual(updatedPost);
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+          post: {
+            name: '既存タイトル、新規タイトル',
+            category: '日報/2025/06/20',
+            tags: ['new', 'existing', 'tag'],
+            body_md: '新規本文\\n既存本文',
+            wip: false,
+          },
+        });
+      });
+
+      it('空テキストの場合、既存本文のみを保持する', async () => {
+        const existingPost = createMockEsaPost({
+          number: 123,
+          name: '既存タイトル',
+          category: '日報/2025/06/20',
+          tags: ['existing'],
+          body_md: '既存本文',
+          body_html: '<p>既存本文</p>',
+          created_at: '2025-06-20T09:00:00+09:00',
+          updated_at: '2025-06-20T09:00:00+09:00',
+        });
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockResolvedValueOnce({ data: existingPost } as AxiosResponse<EsaPost>);
+
+        await createOrUpdatePost(
+          mockAxios,
+          esaConfig,
+          '日報/2025/06/20',
+          [],
+          '新規タイトル',
+          '', // 空テキスト
+        );
+
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+          post: {
+            name: '既存タイトル、新規タイトル',
+            category: '日報/2025/06/20',
+            tags: ['existing'],
+            body_md: '既存本文', // 既存本文のみ
+            wip: false,
+          },
+        });
+      });
+
+      it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
+        const existingPost: EsaPost = {
+          number: 123,
+          name: '既存タイトル',
+          category: '日報/2025/06/20',
+          tags: [],
+          body_md: '既存本文',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          body_html: '<p>既存本文</p>',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          created_at: '2025-06-20T09:00:00+09:00',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          updated_at: '2025-06-20T09:00:00+09:00',
+          url: 'https://test-team.esa.io/posts/123',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          created_by: { screen_name: 'test-user' },
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          updated_by: { screen_name: 'test-user' },
+          kind: 'flow',
+          wip: false,
+          comments_count: 0,
+          tasks_count: 0,
+          done_tasks_count: 0,
+          stargazers_count: 0,
+          watchers_count: 0,
+          star: false,
+          watch: false,
+        };
+
+        const searchResult: EsaSearchResult = {
+          posts: [existingPost],
+          total_count: 1,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockAxios.patch.mockRejectedValueOnce({
+          response: {
+            data: {
+              error: 'rate_limit',
+              message: 'Rate limit exceeded',
+            },
+          },
+        });
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            [],
+            '新規タイトル',
+            'テスト',
+          ),
+        ).rejects.toThrow('rate_limit: Rate limit exceeded');
+      });
+    });
+
+    describe('複数投稿エラー (total_count > 1)', () => {
+      it('検索結果が複数件の場合、エラーをスローする', async () => {
+        const post1: EsaPost = {
+          number: 123,
+          name: '投稿1',
+          category: '日報/2025/06/20',
+          tags: [],
+          body_md: '',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          body_html: '',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          created_at: '2025-06-20T09:00:00+09:00',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          updated_at: '2025-06-20T09:00:00+09:00',
+          url: 'https://test-team.esa.io/posts/123',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          created_by: { screen_name: 'test-user' },
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          updated_by: { screen_name: 'test-user' },
+          kind: 'flow',
+          wip: false,
+          comments_count: 0,
+          tasks_count: 0,
+          done_tasks_count: 0,
+          stargazers_count: 0,
+          watchers_count: 0,
+          star: false,
+          watch: false,
+        };
+
+        const post2: EsaPost = { ...post1, number: 124, name: '投稿2' };
+
+        const searchResult: EsaSearchResult = {
+          posts: [post1, post2],
+          total_count: 2,
+        };
+
+        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+
+        await expect(
+          createOrUpdatePost(
+            mockAxios,
+            esaConfig,
+            '日報/2025/06/20',
+            [],
+            'テストタイトル',
+            'テスト本文',
+          ),
+        ).rejects.toThrow('複数の日報が存在します');
+
+        expect(mockAxios.post).not.toHaveBeenCalled();
+        expect(mockAxios.patch).not.toHaveBeenCalled();
       });
     });
   });
