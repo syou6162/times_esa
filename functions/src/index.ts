@@ -231,7 +231,7 @@ type TimesEsaDailyReportRequest = {
   category: DailyReportCategory;
 }
 
-type RecentReportsRequest = {
+type RecentDailyReportsRequest = {
   days?: number; // 過去何日分を取得するか（デフォルト: 10）
 }
 
@@ -243,7 +243,7 @@ export type DailyReportSummary = {
   number: number; // esa投稿番号
 }
 
-export type RecentReportsResponse = {
+export type RecentDailyReportsResponse = {
   reports: DailyReportSummary[];
   total_count: number;
 }
@@ -276,21 +276,21 @@ export const tagList = onCall(
   }
 );
 
-export const recentReports = onCall(
+export const recentDailyReports = onCall(
   { secrets: ESA_SECRETS},
   async (
-    req: CallableRequest<RecentReportsRequest>,
+    req: CallableRequest<RecentDailyReportsRequest>,
   ) => {
     checkAuthTokenEmail(req);
 
-    const { getRecentReports } = await import('./recentReports');
+    const { getRecentDailyReports } = await import('./recentDailyReports');
     const days = req.data.days || 10;
     
     try {
-      const result = await getRecentReports(days);
+      const result = await getRecentDailyReports(days);
       return result;
     } catch (error) {
-      console.error('recentReports error:', error);
+      console.error('recentDailyReports error:', error);
       throw new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました');
     }
   }

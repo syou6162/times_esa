@@ -44,7 +44,7 @@ export function extractDailyReportSummary(post: EsaPost & { category: DailyRepor
  * @param axiosClient - Axiosクライアント（テスト用にオプション）
  * @returns 日報リストと総数
  */
-export async function getRecentReports(
+export async function getRecentDailyReports(
   days: number = 10,
   axiosClient?: AxiosInstance
 ): Promise<{ reports: DailyReportSummary[]; total_count: number }> {

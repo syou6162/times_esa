@@ -2,15 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { 
   createMultipleCategoryQuery, 
   extractDailyReportSummary,
-  getRecentReports 
-} from '../recentReports';
+  getRecentDailyReports 
+} from '../recentDailyReports';
 import * as search from '../search';
 import type { EsaPost } from '../index';
 
 // searchPostsをモック
 vi.mock('../search');
 
-describe('recentReports', () => {
+describe('recentDailyReports', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -60,7 +60,7 @@ describe('recentReports', () => {
     });
   });
 
-  describe('getRecentReports', () => {
+  describe('getRecentDailyReports', () => {
     it('過去の日報リストを取得する', async () => {
       const mockSearchResult = {
         posts: [
@@ -89,7 +89,7 @@ describe('recentReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentReports(5);
+      const result = await getRecentDailyReports(5);
 
       // searchPostsが正しいパラメータで呼ばれたか確認
       expect(searchPostsMock).toHaveBeenCalledWith({
@@ -139,7 +139,7 @@ describe('recentReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentReports(5);
+      const result = await getRecentDailyReports(5);
 
       // 日報のみが含まれることを確認
       expect(result.reports).toHaveLength(1);
@@ -155,7 +155,7 @@ describe('recentReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentReports(10);
+      const result = await getRecentDailyReports(10);
 
       expect(result.reports).toHaveLength(0);
       expect(result.total_count).toBe(0);
