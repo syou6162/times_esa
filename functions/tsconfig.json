@@ -8,7 +8,7 @@
     "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
-    "types": ["node", "jest"]
+    "types": ["node", "vitest/globals"]
   },
   "compileOnSave": true,
   "include": [
@@ -17,6 +17,6 @@
   "exclude": [
     "src/**/__tests__/**/*",
     "src/**/*.test.ts",
-    "jest.config.js"
+    "vitest.config.ts"
   ]
 }
