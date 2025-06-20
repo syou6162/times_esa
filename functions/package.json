@@ -9,14 +9,17 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "engines": {
     "node": "22"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/node": "22.15.31",
+    "@types/node": "22.15.32",
     "@types/request": "2.48.12",
     "axios": "1.10.0",
     "esa-node": "0.2.2",
@@ -26,11 +29,14 @@
   },
   "devDependencies": {
     "@types/express-serve-static-core": "5.0.6",
-    "@typescript-eslint/eslint-plugin": "8.34.0",
-    "@typescript-eslint/parser": "8.34.0",
+    "@typescript-eslint/eslint-plugin": "8.34.1",
+    "@typescript-eslint/parser": "8.34.1",
     "eslint": "9.29.0",
     "eslint-plugin-import": "2.31.0",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "jest": "29.7.0",
+    "@types/jest": "29.5.14",
+    "ts-jest": "29.4.0"
   },
   "private": true
 }

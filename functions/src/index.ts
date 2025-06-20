@@ -18,8 +18,8 @@ const ESA_SECRETS = [
 ];
 
 function getEsaConfig(): EsaConfig {
-  const teamName = process.env.ESA_TEAM_NAME as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
-  const accessToken = process.env.ESA_ACCESS_TOKEN as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const teamName = process.env.ESA_TEAM_NAME as string;
+  const accessToken = process.env.ESA_ACCESS_TOKEN as string;
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
@@ -35,10 +35,10 @@ function createAxiosClient(accessToken: string): AxiosInstance {
   });
 }
 
-type EsaPost = {
+export type EsaPost = {
   // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
-  body_md: string; // eslint-disable-line camelcase
-  body_html: string; // eslint-disable-line camelcase
+  body_md: string;
+  body_html: string;
   number: number;
   name: string;
   tags: string[];
@@ -53,12 +53,12 @@ type TimesEsaPostRequest = {
 
 export type EsaSearchResult = {
   posts: EsaPost[];
-  total_count: number; // eslint-disable-line camelcase
+  total_count: number;
 }
 
 export type Tag = {
   name: string;
-  posts_count: number; // eslint-disable-line camelcase
+  posts_count: number;
 }
 
 export type EsaTags = {
@@ -71,9 +71,32 @@ type EsaErrorResponse = {
   message: string;
 }
 
-function transformTitle(oldTitle: string, newTitle: string): string {
-  const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))));
-  if (JSON.stringify(result) === JSON.stringify(['日報'])) {
+/**
+ * 複数のセッションから並行編集されたタイトルをマージする
+ * 
+ * times_esaでは情報の喪失を防ぐため、すべての要素を保持する方針を採用。
+ * 意図的な置き換えが必要な場合は、esa.io本体から編集することを想定。
+ * 
+ * @param oldTitle 既存のタイトル
+ * @param newTitle 新しく設定されたタイトル
+ * @returns マージされたタイトル（重複は除去、「日報」は特別扱い）
+ * 
+ * @example
+ * // 基本的なマージ
+ * transformTitle("開発", "テスト") // => "開発、テスト"
+ * 
+ * // 並行編集（共通要素がある場合）
+ * transformTitle("開発、設計", "開発、テスト") // => "開発、設計、テスト"
+ * transformTitle("a,b,c", "a,d,e") // => "a、b、c、d、e"
+ * 
+ * // 「日報」の特別扱い
+ * transformTitle("日報", "開発") // => "開発"
+ * transformTitle("日報、開発", "テスト") // => "開発、テスト"
+ */
+export function transformTitle(oldTitle: string, newTitle: string): string {
+  const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))))
+    .filter(item => item !== ''); // Remove empty strings
+  if (result.length === 1 && result[0] === '日報') {
     return '日報';
   }
   return result.filter((item) => {
@@ -128,7 +151,7 @@ async function createOrUpdatePost(
   throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
 }
 
-async function getDailyReport(
+export async function getDailyReport(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
@@ -157,8 +180,8 @@ async function getTagList(
   return response.data;
 }
 
-function checkAuthTokenEmail(context: CallableRequest): void {
-  const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+export function checkAuthTokenEmail(context: CallableRequest): void {
+  const valid_email = process.env.VALID_EMAIL as string;
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }
