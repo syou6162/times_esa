@@ -96,7 +96,7 @@ type EsaErrorResponse = {
 export function transformTitle(oldTitle: string, newTitle: string): string {
   const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))))
     .filter(item => item !== ''); // Remove empty strings
-  if (JSON.stringify(result) === JSON.stringify(['日報'])) {
+  if (result.length === 1 && result[0] === '日報') {
     return '日報';
   }
   return result.filter((item) => {
