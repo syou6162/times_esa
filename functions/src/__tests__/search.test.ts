@@ -48,7 +48,7 @@ describe('search', () => {
       const result = await searchPosts({ options }, mockAxiosClient);
 
       expect(mockGet).toHaveBeenCalledWith(
-        '/teams/test-team/posts',
+        '/v1/teams/test-team/posts',
         {
           params: {
             q: 'in:日報/2024/06',
@@ -85,7 +85,7 @@ describe('search', () => {
       }, mockAxiosClient);
 
       expect(mockGet).toHaveBeenCalledWith(
-        '/teams/test-team/posts',
+        '/v1/teams/test-team/posts',
         {
           params: {
             q: 'in:日報/2024/06 tag:重要 wip:false',
@@ -110,7 +110,7 @@ describe('search', () => {
       const result = await searchPosts({ options: [] }, mockAxiosClient);
 
       expect(mockGet).toHaveBeenCalledWith(
-        '/teams/test-team/posts',
+        '/v1/teams/test-team/posts',
         {
           params: {
             q: '',
@@ -154,7 +154,7 @@ describe('search', () => {
       const result = await searchDailyReport('2024-06-20', mockAxiosClient);
 
       expect(mockGet).toHaveBeenCalledWith(
-        '/teams/test-team/posts',
+        '/v1/teams/test-team/posts',
         {
           params: {
             q: 'in:日報/2024/06 title:6月20日',
@@ -179,7 +179,7 @@ describe('search', () => {
       await searchDailyReport('2024-01-05', mockAxiosClient);
 
       expect(mockGet).toHaveBeenCalledWith(
-        '/teams/test-team/posts',
+        '/v1/teams/test-team/posts',
         {
           params: {
             q: 'in:日報/2024/01 title:1月5日',

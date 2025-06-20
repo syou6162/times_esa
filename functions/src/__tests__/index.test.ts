@@ -279,7 +279,7 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenCalledTimes(2);
       
       // 検索API呼び出しの検証
-      expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/teams/test-team/posts', {
+      expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
           q: 'in:日報/2024/06 title:6月20日',
           page: 1,
@@ -290,7 +290,7 @@ describe('Firebase Functions Tests', () => {
       });
 
       // 詳細取得API呼び出しの検証
-      expect(mockAxios.get).toHaveBeenNthCalledWith(2, '/teams/test-team/posts/123');
+      expect(mockAxios.get).toHaveBeenNthCalledWith(2, '/v1/teams/test-team/posts/123');
 
       // 結果の検証
       expect(result).toEqual(mockPost);
@@ -444,10 +444,10 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(newPost);
-        expect(mockAxios.get).toHaveBeenCalledWith('/teams/test-team/posts', {
+        expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           params: { q: 'category:日報/2025/06/20' },
         });
-        expect(mockAxios.post).toHaveBeenCalledWith('/teams/test-team/posts', {
+        expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {
             name: 'テストタイトル',
             category: '日報/2025/06/20',
@@ -532,7 +532,7 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(updatedPost);
-        expect(mockAxios.patch).toHaveBeenCalledWith('/teams/test-team/posts/123', {
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
             category: '日報/2025/06/20',
@@ -574,7 +574,7 @@ describe('Firebase Functions Tests', () => {
           '', // 空テキスト
         );
 
-        expect(mockAxios.patch).toHaveBeenCalledWith('/teams/test-team/posts/123', {
+        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
             category: '日報/2025/06/20',
@@ -709,7 +709,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-      expect(mockAxios.get).toHaveBeenCalledWith('/teams/test-team/tags');
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -724,7 +724,7 @@ describe('Firebase Functions Tests', () => {
 
       expect(result).toEqual(mockTags);
       // Jest mockのメソッド参照はthisに依存しないため安全
-      expect(mockAxios.get).toHaveBeenCalledWith('/teams/test-team/tags');
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 

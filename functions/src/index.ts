@@ -28,7 +28,7 @@ export function getEsaConfig(): EsaConfig {
 export function createAxiosClient(accessToken?: string): AxiosInstance {
   const token = accessToken || getEsaConfig().accessToken;
   return axios.create({
-    baseURL: 'https://api.esa.io/v1',
+    baseURL: 'https://api.esa.io',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -114,13 +114,13 @@ export async function createOrUpdatePost(
   title: string,
   text: string,
 ): Promise<EsaPost> {
-  const response = await axios.get<EsaSearchResult>(`/teams/${esaConfig.teamName}/posts`, {
+  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
-    return axios.post<EsaPost>(`/teams/${esaConfig.teamName}/posts`, {
+    return axios.post<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts`, {
       post: {
         name: title,
         category,
@@ -136,7 +136,7 @@ export async function createOrUpdatePost(
   }
   if (response.data.total_count === 1) {
     const latestEsaPost: EsaPost = response.data.posts[0];
-    return axios.patch<EsaPost>(`/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
+    return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
       post: {
         name: transformTitle(latestEsaPost.name, title),
         category,
@@ -174,7 +174,7 @@ export async function getDailyReport(
       throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
     } else {
       // 詳細を取得
-      return axiosClient.get<EsaPost>(`/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+      return axiosClient.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
         return res.data;
       });
     }
@@ -190,7 +190,7 @@ export async function getTagList(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
 ): Promise<EsaTags> {
-  const response = await axios.get<EsaTags>(`/teams/${esaConfig.teamName}/tags`);
+  const response = await axios.get<EsaTags>(`/v1/teams/${esaConfig.teamName}/tags`);
   return response.data;
 }
 

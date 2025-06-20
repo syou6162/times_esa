@@ -42,20 +42,12 @@ export async function searchPosts(
     order: params.order || 'desc'
   };
   
-  try {
-    const response = await client.get<EsaSearchResult>(
-      `/teams/${config.teamName}/posts`,
-      { params: apiParams }
-    );
-    
-    return response.data;
-  } catch (error) {
-    // エラーハンドリング（既存のコードと同様）
-    if (error instanceof Error) {
-      throw error;
-    }
-    throw new Error('Unknown error occurred during search');
-  }
+  const response = await client.get<EsaSearchResult>(
+    `/v1/teams/${config.teamName}/posts`,
+    { params: apiParams }
+  );
+  
+  return response.data;
 }
 
 /**
