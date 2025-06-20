@@ -4,6 +4,7 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
+import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -47,7 +48,7 @@ export type EsaPost = {
 }
 
 type TimesEsaPostRequest = {
-  category: string;
+  category: DailyReportCategory;
   tags: string[];
   title: string;
   text: string;
@@ -109,7 +110,7 @@ export function transformTitle(oldTitle: string, newTitle: string): string {
 export async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
-  category: string,
+  category: DailyReportCategory,
   tags: string[],
   title: string,
   text: string,
@@ -156,20 +157,22 @@ export async function createOrUpdatePost(
 export async function getDailyReport(
   axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
-  category: string,
+  category: DailyReportCategory,
 ): Promise<EsaPost> {
-  // categoryから日付を抽出（例: "日報/2024/06/20" -> "2024-06-20"）
-  const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
-  if (!match) {
-    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
-  }
-  const date = `${match[1]}-${match[2]}-${match[3]}`;
+  let targetDate: DateString;
   
   try {
-    const response = await searchDailyReport(date, axiosClient);
+    // categoryから日付を抽出
+    targetDate = formatCategoryToDate(category);
+  } catch {
+    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
+  }
+  
+  try {
+    const response = await searchDailyReport(targetDate, axiosClient);
     
     if (response.total_count === 0) {
-      throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+      throw new functions.https.HttpsError('not-found', '指定された日の日報はまだありません');
     } else if (response.total_count > 1) {
       throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
     } else {
@@ -225,7 +228,24 @@ export const submitTextToEsa = onCall(
 );
 
 type TimesEsaDailyReportRequest = {
-  category: string;
+  category: DailyReportCategory;
+}
+
+type RecentDailyReportsRequest = {
+  days?: number; // 過去何日分を取得するか（デフォルト: 10）
+}
+
+export type DailyReportSummary = {
+  date: DateString; // yyyy-MM-dd形式
+  title: string;
+  category: DailyReportCategory;
+  updated_at: string;
+  number: number; // esa投稿番号
+}
+
+export type RecentDailyReportsResponse = {
+  reports: DailyReportSummary[];
+  total_count: number;
 }
 
 export const dailyReport = onCall(
@@ -253,5 +273,30 @@ export const tagList = onCall(
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getTagList(axios, esaConfig);
     return result;
+  }
+);
+
+export const recentDailyReports = onCall(
+  { secrets: ESA_SECRETS},
+  async (
+    req: CallableRequest<RecentDailyReportsRequest>,
+  ) => {
+    checkAuthTokenEmail(req);
+
+    const { getRecentDailyReports } = await import('./recentDailyReports');
+    const days = req.data.days ?? 10; // nullish coalescingで0を許可
+    
+    // daysパラメータのバリデーション（1〜31の範囲）
+    if (days < 1 || days > 31) {
+      throw new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください');
+    }
+    
+    try {
+      const result = await getRecentDailyReports(days);
+      return result;
+    } catch (error) {
+      console.error('recentDailyReports error:', error);
+      throw new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました');
+    }
   }
 );
