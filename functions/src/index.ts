@@ -42,6 +42,21 @@ export type EsaPost = {
   number: number;
   name: string;
   tags: string[];
+  category?: string;
+  created_at: string;
+  updated_at: string;
+  url: string;
+  created_by: { screen_name: string };
+  updated_by: { screen_name: string };
+  kind: string;
+  wip: boolean;
+  comments_count: number;
+  tasks_count: number;
+  done_tasks_count: number;
+  stargazers_count: number;
+  watchers_count: number;
+  star: boolean;
+  watch: boolean;
 }
 
 type TimesEsaPostRequest = {
