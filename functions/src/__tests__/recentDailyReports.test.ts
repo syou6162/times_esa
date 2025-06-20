@@ -93,7 +93,7 @@ describe('recentDailyReports', () => {
 
       // searchPostsが正しいパラメータで呼ばれたか確認
       expect(searchPostsMock).toHaveBeenCalledWith({
-        options: [{ query: expect.stringContaining('on:日報/') }],
+        options: [{ query: expect.stringContaining('on:日報/') as string }],
         perPage: 5,
         sort: 'updated',
         order: 'desc'

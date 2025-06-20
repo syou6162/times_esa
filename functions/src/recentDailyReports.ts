@@ -3,9 +3,8 @@
  */
 
 import { AxiosInstance } from 'axios';
-import { withCategory, combineOptions } from './searchOptions';
 import { searchPosts } from './search';
-import { getDateRangeCategories, formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
+import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory, type DailyReportCategory } from './dateUtils';
 import { type DailyReportSummary, type EsaPost } from './index';
 
 /**
@@ -66,8 +65,8 @@ export async function getRecentDailyReports(
   const reports = result.posts
     .filter(post => {
       // 念のため日報カテゴリのみをフィルタリング
-      const categoryMatch = (post as any).category?.match(/^日報\/\d{4}\/\d{2}\/\d{2}$/);
-      return categoryMatch !== null;
+      const postWithCategory = post as EsaPost & { category?: string };
+      return postWithCategory.category ? isDailyReportCategory(postWithCategory.category) : false;
     })
     .map(post => extractDailyReportSummary(post as EsaPost & { category: DailyReportCategory; updated_at: string }));
   

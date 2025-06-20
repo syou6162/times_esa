@@ -13,6 +13,11 @@ export type DailyReportCategory = string;
 export type DateString = string;
 
 /**
+ * 日報カテゴリの正規表現パターン
+ */
+const DAILY_REPORT_CATEGORY_PATTERN = /^日報\/(\d{4})\/(\d{2})\/(\d{2})$/;
+
+/**
  * Dateオブジェクトを日報カテゴリ形式に変換する
  * @param date - 変換する日付
  * @returns 日報カテゴリ形式の文字列（例: "日報/2024/06/20"）
@@ -31,7 +36,7 @@ export function formatDateToCategory(date: Date): DailyReportCategory {
  * @throws カテゴリ形式が不正な場合
  */
 export function formatCategoryToDate(category: DailyReportCategory): DateString {
-  const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
+  const match = category.match(DAILY_REPORT_CATEGORY_PATTERN);
   if (!match) {
     throw new Error('カテゴリの形式が正しくありません');
   }
@@ -89,4 +94,13 @@ export function getDateRangeCategoriesBetween(start: DateString, end: DateString
   }
   
   return categories;
+}
+
+/**
+ * 文字列が日報カテゴリ形式かどうかを検証する
+ * @param category - 検証する文字列
+ * @returns 日報カテゴリ形式の場合true
+ */
+export function isDailyReportCategory(category: string): boolean {
+  return DAILY_REPORT_CATEGORY_PATTERN.test(category);
 }

@@ -164,7 +164,7 @@ export async function getDailyReport(
   try {
     // categoryから日付を抽出
     targetDate = formatCategoryToDate(category);
-  } catch (error) {
+  } catch {
     throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
   }
   

@@ -4,7 +4,8 @@ import {
   formatCategoryToDate,
   formatDateStringToCategory,
   getDateRangeCategories,
-  getDateRangeCategoriesBetween
+  getDateRangeCategoriesBetween,
+  isDailyReportCategory
 } from '../dateUtils';
 
 describe('dateUtils', () => {
@@ -97,6 +98,23 @@ describe('dateUtils', () => {
     it('開始日が終了日より後の場合、エラーをスローする', () => {
       expect(() => getDateRangeCategoriesBetween('2024-06-21', '2024-06-20'))
         .toThrow('開始日は終了日より前である必要があります');
+    });
+  });
+
+  describe('isDailyReportCategory', () => {
+    it('正しい日報カテゴリ形式の場合、trueを返す', () => {
+      expect(isDailyReportCategory('日報/2024/06/20')).toBe(true);
+      expect(isDailyReportCategory('日報/2024/01/01')).toBe(true);
+      expect(isDailyReportCategory('日報/2024/12/31')).toBe(true);
+    });
+
+    it('不正な形式の場合、falseを返す', () => {
+      expect(isDailyReportCategory('日報/2024/6/20')).toBe(false);
+      expect(isDailyReportCategory('日報/2024/06')).toBe(false);
+      expect(isDailyReportCategory('2024/06/20')).toBe(false);
+      expect(isDailyReportCategory('日報/2024/06/20 (金)')).toBe(false);
+      expect(isDailyReportCategory('ミーティング/2024/06/20')).toBe(false);
+      expect(isDailyReportCategory('')).toBe(false);
     });
   });
 });
