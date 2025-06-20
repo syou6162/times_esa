@@ -6,7 +6,7 @@ import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 vi.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags, type RecentDailyReportsRequest } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 
@@ -314,7 +314,7 @@ describe('Firebase Functions Tests', () => {
       // 実行と検証
       await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20'))
         .rejects
-        .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
+        .toThrow(new functions.https.HttpsError('not-found', '指定された日の日報はまだありません'));
 
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
@@ -752,6 +752,190 @@ describe('Firebase Functions Tests', () => {
         const axios = require('axios');
         expect(axios).toBeDefined();
       });
+    });
+  });
+
+  describe('recentDailyReports Cloud Function', () => {
+    const mockContext: CallableRequest<RecentDailyReportsRequest> = {
+      auth: {
+        uid: 'test-uid',
+        token: {
+          email: 'test@example.com',
+        },
+      },
+      data: {},
+      rawRequest: {} as never,
+    };
+
+    beforeEach(() => {
+      // 認証情報のモック
+      process.env.VALID_EMAIL = 'test@example.com';
+      vi.clearAllMocks();
+    });
+
+    afterEach(() => {
+      // 元の環境変数に戻す
+      process.env.VALID_EMAIL = 'test@example.com';
+    });
+
+    it('認証が失敗した場合、permission-deniedエラーをスローする', async () => {
+      const { recentDailyReports } = await import('../index');
+      
+      const invalidContext: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        auth: {
+          uid: 'test-uid',
+          token: {
+            email: 'invalid@example.com',
+          },
+        },
+      };
+
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(invalidContext)
+      ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
+    });
+
+    it('認証なしの場合、permission-deniedエラーをスローする', async () => {
+      const { recentDailyReports } = await import('../index');
+      
+      const noAuthContext: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        auth: null,
+      };
+
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(noAuthContext)
+      ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
+    });
+
+    it('デフォルトパラメータで正常に動作する', async () => {
+      // getRecentDailyReportsをモック
+      const mockGetRecentDailyReports = vi.fn().mockResolvedValue({
+        reports: [
+          {
+            date: '2024-06-20',
+            title: 'テスト日報',
+            category: '日報/2024/06/20',
+            updated_at: '2024-06-20T10:30:00+09:00',
+            number: 123,
+          },
+        ],
+        total_count: 1,
+      });
+
+      // モジュールのモック
+      vi.doMock('../recentDailyReports', () => ({
+        getRecentDailyReports: mockGetRecentDailyReports,
+      }));
+
+      const { recentDailyReports } = await import('../index');
+      
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      const result = await recentDailyReports.run(mockContext);
+
+      expect(mockGetRecentDailyReports).toHaveBeenCalledWith(10); // デフォルト値
+      expect(result.reports).toHaveLength(1);
+      expect(result.reports[0].title).toBe('テスト日報');
+    });
+
+    it('カスタムのdays値で正常に動作する', async () => {
+      const mockGetRecentDailyReports = vi.fn().mockResolvedValue({
+        reports: [],
+        total_count: 0,
+      });
+
+      vi.doMock('../recentDailyReports', () => ({
+        getRecentDailyReports: mockGetRecentDailyReports,
+      }));
+
+      const { recentDailyReports } = await import('../index');
+      
+      const contextWithDays: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        data: { days: 20 },
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      await recentDailyReports.run(contextWithDays);
+
+      expect(mockGetRecentDailyReports).toHaveBeenCalledWith(20);
+    });
+
+    it('daysが0以下の場合、invalid-argumentエラーをスローする', async () => {
+      // モジュールをリセット
+      vi.resetModules();
+      const { recentDailyReports } = await import('../index');
+      
+      const contextWithZeroDays: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        data: { days: 0 },
+      };
+
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(contextWithZeroDays)
+      ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
+      
+      // 負の数でもテスト
+      const contextWithNegativeDays: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        data: { days: -5 },
+      };
+      
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(contextWithNegativeDays)
+      ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
+    });
+
+    it('daysが31を超える場合、invalid-argumentエラーをスローする', async () => {
+      // モジュールをリセット
+      vi.resetModules();
+      const { recentDailyReports } = await import('../index');
+      
+      const contextWithLargeDays: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        data: { days: 32 },
+      };
+
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(contextWithLargeDays)
+      ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
+      
+      // より大きな値でもテスト
+      const contextWithVeryLargeDays: CallableRequest<RecentDailyReportsRequest> = {
+        ...mockContext,
+        data: { days: 100 },
+      };
+      
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(contextWithVeryLargeDays)
+      ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
+    });
+
+    it('getRecentDailyReportsがエラーをスローした場合、internalエラーを返す', async () => {
+      const mockGetRecentDailyReports = vi.fn().mockRejectedValue(new Error('Test error'));
+
+      vi.doMock('../recentDailyReports', () => ({
+        getRecentDailyReports: mockGetRecentDailyReports,
+      }));
+
+      const { recentDailyReports } = await import('../index');
+      
+      await expect(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        recentDailyReports.run(mockContext)
+      ).rejects.toThrow(new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました'));
+    });
+
+    // モックをクリア
+    afterEach(() => {
+      vi.doUnmock('../recentDailyReports');
     });
   });
 
