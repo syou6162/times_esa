@@ -41,6 +41,46 @@ describe('Firebase Functions Tests', () => {
       expect(transformTitle('', 'テスト')).toBe('テスト');
       expect(transformTitle('テスト', '')).toBe('テスト');
     });
+
+    it('should keep "日報" when trying to change from other title to "日報"', () => {
+      expect(transformTitle('開発', '日報')).toBe('開発');
+      expect(transformTitle('開発、テスト', '日報')).toBe('開発、テスト');
+    });
+
+    it('should handle complex scenarios with "日報"', () => {
+      // 日報が混在している場合
+      expect(transformTitle('開発、日報', 'テスト')).toBe('開発、テスト');
+      expect(transformTitle('日報、開発', '日報、テスト')).toBe('開発、テスト');
+      
+      // 一方が日報のみ、もう一方が日報を含む複数タイトル
+      expect(transformTitle('日報', '日報、開発')).toBe('開発');
+      expect(transformTitle('日報、開発', '日報')).toBe('開発');
+    });
+
+    it('should handle edge cases', () => {
+      // 空文字列と日報 - 日報のみの場合は日報を返す
+      expect(transformTitle('', '日報')).toBe('日報');
+      expect(transformTitle('日報', '')).toBe('日報');
+      
+      // スペースのみ（現在の実装ではスペースは保持される）
+      expect(transformTitle(' ', 'テスト')).toBe(' 、テスト');
+      expect(transformTitle('テスト', ' ')).toBe('テスト、 ');
+      
+      // カンマやセパレータのみ（空文字列になるため除去される）
+      expect(transformTitle(',', 'テスト')).toBe('テスト');
+      expect(transformTitle('、', 'テスト')).toBe('テスト');
+    });
+
+    it('should handle "日報" as substring correctly', () => {
+      // "日報"は独立した要素として扱われる（部分文字列としては扱われない）
+      expect(transformTitle('毎日報告', 'テスト')).toBe('毎日報告、テスト');
+      expect(transformTitle('日報会議', 'レビュー')).toBe('日報会議、レビュー');
+      expect(transformTitle('営業日報', 'ミーティング')).toBe('営業日報、ミーティング');
+      
+      // 分割された要素が正確に"日報"の場合のみ特別扱い
+      expect(transformTitle('日報、毎日報告', 'テスト')).toBe('毎日報告、テスト');
+      expect(transformTitle('毎日報告、日報', 'レビュー')).toBe('毎日報告、レビュー');
+    });
   });
 
   describe('checkAuthTokenEmail', () => {
