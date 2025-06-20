@@ -16,21 +16,6 @@ function createMockEsaPost(overrides: Partial<EsaPost> = {}): EsaPost {
     number: 123,
     name: 'タイトル',
     tags: [],
-    category: 'カテゴリ',
-    created_at: '2025-06-20T10:00:00+09:00',
-    updated_at: '2025-06-20T10:00:00+09:00',
-    url: 'https://test.esa.io/posts/123',
-    created_by: { screen_name: 'test-user' },
-    updated_by: { screen_name: 'test-user' },
-    kind: 'flow',
-    wip: false,
-    comments_count: 0,
-    tasks_count: 0,
-    done_tasks_count: 0,
-    stargazers_count: 0,
-    watchers_count: 0,
-    star: false,
-    watch: false,
     ...overrides,
   };
 }
@@ -521,13 +506,9 @@ describe('Firebase Functions Tests', () => {
         const newPost = createMockEsaPost({
           number: 123,
           name: 'テストタイトル',
-          category: '日報/2025/06/20',
           tags: ['test', 'new'],
           body_md: 'テスト本文',
           body_html: '<p>テスト本文</p>',
-          created_at: '2025-06-20T10:00:00+09:00',
-          updated_at: '2025-06-20T10:00:00+09:00',
-          url: 'https://test-team.esa.io/posts/123',
         });
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
@@ -591,12 +572,9 @@ describe('Firebase Functions Tests', () => {
         const existingPost = createMockEsaPost({
           number: 123,
           name: '既存タイトル',
-          category: '日報/2025/06/20',
           tags: ['existing', 'tag'],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-          created_at: '2025-06-20T09:00:00+09:00',
-          updated_at: '2025-06-20T09:00:00+09:00',
         });
 
         const searchResult: EsaSearchResult = {
@@ -609,7 +587,6 @@ describe('Firebase Functions Tests', () => {
           name: '既存タイトル、新規タイトル',
           tags: ['existing', 'tag', 'new'],
           body_md: '新規本文\n既存本文',
-          updated_at: '2025-06-20T10:00:00+09:00',
         });
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
@@ -640,12 +617,9 @@ describe('Firebase Functions Tests', () => {
         const existingPost = createMockEsaPost({
           number: 123,
           name: '既存タイトル',
-          category: '日報/2025/06/20',
           tags: ['existing'],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-          created_at: '2025-06-20T09:00:00+09:00',
-          updated_at: '2025-06-20T09:00:00+09:00',
         });
 
         const searchResult: EsaSearchResult = {
@@ -680,12 +654,9 @@ describe('Firebase Functions Tests', () => {
         const existingPost = createMockEsaPost({
           number: 123,
           name: '既存タイトル',
-          category: '日報/2025/06/20',
           tags: [],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-          created_at: '2025-06-20T09:00:00+09:00',
-          updated_at: '2025-06-20T09:00:00+09:00',
         });
 
         const searchResult: EsaSearchResult = {
@@ -721,7 +692,6 @@ describe('Firebase Functions Tests', () => {
         const post1 = createMockEsaPost({
           number: 123,
           name: '投稿1',
-          category: '日報/2025/06/20',
           tags: [],
           body_md: '',
           body_html: '',
