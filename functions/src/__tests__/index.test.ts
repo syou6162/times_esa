@@ -8,17 +8,6 @@ jest.mock('axios');
 import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-// Helper function to create a mock EsaPost
-function createMockEsaPost(overrides: Partial<EsaPost> = {}): EsaPost {
-  return {
-    body_md: '本文',
-    body_html: '<p>本文</p>',
-    number: 123,
-    name: 'タイトル',
-    tags: [],
-    ...overrides,
-  };
-}
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
@@ -244,13 +233,13 @@ describe('Firebase Functions Tests', () => {
 
     it('should return post data when exactly one daily report exists', async () => {
       // 検索APIのレスポンス（1件の日報）
-      const mockPost = createMockEsaPost({
+      const mockPost: EsaPost = {
         body_md: '# 日報\n\n今日の作業内容',
         body_html: '<h1>日報</h1><p>今日の作業内容</p>',
         number: 123,
         name: '日報 2024-06-20',
         tags: ['日報', '開発'],
-      });
+      };
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -332,20 +321,20 @@ describe('Firebase Functions Tests', () => {
     it('should throw already-exists error when multiple daily reports exist', async () => {
       // 検索APIのレスポンス（複数件）
       const mockPosts: EsaPost[] = [
-        createMockEsaPost({
+        {
           body_md: 'post1',
           body_html: '<p>post1</p>',
           number: 123,
           name: '日報1',
           tags: [],
-        }),
-        createMockEsaPost({
+        },
+        {
           body_md: 'post2',
           body_html: '<p>post2</p>',
           number: 124,
           name: '日報2',
           tags: [],
-        }),
+        },
       ];
 
       const searchResult: EsaSearchResult = {
@@ -374,13 +363,13 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should correctly build request parameters with special characters in category', async () => {
-      const mockPost = createMockEsaPost({
+      const mockPost: EsaPost = {
         body_md: 'test',
         body_html: '<p>test</p>',
         number: 125,
         name: 'test',
         tags: [],
-      });
+      };
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -423,13 +412,13 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should fail when incorrect request parameters are used', async () => {
-      const mockPost = createMockEsaPost({
+      const mockPost: EsaPost = {
         body_md: 'test',
         body_html: '<p>test</p>',
         number: 126,
         name: 'test',
         tags: [],
-      });
+      };
 
       const searchResult: EsaSearchResult = {
         posts: [mockPost],
@@ -503,13 +492,13 @@ describe('Firebase Functions Tests', () => {
           total_count: 0,
         };
 
-        const newPost = createMockEsaPost({
+        const newPost: EsaPost = {
           number: 123,
           name: 'テストタイトル',
           tags: ['test', 'new'],
           body_md: 'テスト本文',
           body_html: '<p>テスト本文</p>',
-        });
+        };
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
         mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPost>);
@@ -569,25 +558,25 @@ describe('Firebase Functions Tests', () => {
 
     describe('既存投稿更新 (total_count === 1)', () => {
       it('検索結果1件の場合、既存投稿を更新する', async () => {
-        const existingPost = createMockEsaPost({
+        const existingPost: EsaPost = {
           number: 123,
           name: '既存タイトル',
           tags: ['existing', 'tag'],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-        });
+        };
 
         const searchResult: EsaSearchResult = {
           posts: [existingPost],
           total_count: 1,
         };
 
-        const updatedPost = createMockEsaPost({
+        const updatedPost: EsaPost = {
           ...existingPost,
           name: '既存タイトル、新規タイトル',
           tags: ['existing', 'tag', 'new'],
           body_md: '新規本文\n既存本文',
-        });
+        };
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
         mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPost>);
@@ -614,13 +603,13 @@ describe('Firebase Functions Tests', () => {
       });
 
       it('空テキストの場合、既存本文のみを保持する', async () => {
-        const existingPost = createMockEsaPost({
+        const existingPost: EsaPost = {
           number: 123,
           name: '既存タイトル',
           tags: ['existing'],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-        });
+        };
 
         const searchResult: EsaSearchResult = {
           posts: [existingPost],
@@ -651,13 +640,13 @@ describe('Firebase Functions Tests', () => {
       });
 
       it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
-        const existingPost = createMockEsaPost({
+        const existingPost: EsaPost = {
           number: 123,
           name: '既存タイトル',
           tags: [],
           body_md: '既存本文',
           body_html: '<p>既存本文</p>',
-        });
+        };
 
         const searchResult: EsaSearchResult = {
           posts: [existingPost],
@@ -689,13 +678,13 @@ describe('Firebase Functions Tests', () => {
 
     describe('複数投稿エラー (total_count > 1)', () => {
       it('検索結果が複数件の場合、エラーをスローする', async () => {
-        const post1 = createMockEsaPost({
+        const post1: EsaPost = {
           number: 123,
           name: '投稿1',
           tags: [],
           body_md: '',
           body_html: '',
-        });
+        };
 
         const post2: EsaPost = { ...post1, number: 124, name: '投稿2' };
 
