@@ -315,6 +315,7 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('not-found', '今日の日報はまだありません'));
 
+       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -359,6 +360,7 @@ describe('Firebase Functions Tests', () => {
         .rejects
         .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
 
+       
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -513,9 +515,13 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(newPost);
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           params: { q: 'category:日報/2025/06/20' },
         });
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {
             name: 'テストタイトル',
@@ -527,8 +533,12 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
 
@@ -560,8 +570,12 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('invalid_token: Invalid access token');
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
     });
@@ -601,6 +615,8 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(updatedPost);
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
@@ -612,8 +628,12 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
 
@@ -643,6 +663,8 @@ describe('Firebase Functions Tests', () => {
           '', // 空テキスト
         );
 
+        // Jest mockのメソッド参照はthisに依存しないため安全
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
@@ -654,8 +676,12 @@ describe('Firebase Functions Tests', () => {
         });
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
 
@@ -695,8 +721,12 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('rate_limit: Rate limit exceeded');
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
       });
     });
@@ -732,8 +762,12 @@ describe('Firebase Functions Tests', () => {
         ).rejects.toThrow('複数の日報が存在します');
 
         // エンドポイント呼び出し回数を検証
-        expect(mockAxios.get).toHaveBeenCalledTimes(1);
+         
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.post).not.toHaveBeenCalled();
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(mockAxios.patch).not.toHaveBeenCalled();
       });
     });
@@ -769,7 +803,10 @@ describe('Firebase Functions Tests', () => {
       const result = await getTagList(mockAxios, esaConfig);
 
       expect(result).toEqual(mockTags);
+      // Jest mockのメソッド参照はthisに依存しないため安全
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -783,7 +820,10 @@ describe('Firebase Functions Tests', () => {
       const result = await getTagList(mockAxios, esaConfig);
 
       expect(result).toEqual(mockTags);
+      // Jest mockのメソッド参照はthisに依存しないため安全
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
@@ -791,6 +831,7 @@ describe('Firebase Functions Tests', () => {
       mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
 
       await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
   });
@@ -811,6 +852,7 @@ describe('Firebase Functions Tests', () => {
         // This is tested indirectly through the API calls in other tests
         // The axios.create mock is set up in the Jest mock, but not called directly in test setup
         // We can verify the behavior through the successful API call tests
+        // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
         const axios = require('axios');
         expect(axios).toBeDefined();
       });
