@@ -5,8 +5,8 @@ import { CallableRequest } from 'firebase-functions/v2/https';
 jest.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport } from '../index';
-import { AxiosInstance } from 'axios';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, type EsaSearchResult, type EsaPost } from '../index';
+import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
@@ -232,22 +232,37 @@ describe('Firebase Functions Tests', () => {
 
     it('should return post data when exactly one daily report exists', async () => {
       // 検索APIのレスポンス（1件の日報）
-      const searchResponse = {
-        data: {
-          posts: [{ number: 123 }],
-          total_count: 1,
-        },
+      const mockPost: EsaPost = {
+        body_md: '# 日報\n\n今日の作業内容',
+        body_html: '<h1>日報</h1><p>今日の作業内容</p>',
+        number: 123,
+        name: '日報 2024-06-20',
+        tags: ['日報', '開発'],
       };
 
-      // 詳細取得APIのレスポンス
-      const detailResponse = {
-        data: {
-          body_md: '# 日報\n\n今日の作業内容',
-          body_html: '<h1>日報</h1><p>今日の作業内容</p>',
-          number: 123,
-          name: '日報 2024-06-20',
-          tags: ['日報', '開発'],
-        },
+      const searchResult: EsaSearchResult = {
+        posts: [mockPost],
+        total_count: 1,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      const detailResponse: AxiosResponse<EsaPost> = {
+        data: mockPost,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
       };
 
       // モックの設定
@@ -272,16 +287,24 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenNthCalledWith(2, '/v1/teams/test-team/posts/123');
 
       // 結果の検証
-      expect(result).toEqual(detailResponse.data);
+      expect(result).toEqual(mockPost);
     });
 
     it('should throw not-found error when no daily report exists', async () => {
       // 検索APIのレスポンス（0件）
-      const searchResponse = {
-        data: {
-          posts: [],
-          total_count: 0,
-        },
+      const searchResult: EsaSearchResult = {
+        posts: [],
+        total_count: 0,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
       };
 
       mockAxios.get.mockResolvedValueOnce(searchResponse);
@@ -296,11 +319,36 @@ describe('Firebase Functions Tests', () => {
 
     it('should throw already-exists error when multiple daily reports exist', async () => {
       // 検索APIのレスポンス（複数件）
-      const searchResponse = {
-        data: {
-          posts: [{ number: 123 }, { number: 124 }],
-          total_count: 2,
+      const mockPosts: EsaPost[] = [
+        {
+          body_md: 'post1',
+          body_html: '<p>post1</p>',
+          number: 123,
+          name: '日報1',
+          tags: [],
         },
+        {
+          body_md: 'post2',
+          body_html: '<p>post2</p>',
+          number: 124,
+          name: '日報2',
+          tags: [],
+        },
+      ];
+
+      const searchResult: EsaSearchResult = {
+        posts: mockPosts,
+        total_count: 2,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
       };
 
       mockAxios.get.mockResolvedValueOnce(searchResponse);
@@ -314,21 +362,37 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should correctly build request parameters with special characters in category', async () => {
-      const searchResponse = {
-        data: {
-          posts: [{ number: 125 }],
-          total_count: 1,
-        },
+      const mockPost: EsaPost = {
+        body_md: 'test',
+        body_html: '<p>test</p>',
+        number: 125,
+        name: 'test',
+        tags: [],
       };
 
-      const detailResponse = {
-        data: {
-          body_md: 'test',
-          body_html: '<p>test</p>',
-          number: 125,
-          name: 'test',
-          tags: [],
-        },
+      const searchResult: EsaSearchResult = {
+        posts: [mockPost],
+        total_count: 1,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      const detailResponse: AxiosResponse<EsaPost> = {
+        data: mockPost,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
       };
 
       mockAxios.get
@@ -342,6 +406,61 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
         params: {
           q: 'category:日報/2024/06/20 (金)',
+        },
+      });
+    });
+
+    it('should fail when incorrect request parameters are used', async () => {
+      const mockPost: EsaPost = {
+        body_md: 'test',
+        body_html: '<p>test</p>',
+        number: 126,
+        name: 'test',
+        tags: [],
+      };
+
+      const searchResult: EsaSearchResult = {
+        posts: [mockPost],
+        total_count: 1,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      const detailResponse: AxiosResponse<EsaPost> = {
+        data: mockPost,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      mockAxios.get
+        .mockResolvedValueOnce(searchResponse)
+        .mockResolvedValueOnce(detailResponse);
+
+      await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, 'テストカテゴリ');
+
+      // 間違ったパラメータ名でテスト（これは失敗するはず）
+      expect(mockAxios.get).not.toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+        params: {
+          query: 'category:テストカテゴリ', // 'q' ではなく 'query'
+        },
+      });
+
+      // 正しいパラメータ名でテスト
+      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+        params: {
+          q: 'category:テストカテゴリ',
         },
       });
     });

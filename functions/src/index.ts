@@ -35,7 +35,7 @@ function createAxiosClient(accessToken: string): AxiosInstance {
   });
 }
 
-type EsaPost = {
+export type EsaPost = {
   // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
   body_md: string;
   body_html: string;
