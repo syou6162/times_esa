@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import { CallableRequest } from 'firebase-functions/v2/https';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock axios before importing the module
-jest.mock('axios');
+vi.mock('axios');
 
 // Import the functions to test
 import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags } from '../index';
@@ -11,7 +12,7 @@ import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 describe('Firebase Functions Tests', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('transformTitle', () => {
@@ -219,7 +220,7 @@ describe('Firebase Functions Tests', () => {
   describe('getDailyReport', () => {
     // Axiosモックのタイプ定義
     const mockAxios = {
-      get: jest.fn(),
+      get: vi.fn(),
     };
 
     const mockEsaConfig = {
@@ -228,7 +229,7 @@ describe('Firebase Functions Tests', () => {
     };
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('should return post data when exactly one daily report exists', async () => {
@@ -470,21 +471,30 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('createOrUpdatePost', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    let mockAxios: {
+      get: ReturnType<typeof vi.fn>;
+      post: ReturnType<typeof vi.fn>;
+      patch: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, any> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       // Create a mock axios instance
       mockAxios = {
-        get: jest.fn(),
-        post: jest.fn(),
-        patch: jest.fn(),
+        get: vi.fn(),
+        post: vi.fn(),
+        patch: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     describe('新規投稿作成 (total_count === 0)', () => {
@@ -774,19 +784,26 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('getTagList', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    let mockAxios: {
+      get: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, any> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       // Create a mock axios instance
       mockAxios = {
-        get: jest.fn(),
+        get: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     it('タグ一覧を正常に取得できる', async () => {
@@ -860,20 +877,29 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('Error handling integration', () => {
-    let mockAxios: jest.Mocked<AxiosInstance>;
+    let mockAxios: {
+      get: ReturnType<typeof vi.fn>;
+      post: ReturnType<typeof vi.fn>;
+      patch: ReturnType<typeof vi.fn>;
+      defaults: { headers: { common: Record<string, any> } };
+      interceptors: {
+        request: { use: ReturnType<typeof vi.fn> };
+        response: { use: ReturnType<typeof vi.fn> };
+      };
+    };
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
       mockAxios = {
-        get: jest.fn(),
-        post: jest.fn(),
-        patch: jest.fn(),
+        get: vi.fn(),
+        post: vi.fn(),
+        patch: vi.fn(),
         defaults: { headers: { common: {} } },
         interceptors: {
-          request: { use: jest.fn() },
-          response: { use: jest.fn() },
+          request: { use: vi.fn() },
+          response: { use: vi.fn() },
         },
-      } as unknown as jest.Mocked<AxiosInstance>;
+      };
     });
 
     it('AxiosError のエラーレスポンスが正しく変換される', async () => {
