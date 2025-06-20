@@ -281,7 +281,7 @@ describe('Firebase Functions Tests', () => {
       // 検索API呼び出しの検証
       expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
-          q: 'category:日報/2024/06/20',
+          q: 'on:日報/2024/06/20',
         },
       });
 
@@ -363,108 +363,24 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
-    it('should correctly build request parameters with special characters in category', async () => {
-      const mockPost: EsaPost = {
-        body_md: 'test',
-        body_html: '<p>test</p>',
-        number: 125,
-        name: 'test',
-        tags: [],
-      };
+    it('should throw error for invalid category format', async () => {
+      // 曜日付きカテゴリはサポートしない
+      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20 (金)'))
+        .rejects
+        .toThrow(new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません'));
 
-      const searchResult: EsaSearchResult = {
-        posts: [mockPost],
-        total_count: 1,
-      };
-
-      const searchResponse: AxiosResponse<EsaSearchResult> = {
-        data: searchResult,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: {},
-        } as InternalAxiosRequestConfig,
-      };
-
-      const detailResponse: AxiosResponse<EsaPost> = {
-        data: mockPost,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: {},
-        } as InternalAxiosRequestConfig,
-      };
-
-      mockAxios.get
-        .mockResolvedValueOnce(searchResponse)
-        .mockResolvedValueOnce(detailResponse);
-
-      // カテゴリに特殊文字を含む場合
-      await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20 (金)');
-
-      // パラメータが正しく設定されることを確認
-      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
-        params: {
-          q: 'category:日報/2024/06/20 (金)',
-        },
-      });
+      // APIが呼ばれていないことを確認
+      expect(mockAxios.get).not.toHaveBeenCalled();
     });
 
-    it('should fail when incorrect request parameters are used', async () => {
-      const mockPost: EsaPost = {
-        body_md: 'test',
-        body_html: '<p>test</p>',
-        number: 126,
-        name: 'test',
-        tags: [],
-      };
+    it('should throw error for non-date category format', async () => {
+      // 日付形式ではないカテゴリでテスト
+      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, 'テストカテゴリ'))
+        .rejects
+        .toThrow(new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません'));
 
-      const searchResult: EsaSearchResult = {
-        posts: [mockPost],
-        total_count: 1,
-      };
-
-      const searchResponse: AxiosResponse<EsaSearchResult> = {
-        data: searchResult,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: {},
-        } as InternalAxiosRequestConfig,
-      };
-
-      const detailResponse: AxiosResponse<EsaPost> = {
-        data: mockPost,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: {},
-        } as InternalAxiosRequestConfig,
-      };
-
-      mockAxios.get
-        .mockResolvedValueOnce(searchResponse)
-        .mockResolvedValueOnce(detailResponse);
-
-      await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, 'テストカテゴリ');
-
-      // 間違ったパラメータ名でテスト（これは失敗するはず）
-      expect(mockAxios.get).not.toHaveBeenCalledWith('/v1/teams/test-team/posts', {
-        params: {
-          query: 'category:テストカテゴリ', // 'q' ではなく 'query'
-        },
-      });
-
-      // 正しいパラメータ名でテスト
-      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
-        params: {
-          q: 'category:テストカテゴリ',
-        },
-      });
+      // APIが呼ばれていないことを確認
+      expect(mockAxios.get).not.toHaveBeenCalled();
     });
   });
 
@@ -525,7 +441,7 @@ describe('Firebase Functions Tests', () => {
 
         expect(result).toEqual(newPost);
         expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
-          params: { q: 'category:日報/2025/06/20' },
+          params: { q: 'on:日報/2025/06/20' },
         });
         expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {
@@ -898,8 +814,8 @@ describe('Firebase Functions Tests', () => {
       mockAxios.get.mockRejectedValueOnce(new Error('Network timeout'));
 
       await expect(
-        getDailyReport(mockAxios, esaConfig, 'test-category'),
-      ).rejects.toThrow('Network timeout');
+        getDailyReport(mockAxios, esaConfig, '日報/2024/06/20'),
+      ).rejects.toThrow('エラーが発生しました');
     });
   });
 });

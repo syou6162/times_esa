@@ -3,6 +3,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
+import { searchDailyReport } from './search';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -24,12 +25,13 @@ export function getEsaConfig(): EsaConfig {
   return config;
 }
 
-export function createAxiosClient(accessToken: string): AxiosInstance {
+export function createAxiosClient(accessToken?: string): AxiosInstance {
+  const token = accessToken || getEsaConfig().accessToken;
   return axios.create({
     baseURL: 'https://api.esa.io',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
     responseType: 'json',
   });
@@ -114,7 +116,7 @@ export async function createOrUpdatePost(
 ): Promise<EsaPost> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
-      q: `category:${category}`,
+      q: `on:${category}`,
     },
   });
   if (response.data.total_count === 0) {
@@ -152,23 +154,37 @@ export async function createOrUpdatePost(
 }
 
 export async function getDailyReport(
-  axios: AxiosInstance,
+  axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
 ): Promise<EsaPost> {
-  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
-    params: {
-      q: `category:${category}`,
-    },
-  });
-  if (response.data.total_count === 0) {
-    throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
-  } else if (response.data.total_count > 1) {
-    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
-  } else {
-    return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
-      return res.data;
-    });
+  // categoryから日付を抽出（例: "日報/2024/06/20" -> "2024-06-20"）
+  const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
+  if (!match) {
+    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
+  }
+  const date = `${match[1]}-${match[2]}-${match[3]}`;
+  
+  try {
+    const response = await searchDailyReport(date, axiosClient);
+    
+    if (response.total_count === 0) {
+      throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+    } else if (response.total_count > 1) {
+      throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
+    } else {
+      // 詳細を取得
+      return axiosClient.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+        return res.data;
+      });
+    }
+  } catch (error) {
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    // 元のエラー情報を含めてログ出力し、ユーザーには詳細を隠す
+    console.error('getDailyReport error:', error);
+    throw new functions.https.HttpsError('internal', '日報の取得中にエラーが発生しました');
   }
 }
 
