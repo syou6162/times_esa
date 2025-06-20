@@ -18,8 +18,8 @@ const ESA_SECRETS = [
 ];
 
 function getEsaConfig(): EsaConfig {
-  const teamName = process.env.ESA_TEAM_NAME as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
-  const accessToken = process.env.ESA_ACCESS_TOKEN as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const teamName = process.env.ESA_TEAM_NAME as string;
+  const accessToken = process.env.ESA_ACCESS_TOKEN as string;
   const config: EsaConfig = { teamName, accessToken };
   return config;
 }
@@ -37,8 +37,8 @@ function createAxiosClient(accessToken: string): AxiosInstance {
 
 type EsaPost = {
   // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
-  body_md: string; // eslint-disable-line camelcase
-  body_html: string; // eslint-disable-line camelcase
+  body_md: string;
+  body_html: string;
   number: number;
   name: string;
   tags: string[];
@@ -53,12 +53,12 @@ type TimesEsaPostRequest = {
 
 export type EsaSearchResult = {
   posts: EsaPost[];
-  total_count: number; // eslint-disable-line camelcase
+  total_count: number;
 }
 
 export type Tag = {
   name: string;
-  posts_count: number; // eslint-disable-line camelcase
+  posts_count: number;
 }
 
 export type EsaTags = {
@@ -159,7 +159,7 @@ async function getTagList(
 }
 
 export function checkAuthTokenEmail(context: CallableRequest): void {
-  const valid_email = process.env.VALID_EMAIL as string; // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+  const valid_email = process.env.VALID_EMAIL as string;
   if (!context.auth || context.auth.token.email !== valid_email) {
     throw new functions.https.HttpsError('permission-denied', 'Auth Error');
   }

@@ -96,24 +96,24 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should pass when auth token email matches VALID_EMAIL', () => {
-      const validContext: CallableRequest = {
+      const validContext = {
         auth: {
           uid: 'test-uid',
           token: {
             email: 'valid@example.com',
-          } as any,
+          },
         },
-        rawRequest: {} as any,
-      } as CallableRequest;
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       // Should not throw
       expect(() => checkAuthTokenEmail(validContext)).not.toThrow();
     });
 
     it('should throw permission-denied error when auth is missing', () => {
-      const invalidContext: CallableRequest = {
-        rawRequest: {} as any,
-      } as CallableRequest;
+      const invalidContext = {
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(invalidContext)).toThrow(
         new functions.https.HttpsError('permission-denied', 'Auth Error')
@@ -121,15 +121,15 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should throw permission-denied error when email does not match', () => {
-      const invalidContext: CallableRequest = {
+      const invalidContext = {
         auth: {
           uid: 'test-uid',
           token: {
             email: 'invalid@example.com',
-          } as any,
+          },
         },
-        rawRequest: {} as any,
-      } as CallableRequest;
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(invalidContext)).toThrow(
         new functions.https.HttpsError('permission-denied', 'Auth Error')
@@ -137,13 +137,13 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('should throw when auth exists but token is missing', () => {
-      const invalidContext: CallableRequest = {
+      const invalidContext = {
         auth: {
           uid: 'test-uid',
-          token: {} as any,
+          token: {},
         },
-        rawRequest: {} as any,
-      } as CallableRequest;
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(invalidContext)).toThrow(
         new functions.https.HttpsError('permission-denied', 'Auth Error')
@@ -153,27 +153,27 @@ describe('Firebase Functions Tests', () => {
     it('should use VALID_EMAIL from environment', () => {
       process.env.VALID_EMAIL = 'different@example.com';
       
-      const validContext: CallableRequest = {
+      const validContext = {
         auth: {
           uid: 'test-uid',
           token: {
             email: 'different@example.com',
-          } as any,
+          },
         },
-        rawRequest: {} as any,
-      } as CallableRequest;
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(validContext)).not.toThrow();
 
-      const invalidContext: CallableRequest = {
+      const invalidContext = {
         auth: {
           uid: 'test-uid',
           token: {
             email: 'valid@example.com',
-          } as any,
+          },
         },
-        rawRequest: {} as any,
-      } as CallableRequest;
+        rawRequest: {},
+      } as unknown as CallableRequest;
 
       expect(() => checkAuthTokenEmail(invalidContext)).toThrow();
     });
