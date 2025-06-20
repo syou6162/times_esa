@@ -1,6 +1,7 @@
 import React from 'react';
 import { EsaSubmitForm } from '../EsaSubmitForm';
 import DailyReport from '../DailyReport';
+import { getPostsCount, formatTodayPostsText } from '../../utils/dailyReportUtils';
 
 export type TodayReportViewProps = {
   // ESA関連のデータ
@@ -27,9 +28,6 @@ export type TodayReportViewProps = {
   reloadDailyReport: () => void;
 };
 
-const getPostsCount = (md: string): number => {
-  return md.split('---').length - 1;
-};
 
 export const TodayReportView: React.FC<TodayReportViewProps> = ({
   esaCategory,

@@ -23,7 +23,7 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = ({
       <List>
         {/* 今日の日報 */}
         <ListItem
-          button
+          component="button"
           onClick={() => onSelectReport('today')}
           selected={selectedDate === 'today'}
           sx={{
@@ -47,7 +47,7 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = ({
         {reports.map((report) => (
           <ListItem
             key={report.date}
-            button
+            component="button"
             onClick={() => onSelectReport(report.date)}
             selected={selectedDate === report.date}
             sx={{

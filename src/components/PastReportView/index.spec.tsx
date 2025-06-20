@@ -28,7 +28,7 @@ describe('PastReportViewが正しく表示される', () => {
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
-    expect(renderResult.getByText('5個のつぶやき')).toBeTruthy();
+    expect(renderResult.getByText('過去の日報は編集できません・5個のつぶやき')).toBeTruthy();
   });
 
   it('フェッチ中の状態が正しく表示される', () => {
