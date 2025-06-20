@@ -40,11 +40,11 @@ export function formatCategoryToDate(category: DailyReportCategory): DateString 
 
 /**
  * yyyy-MM-dd形式の日付文字列を日報カテゴリ形式に変換する
- * @param dateString - yyyy-MM-dd形式の日付文字列
+ * @param date - yyyy-MM-dd形式の日付文字列
  * @returns 日報カテゴリ形式の文字列
  */
-export function formatDateStringToCategory(dateString: DateString): DailyReportCategory {
-  const [year, month, day] = dateString.split('-');
+export function formatDateStringToCategory(date: DateString): DailyReportCategory {
+  const [year, month, day] = date.split('-');
   return `日報/${year}/${month}/${day}`;
 }
 
@@ -69,21 +69,21 @@ export function getDateRangeCategories(days: number = 10, baseDate: Date = new D
 
 /**
  * 2つの日付間の日報カテゴリを生成する
- * @param startDate - 開始日（yyyy-MM-dd形式）
- * @param endDate - 終了日（yyyy-MM-dd形式）
+ * @param start - 開始日（yyyy-MM-dd形式）
+ * @param end - 終了日（yyyy-MM-dd形式）
  * @returns 日報カテゴリの配列（新しい日付順）
  */
-export function getDateRangeCategoriesBetween(startDate: DateString, endDate: DateString): DailyReportCategory[] {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+export function getDateRangeCategoriesBetween(start: DateString, end: DateString): DailyReportCategory[] {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
   const categories: DailyReportCategory[] = [];
   
-  if (start > end) {
+  if (startDate > endDate) {
     throw new Error('開始日は終了日より前である必要があります');
   }
   
-  const current = new Date(end);
-  while (current >= start) {
+  const current = new Date(endDate);
+  while (current >= startDate) {
     categories.push(formatDateToCategory(current));
     current.setDate(current.getDate() - 1);
   }
