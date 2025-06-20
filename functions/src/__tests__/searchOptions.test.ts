@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
   withCategory,
   withTags,
-  withDateRange,
   withTitle,
   combineOptions,
   type SearchOption
@@ -73,29 +72,6 @@ describe('searchOptions', () => {
     });
   });
 
-  describe('withDateRange', () => {
-    it('開始日のみを指定できる', () => {
-      expect(withDateRange('2024-06-01')).toEqual({ 
-        query: 'created:>=2024-06-01' 
-      });
-    });
-
-    it('終了日のみを指定できる', () => {
-      expect(withDateRange(undefined, '2024-06-30')).toEqual({ 
-        query: 'created:<=2024-06-30' 
-      });
-    });
-
-    it('開始日と終了日の両方を指定できる', () => {
-      expect(withDateRange('2024-06-01', '2024-06-30')).toEqual({ 
-        query: 'created:>=2024-06-01 created:<=2024-06-30' 
-      });
-    });
-
-    it('どちらも指定しないと空のクエリを返す', () => {
-      expect(withDateRange()).toEqual({ query: '' });
-    });
-  });
 
   describe('withTitle', () => {
     it('タイトル検索クエリを正しくフォーマットする', () => {
@@ -119,13 +95,12 @@ describe('searchOptions', () => {
       const options: SearchOption[] = [
         withCategory('日報/2024/06'),
         withTags(['重要', '緊急']),
-        withDateRange('2024-06-01', '2024-06-30'),
         withTitle('6月20日')
       ];
       
       const combinedQuery = combineOptions(options);
       expect(combinedQuery).toBe(
-        'in:日報/2024/06 tag:重要 tag:緊急 created:>=2024-06-01 created:<=2024-06-30 title:6月20日'
+        'in:日報/2024/06 tag:重要 tag:緊急 title:6月20日'
       );
     });
 
@@ -133,12 +108,11 @@ describe('searchOptions', () => {
       const options: SearchOption[] = [
         withCategory('日報'),
         withTags([]),  // 空のタグ
-        withDateRange('2024-06-01'),  // 終了日なし
         withTitle('')  // 空のタイトル
       ];
       
       const combinedQuery = combineOptions(options);
-      expect(combinedQuery).toBe('in:日報 created:>=2024-06-01');
+      expect(combinedQuery).toBe('in:日報');
     });
   });
 });

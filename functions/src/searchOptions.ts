@@ -49,26 +49,6 @@ export function withTags(tags: string[]): SearchOption {
 }
 
 /**
- * 日付範囲で検索をフィルタリング
- * @param startDate - 開始日（YYYY-MM-DD形式）
- * @param endDate - 終了日（YYYY-MM-DD形式）
- * @returns 検索オプション
- */
-export function withDateRange(startDate?: string, endDate?: string): SearchOption {
-  const queries: string[] = [];
-  
-  // esaの検索では、created:とupdated:で日付範囲を指定できる
-  if (startDate) {
-    queries.push(`created:>=${startDate}`);
-  }
-  if (endDate) {
-    queries.push(`created:<=${endDate}`);
-  }
-  
-  return { query: queries.join(' ') };
-}
-
-/**
  * タイトルでの検索
  * @param title - タイトルの検索文字列
  * @returns 検索オプション
