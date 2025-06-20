@@ -608,7 +608,7 @@ describe('Firebase Functions Tests', () => {
           ...existingPost,
           name: '既存タイトル、新規タイトル',
           tags: ['existing', 'tag', 'new'],
-          body_md: '新規本文\\n既存本文',
+          body_md: '新規本文\n既存本文',
           updated_at: '2025-06-20T10:00:00+09:00',
         });
 
@@ -630,7 +630,7 @@ describe('Firebase Functions Tests', () => {
             name: '既存タイトル、新規タイトル',
             category: '日報/2025/06/20',
             tags: ['new', 'existing', 'tag'],
-            body_md: '新規本文\\n既存本文',
+            body_md: '新規本文\n既存本文',
             wip: false,
           },
         });
@@ -677,33 +677,16 @@ describe('Firebase Functions Tests', () => {
       });
 
       it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
-        const existingPost: EsaPost = {
+        const existingPost = createMockEsaPost({
           number: 123,
           name: '既存タイトル',
           category: '日報/2025/06/20',
           tags: [],
           body_md: '既存本文',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           body_html: '<p>既存本文</p>',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           created_at: '2025-06-20T09:00:00+09:00',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           updated_at: '2025-06-20T09:00:00+09:00',
-          url: 'https://test-team.esa.io/posts/123',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          created_by: { screen_name: 'test-user' },
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          updated_by: { screen_name: 'test-user' },
-          kind: 'flow',
-          wip: false,
-          comments_count: 0,
-          tasks_count: 0,
-          done_tasks_count: 0,
-          stargazers_count: 0,
-          watchers_count: 0,
-          star: false,
-          watch: false,
-        };
+        });
 
         const searchResult: EsaSearchResult = {
           posts: [existingPost],
@@ -735,33 +718,14 @@ describe('Firebase Functions Tests', () => {
 
     describe('複数投稿エラー (total_count > 1)', () => {
       it('検索結果が複数件の場合、エラーをスローする', async () => {
-        const post1: EsaPost = {
+        const post1 = createMockEsaPost({
           number: 123,
           name: '投稿1',
           category: '日報/2025/06/20',
           tags: [],
           body_md: '',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           body_html: '',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          created_at: '2025-06-20T09:00:00+09:00',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          updated_at: '2025-06-20T09:00:00+09:00',
-          url: 'https://test-team.esa.io/posts/123',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          created_by: { screen_name: 'test-user' },
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          updated_by: { screen_name: 'test-user' },
-          kind: 'flow',
-          wip: false,
-          comments_count: 0,
-          tasks_count: 0,
-          done_tasks_count: 0,
-          stargazers_count: 0,
-          watchers_count: 0,
-          star: false,
-          watch: false,
-        };
+        });
 
         const post2: EsaPost = { ...post1, number: 124, name: '投稿2' };
 
