@@ -157,7 +157,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'in:日報/2024/06 title:6月20日',
+            q: 'category:日報/2024/06/20',
             page: 1,
             per_page: 10,
             sort: 'best_match',
@@ -168,7 +168,7 @@ describe('search', () => {
       expect(result).toEqual(mockResponse);
     });
 
-    it('月と日の先頭の0を除去して検索する', async () => {
+    it('日付のフォーマットをそのまま使用する', async () => {
       const mockResponse: EsaSearchResult = {
         posts: [],
         total_count: 0
@@ -182,7 +182,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'in:日報/2024/01 title:1月5日',
+            q: 'category:日報/2024/01/05',
             page: 1,
             per_page: 10,
             sort: 'best_match',

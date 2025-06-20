@@ -51,7 +51,7 @@ export async function searchPosts(
 }
 
 /**
- * 日報を検索する関数（特定のカテゴリとタイトルで検索）
+ * 日報を検索する関数（特定の日付のカテゴリで検索）
  * @param date - 日付（YYYY-MM-DD形式）
  * @param axiosClient - Axiosクライアント（テスト用にオプション）
  * @returns 検索結果
@@ -60,15 +60,13 @@ export async function searchDailyReport(
   date: string,
   axiosClient?: AxiosInstance
 ): Promise<EsaSearchResult> {
-  // 日付からカテゴリとタイトルを構築
+  // 日付からカテゴリを構築（日報は日付まで含むカテゴリ構造）
   const [year, month, day] = date.split('-');
-  const category = `日報/${year}/${month}`;
-  const titleDate = `${parseInt(month, 10)}月${parseInt(day, 10)}日`;
+  const category = `日報/${year}/${month}/${day}`;
   
   // 検索オプションを構築
   const options: SearchOption[] = [
-    { query: `in:${category}` },
-    { query: `title:${titleDate}` }
+    { query: `category:${category}` }
   ];
   
   return searchPosts({

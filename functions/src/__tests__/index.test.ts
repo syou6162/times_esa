@@ -281,7 +281,7 @@ describe('Firebase Functions Tests', () => {
       // 検索API呼び出しの検証
       expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
-          q: 'in:日報/2024/06 title:6月20日',
+          q: 'category:日報/2024/06/20',
           page: 1,
           per_page: 10,
           sort: 'best_match',
