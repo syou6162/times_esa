@@ -282,10 +282,6 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
           q: 'category:日報/2024/06/20',
-          page: 1,
-          per_page: 10,
-          sort: 'best_match',
-          order: 'desc',
         },
       });
 

@@ -157,11 +157,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'category:日報/2024/06/20',
-            page: 1,
-            per_page: 10,
-            sort: 'best_match',
-            order: 'desc'
+            q: 'category:日報/2024/06/20'
           }
         }
       );
@@ -182,11 +178,7 @@ describe('search', () => {
         '/v1/teams/test-team/posts',
         {
           params: {
-            q: 'category:日報/2024/01/05',
-            page: 1,
-            per_page: 10,
-            sort: 'best_match',
-            order: 'desc'
+            q: 'category:日報/2024/01/05'
           }
         }
       );

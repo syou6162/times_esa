@@ -60,17 +60,22 @@ export async function searchDailyReport(
   date: string,
   axiosClient?: AxiosInstance
 ): Promise<EsaSearchResult> {
+  const client = axiosClient || createAxiosClient();
+  const config = getEsaConfig();
+  
   // 日付からカテゴリを構築（日報は日付まで含むカテゴリ構造）
   const [year, month, day] = date.split('-');
   const category = `日報/${year}/${month}/${day}`;
   
-  // 検索オプションを構築
-  const options: SearchOption[] = [
-    { query: `category:${category}` }
-  ];
+  // 元の実装と同じく、qパラメータのみを使用
+  const response = await client.get<EsaSearchResult>(
+    `/v1/teams/${config.teamName}/posts`,
+    { 
+      params: {
+        q: `category:${category}`
+      }
+    }
+  );
   
-  return searchPosts({
-    options,
-    perPage: 10
-  }, axiosClient);
+  return response.data;
 }
