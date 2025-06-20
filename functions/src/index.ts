@@ -4,7 +4,7 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
-import type { DailyReportCategory, DateString } from './dateUtils';
+import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -48,7 +48,7 @@ export type EsaPost = {
 }
 
 type TimesEsaPostRequest = {
-  category: string;
+  category: DailyReportCategory;
   tags: string[];
   title: string;
   text: string;
@@ -110,7 +110,7 @@ export function transformTitle(oldTitle: string, newTitle: string): string {
 export async function createOrUpdatePost(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
-  category: string,
+  category: DailyReportCategory,
   tags: string[],
   title: string,
   text: string,
@@ -157,26 +157,15 @@ export async function createOrUpdatePost(
 export async function getDailyReport(
   axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
-  category: string,
-  date?: string,
+  category: DailyReportCategory,
 ): Promise<EsaPost> {
-  let targetDate: string;
+  let targetDate: DateString;
   
-  if (date) {
-    // dateパラメータが指定されている場合はそれを使用
-    targetDate = date;
-    // dateとcategoryの整合性チェック
-    const expectedCategory = `日報/${date.replace(/-/g, '/')}`;
-    if (category !== expectedCategory) {
-      console.warn(`Category mismatch: expected ${expectedCategory}, got ${category}`);
-    }
-  } else {
-    // 後方互換性: categoryから日付を抽出
-    const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
-    if (!match) {
-      throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
-    }
-    targetDate = `${match[1]}-${match[2]}-${match[3]}`;
+  try {
+    // categoryから日付を抽出
+    targetDate = formatCategoryToDate(category);
+  } catch (error) {
+    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
   }
   
   try {
@@ -239,8 +228,7 @@ export const submitTextToEsa = onCall(
 );
 
 type TimesEsaDailyReportRequest = {
-  category: string;
-  date?: string; // 新規追加: yyyy-MM-dd形式
+  category: DailyReportCategory;
 }
 
 type RecentReportsRequest = {
@@ -269,7 +257,7 @@ export const dailyReport = onCall(
 
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
-    const result = await getDailyReport(axios, esaConfig, req.data.category, req.data.date);
+    const result = await getDailyReport(axios, esaConfig, req.data.category);
     return result;
   }
 );

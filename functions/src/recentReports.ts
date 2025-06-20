@@ -69,7 +69,7 @@ export async function getRecentReports(
       const categoryMatch = (post as any).category?.match(/^日報\/\d{4}\/\d{2}\/\d{2}$/);
       return categoryMatch !== null;
     })
-    .map(post => extractDailyReportSummary(post as EsaPost & { category: string; updated_at: string }));
+    .map(post => extractDailyReportSummary(post as EsaPost & { category: DailyReportCategory; updated_at: string }));
   
   return {
     reports,
