@@ -158,7 +158,7 @@ export async function getDailyReport(
   esaConfig: EsaConfig,
   category: string,
 ): Promise<EsaPost> {
-  // categoryから日付を抽出（例: "日報/2024/06/20" -> "2024-06-20"）
+  // categoryから日付を抽出（例: "日報/2024/06/20" または "日報/2024/06/20 (金)" -> "2024-06-20"）
   const match = category.match(/日報\/(\d{4})\/(\d{2})\/(\d{2})/);
   if (!match) {
     throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');

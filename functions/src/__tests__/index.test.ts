@@ -367,14 +367,48 @@ describe('Firebase Functions Tests', () => {
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw error for invalid category format', async () => {
-      // 無効なカテゴリ形式でテスト
-      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20 (金)'))
-        .rejects
-        .toThrow(new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません'));
+    it('should handle category with day of week', async () => {
+      const mockPost: EsaPost = {
+        body_md: '日報内容',
+        body_html: '<p>日報内容</p>',
+        number: 125,
+        name: '6月20日 (金)',
+        tags: [],
+      };
 
-      // APIが呼ばれていないことを確認
-      expect(mockAxios.get).not.toHaveBeenCalled();
+      const searchResult: EsaSearchResult = {
+        posts: [mockPost],
+        total_count: 1,
+      };
+
+      const searchResponse: AxiosResponse<EsaSearchResult> = {
+        data: searchResult,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      const detailResponse: AxiosResponse<EsaPost> = {
+        data: mockPost,
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config: {
+          headers: {},
+        } as InternalAxiosRequestConfig,
+      };
+
+      mockAxios.get
+        .mockResolvedValueOnce(searchResponse)
+        .mockResolvedValueOnce(detailResponse);
+
+      const result = await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaConfig, '日報/2024/06/20 (金)');
+
+      expect(result).toEqual(mockPost);
+      expect(mockAxios.get).toHaveBeenCalledTimes(2);
     });
 
     it('should throw error for non-date category format', async () => {
