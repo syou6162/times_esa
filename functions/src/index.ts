@@ -3,6 +3,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
+import { searchDailyReport } from './search';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -24,12 +25,13 @@ export function getEsaConfig(): EsaConfig {
   return config;
 }
 
-export function createAxiosClient(accessToken: string): AxiosInstance {
+export function createAxiosClient(accessToken?: string): AxiosInstance {
+  const token = accessToken || getEsaConfig().accessToken;
   return axios.create({
-    baseURL: 'https://api.esa.io',
+    baseURL: 'https://api.esa.io/v1',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
     responseType: 'json',
   });
@@ -112,13 +114,13 @@ export async function createOrUpdatePost(
   title: string,
   text: string,
 ): Promise<EsaPost> {
-  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
+  const response = await axios.get<EsaSearchResult>(`/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `category:${category}`,
     },
   });
   if (response.data.total_count === 0) {
-    return axios.post<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts`, {
+    return axios.post<EsaPost>(`/teams/${esaConfig.teamName}/posts`, {
       post: {
         name: title,
         category,
@@ -134,7 +136,7 @@ export async function createOrUpdatePost(
   }
   if (response.data.total_count === 1) {
     const latestEsaPost: EsaPost = response.data.posts[0];
-    return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
+    return axios.patch<EsaPost>(`/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
       post: {
         name: transformTitle(latestEsaPost.name, title),
         category,
@@ -152,23 +154,35 @@ export async function createOrUpdatePost(
 }
 
 export async function getDailyReport(
-  axios: AxiosInstance,
+  axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
 ): Promise<EsaPost> {
-  const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
-    params: {
-      q: `category:${category}`,
-    },
-  });
-  if (response.data.total_count === 0) {
-    throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
-  } else if (response.data.total_count > 1) {
-    throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
-  } else {
-    return axios.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.data.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
-      return res.data;
-    });
+  // categoryから日付を抽出（例: "日報/2024/06/20" -> "2024-06-20"）
+  const match = category.match(/日報\/(\d{4})\/(\d{2})\/(\d{2})/);
+  if (!match) {
+    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
+  }
+  const date = `${match[1]}-${match[2]}-${match[3]}`;
+  
+  try {
+    const response = await searchDailyReport(date, axiosClient);
+    
+    if (response.total_count === 0) {
+      throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+    } else if (response.total_count > 1) {
+      throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
+    } else {
+      // 詳細を取得
+      return axiosClient.get<EsaPost>(`/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+        return res.data;
+      });
+    }
+  } catch (error) {
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    throw new functions.https.HttpsError('internal', 'エラーが発生しました');
   }
 }
 
@@ -176,7 +190,7 @@ export async function getTagList(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
 ): Promise<EsaTags> {
-  const response = await axios.get<EsaTags>(`/v1/teams/${esaConfig.teamName}/tags`);
+  const response = await axios.get<EsaTags>(`/teams/${esaConfig.teamName}/tags`);
   return response.data;
 }
 

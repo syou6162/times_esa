@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { searchPosts, searchDailyReport, type EsaSearchResult } from '../search';
+import { searchPosts, searchDailyReport } from '../search';
 import { type SearchOption } from '../searchOptions';
 import type { AxiosInstance } from 'axios';
+import type { EsaSearchResult } from '../index';
 
 // モック用のAxiosクライアント
 const mockAxiosClient = {
@@ -31,30 +32,10 @@ describe('search', () => {
             name: 'テスト投稿',
             body_md: '# テスト',
             body_html: '<h1>テスト</h1>',
-            tags: ['test'],
-            category: '日報/2024/06',
-            full_name: '日報/2024/06/テスト投稿',
-            wip: false,
-            created_at: '2024-06-20T10:00:00+09:00',
-            updated_at: '2024-06-20T10:00:00+09:00',
-            message: 'Initial commit',
-            url: 'https://test-team.esa.io/posts/1',
-            created_by: {
-              name: 'Test User',
-              screen_name: 'testuser',
-              icon: 'https://example.com/icon.png'
-            },
-            updated_by: {
-              name: 'Test User',
-              screen_name: 'testuser',
-              icon: 'https://example.com/icon.png'
-            }
+            tags: ['test']
           }
         ],
-        total_count: 1,
-        page: 1,
-        per_page: 20,
-        max_per_page: 100
+        total_count: 1
       };
 
       (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
@@ -83,10 +64,7 @@ describe('search', () => {
     it('複数のオプションを組み合わせて検索できる', async () => {
       const mockResponse: EsaSearchResult = {
         posts: [],
-        total_count: 0,
-        page: 1,
-        per_page: 20,
-        max_per_page: 100
+        total_count: 0
       };
 
       (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
@@ -123,10 +101,7 @@ describe('search', () => {
     it('空のオプションでも検索できる', async () => {
       const mockResponse: EsaSearchResult = {
         posts: [],
-        total_count: 0,
-        page: 1,
-        per_page: 20,
-        max_per_page: 100
+        total_count: 0
       };
 
       (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
@@ -167,30 +142,10 @@ describe('search', () => {
             name: '6月20日 (木)',
             body_md: '日報内容',
             body_html: '<p>日報内容</p>',
-            tags: [],
-            category: '日報/2024/06',
-            full_name: '日報/2024/06/6月20日 (木)',
-            wip: false,
-            created_at: '2024-06-20T10:00:00+09:00',
-            updated_at: '2024-06-20T10:00:00+09:00',
-            message: 'Initial commit',
-            url: 'https://test-team.esa.io/posts/123',
-            created_by: {
-              name: 'Test User',
-              screen_name: 'testuser',
-              icon: 'https://example.com/icon.png'
-            },
-            updated_by: {
-              name: 'Test User',
-              screen_name: 'testuser',
-              icon: 'https://example.com/icon.png'
-            }
+            tags: []
           }
         ],
-        total_count: 1,
-        page: 1,
-        per_page: 10,
-        max_per_page: 100
+        total_count: 1
       };
 
       (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
@@ -215,10 +170,7 @@ describe('search', () => {
     it('月と日の先頭の0を除去して検索する', async () => {
       const mockResponse: EsaSearchResult = {
         posts: [],
-        total_count: 0,
-        page: 1,
-        per_page: 10,
-        max_per_page: 100
+        total_count: 0
       };
 
       (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });

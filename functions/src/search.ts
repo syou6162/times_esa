@@ -4,46 +4,7 @@
 
 import { AxiosInstance } from 'axios';
 import { SearchOption, combineOptions } from './searchOptions';
-import { createAxiosClient, getEsaConfig } from './index';
-
-/**
- * ESA APIの検索レスポンス型
- */
-export interface EsaSearchResult {
-  posts: EsaPost[];
-  total_count: number;
-  page: number;
-  per_page: number;
-  max_per_page: number;
-}
-
-/**
- * ESA投稿の型定義（必要最小限のフィールド）
- */
-export interface EsaPost {
-  number: number;
-  name: string;
-  body_md: string;
-  body_html: string;
-  tags: string[];
-  category: string;
-  full_name: string;
-  wip: boolean;
-  created_at: string;
-  updated_at: string;
-  message: string;
-  url: string;
-  created_by: {
-    name: string;
-    screen_name: string;
-    icon: string;
-  };
-  updated_by: {
-    name: string;
-    screen_name: string;
-    icon: string;
-  };
-}
+import { createAxiosClient, getEsaConfig, type EsaSearchResult, type EsaPost } from './index';
 
 /**
  * 検索パラメータの型定義
