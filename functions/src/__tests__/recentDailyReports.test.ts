@@ -108,6 +108,13 @@ describe('recentDailyReports', () => {
         updated_at: '2024-06-20T10:30:00+09:00',
         number: 123
       });
+      expect(result.reports[1]).toEqual({
+        date: '2024-06-19',
+        title: '設計',
+        category: '日報/2024/06/19',
+        updated_at: '2024-06-19T09:15:00+09:00',
+        number: 122
+      });
       expect(result.total_count).toBe(2);
     });
 
