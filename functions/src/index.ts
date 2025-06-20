@@ -71,6 +71,28 @@ type EsaErrorResponse = {
   message: string;
 }
 
+/**
+ * 複数のセッションから並行編集されたタイトルをマージする
+ * 
+ * times_esaでは情報の喪失を防ぐため、すべての要素を保持する方針を採用。
+ * 意図的な置き換えが必要な場合は、esa.io本体から編集することを想定。
+ * 
+ * @param oldTitle 既存のタイトル
+ * @param newTitle 新しく設定されたタイトル
+ * @returns マージされたタイトル（重複は除去、「日報」は特別扱い）
+ * 
+ * @example
+ * // 基本的なマージ
+ * transformTitle("開発", "テスト") // => "開発、テスト"
+ * 
+ * // 並行編集（共通要素がある場合）
+ * transformTitle("開発、設計", "開発、テスト") // => "開発、設計、テスト"
+ * transformTitle("a,b,c", "a,d,e") // => "a、b、c、d、e"
+ * 
+ * // 「日報」の特別扱い
+ * transformTitle("日報", "開発") // => "開発"
+ * transformTitle("日報、開発", "テスト") // => "開発、テスト"
+ */
 export function transformTitle(oldTitle: string, newTitle: string): string {
   const result = Array.from(new Set(oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))))
     .filter(item => item !== ''); // Remove empty strings

@@ -81,6 +81,41 @@ describe('Firebase Functions Tests', () => {
       expect(transformTitle('日報、毎日報告', 'テスト')).toBe('毎日報告、テスト');
       expect(transformTitle('毎日報告、日報', 'レビュー')).toBe('毎日報告、レビュー');
     });
+
+    it('should handle parallel editing patterns correctly', () => {
+      // 並行編集パターン：すべての要素を保持
+      // ケース1: 共通の開始部分がある場合
+      expect(transformTitle('開発、設計', '開発、テスト')).toBe('開発、設計、テスト');
+      
+      // ケース2: より複雑な共通要素
+      expect(transformTitle('開発、設計、テスト', '開発、レビュー、デプロイ')).toBe('開発、設計、テスト、レビュー、デプロイ');
+      
+      // ケース3: 一部の要素が共通（順序が異なる）
+      expect(transformTitle('a,b,c', 'a,d,e')).toBe('a、b、c、d、e');
+      
+      // ケース4: 中間の要素が共通
+      expect(transformTitle('a,b,c', 'd,b')).toBe('a、b、c、d');
+      
+      // ケース5: 完全包含も並行編集として扱う
+      expect(transformTitle('開発', '開発、テスト')).toBe('開発、テスト');
+      expect(transformTitle('開発、テスト', '開発、テスト、レビュー')).toBe('開発、テスト、レビュー');
+    });
+
+    it('should document parallel editing behavior', () => {
+      // このテストは仕様を文書化するためのもの
+      // times_esaでは情報の喪失を防ぐため、すべての要素を保持する
+      
+      // 例1: 異なるセッションが異なる作業を追加
+      const session1 = '開発、バグ修正';
+      const session2 = '開発、新機能追加';
+      expect(transformTitle(session1, session2)).toBe('開発、バグ修正、新機能追加');
+      
+      // 例2: 意図的な置き換えはesa.io本体で行うため、ここでは考慮しない
+      const original = '設計、実装、テスト';
+      const updated = '設計、レビュー、デプロイ';
+      // 置き換えではなく、すべての要素を保持
+      expect(transformTitle(original, updated)).toBe('設計、実装、テスト、レビュー、デプロイ');
+    });
   });
 
   describe('checkAuthTokenEmail', () => {
