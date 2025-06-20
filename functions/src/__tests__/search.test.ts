@@ -54,7 +54,7 @@ describe('search', () => {
             q: 'in:日報/2024/06',
             page: 1,
             per_page: 20,
-            sort: 'best_match',
+            sort: 'updated',
             order: 'desc'
           }
         }
@@ -116,7 +116,7 @@ describe('search', () => {
             q: '',
             page: 1,
             per_page: 20,
-            sort: 'best_match',
+            sort: 'updated',
             order: 'desc'
           }
         }

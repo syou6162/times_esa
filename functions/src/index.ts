@@ -182,7 +182,9 @@ export async function getDailyReport(
     if (error instanceof functions.https.HttpsError) {
       throw error;
     }
-    throw new functions.https.HttpsError('internal', 'エラーが発生しました');
+    // 元のエラー情報を含めてログ出力し、ユーザーには詳細を隠す
+    console.error('getDailyReport error:', error);
+    throw new functions.https.HttpsError('internal', '日報の取得中にエラーが発生しました');
   }
 }
 

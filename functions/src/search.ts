@@ -33,12 +33,12 @@ export async function searchPosts(
   // 検索クエリを構築
   const query = combineOptions(params.options);
   
-  // APIパラメータを構築
+  // APIパラメータを構築（esa.ioのデフォルト値に合わせる）
   const apiParams = {
     q: query,
     page: params.page || 1,
     per_page: params.perPage || 20,
-    sort: params.sort || 'best_match',
+    sort: params.sort || 'updated',
     order: params.order || 'desc'
   };
   
