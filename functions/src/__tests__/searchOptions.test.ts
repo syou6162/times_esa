@@ -68,8 +68,8 @@ describe('searchOptions', () => {
     });
 
     it('nullまたはundefinedを渡すと空のクエリを返す', () => {
-      expect(withTags(null as any)).toEqual({ query: '' });
-      expect(withTags(undefined as any)).toEqual({ query: '' });
+      expect(withTags(null as unknown as string[])).toEqual({ query: '' });
+      expect(withTags(undefined as unknown as string[])).toEqual({ query: '' });
     });
   });
 

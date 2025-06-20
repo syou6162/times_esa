@@ -4,8 +4,7 @@
 
 import { AxiosInstance } from 'axios';
 import { searchPosts } from './search';
-import { withCategory, withDateRange, combineOptions } from './searchOptions';
-import type { EsaPost, EsaSearchResult } from './index';
+import { withCategory, withDateRange } from './searchOptions';
 
 /**
  * 最近の日報リストのパラメータ

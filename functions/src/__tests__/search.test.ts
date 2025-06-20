@@ -5,8 +5,9 @@ import type { AxiosInstance } from 'axios';
 import type { EsaSearchResult } from '../index';
 
 // モック用のAxiosクライアント
+const mockGet = vi.fn();
 const mockAxiosClient = {
-  get: vi.fn()
+  get: mockGet
 } as unknown as AxiosInstance;
 
 // モック用のESA設定
@@ -38,7 +39,7 @@ describe('search', () => {
         total_count: 1
       };
 
-      (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const options: SearchOption[] = [
         { query: 'in:日報/2024/06' }
@@ -46,7 +47,7 @@ describe('search', () => {
 
       const result = await searchPosts({ options }, mockAxiosClient);
 
-      expect(mockAxiosClient.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/teams/test-team/posts',
         {
           params: {
@@ -67,7 +68,7 @@ describe('search', () => {
         total_count: 0
       };
 
-      (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const options: SearchOption[] = [
         { query: 'in:日報/2024/06' },
@@ -83,7 +84,7 @@ describe('search', () => {
         order: 'asc'
       }, mockAxiosClient);
 
-      expect(mockAxiosClient.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/teams/test-team/posts',
         {
           params: {
@@ -104,11 +105,11 @@ describe('search', () => {
         total_count: 0
       };
 
-      (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const result = await searchPosts({ options: [] }, mockAxiosClient);
 
-      expect(mockAxiosClient.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/teams/test-team/posts',
         {
           params: {
@@ -125,7 +126,7 @@ describe('search', () => {
 
     it('エラーを正しく処理する', async () => {
       const error = new Error('API Error');
-      (mockAxiosClient.get as any).mockRejectedValueOnce(error);
+      mockGet.mockRejectedValueOnce(error);
 
       await expect(
         searchPosts({ options: [] }, mockAxiosClient)
@@ -148,11 +149,11 @@ describe('search', () => {
         total_count: 1
       };
 
-      (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       const result = await searchDailyReport('2024-06-20', mockAxiosClient);
 
-      expect(mockAxiosClient.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/teams/test-team/posts',
         {
           params: {
@@ -173,11 +174,11 @@ describe('search', () => {
         total_count: 0
       };
 
-      (mockAxiosClient.get as any).mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce({ data: mockResponse });
 
       await searchDailyReport('2024-01-05', mockAxiosClient);
 
-      expect(mockAxiosClient.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/teams/test-team/posts',
         {
           params: {
