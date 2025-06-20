@@ -4,6 +4,7 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
+import type { DailyReportCategory, DateString } from './dateUtils';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -157,19 +158,32 @@ export async function getDailyReport(
   axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
   category: string,
+  date?: string,
 ): Promise<EsaPost> {
-  // categoryから日付を抽出（例: "日報/2024/06/20" -> "2024-06-20"）
-  const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
-  if (!match) {
-    throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
+  let targetDate: string;
+  
+  if (date) {
+    // dateパラメータが指定されている場合はそれを使用
+    targetDate = date;
+    // dateとcategoryの整合性チェック
+    const expectedCategory = `日報/${date.replace(/-/g, '/')}`;
+    if (category !== expectedCategory) {
+      console.warn(`Category mismatch: expected ${expectedCategory}, got ${category}`);
+    }
+  } else {
+    // 後方互換性: categoryから日付を抽出
+    const match = category.match(/^日報\/(\d{4})\/(\d{2})\/(\d{2})$/);
+    if (!match) {
+      throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
+    }
+    targetDate = `${match[1]}-${match[2]}-${match[3]}`;
   }
-  const date = `${match[1]}-${match[2]}-${match[3]}`;
   
   try {
-    const response = await searchDailyReport(date, axiosClient);
+    const response = await searchDailyReport(targetDate, axiosClient);
     
     if (response.total_count === 0) {
-      throw new functions.https.HttpsError('not-found', '今日の日報はまだありません');
+      throw new functions.https.HttpsError('not-found', '指定された日の日報はまだありません');
     } else if (response.total_count > 1) {
       throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
     } else {
@@ -234,9 +248,9 @@ type RecentReportsRequest = {
 }
 
 export type DailyReportSummary = {
-  date: string; // yyyy-MM-dd形式
+  date: DateString; // yyyy-MM-dd形式
   title: string;
-  category: string;
+  category: DailyReportCategory;
   updated_at: string;
   number: number; // esa投稿番号
 }
@@ -255,7 +269,7 @@ export const dailyReport = onCall(
 
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
-    const result = await getDailyReport(axios, esaConfig, req.data.category);
+    const result = await getDailyReport(axios, esaConfig, req.data.category, req.data.date);
     return result;
   }
 );

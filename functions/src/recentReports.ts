@@ -5,7 +5,7 @@
 import { AxiosInstance } from 'axios';
 import { withCategory, combineOptions } from './searchOptions';
 import { searchPosts } from './search';
-import { getDateRangeCategories, formatCategoryToDate } from './dateUtils';
+import { getDateRangeCategories, formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
 import { type DailyReportSummary, type EsaPost } from './index';
 
 /**
@@ -13,7 +13,7 @@ import { type DailyReportSummary, type EsaPost } from './index';
  * @param categories - 日報カテゴリの配列
  * @returns OR検索用のクエリ文字列
  */
-export function createMultipleCategoryQuery(categories: string[]): string {
+export function createMultipleCategoryQuery(categories: DailyReportCategory[]): string {
   if (categories.length === 0) {
     return '';
   }
@@ -28,7 +28,7 @@ export function createMultipleCategoryQuery(categories: string[]): string {
  * @param post - ESA投稿
  * @returns 日報サマリー
  */
-export function extractDailyReportSummary(post: EsaPost & { category: string; updated_at: string }): DailyReportSummary {
+export function extractDailyReportSummary(post: EsaPost & { category: DailyReportCategory; updated_at: string }): DailyReportSummary {
   return {
     date: formatCategoryToDate(post.category),
     title: post.name,
