@@ -115,7 +115,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
 
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'white' }}>
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 2, pt: isMobile ? 8 : 2 }}>
         <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <CalendarTodayIcon fontSize="small" />
           日報一覧
@@ -166,7 +166,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           aria-label="open drawer"
           onClick={handleDrawerToggle}
           sx={{
-            position: 'fixed',
+            position: 'absolute',
             top: 16,
             left: 16,
             zIndex: theme.zIndex.drawer + 1,
