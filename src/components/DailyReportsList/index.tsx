@@ -1,30 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  CircularProgress,
-  Box,
-  Typography,
-  Alert,
-  Skeleton,
-  Chip,
-} from '@mui/material';
-import { format } from 'date-fns';
-import { ja } from 'date-fns/locale';
+import { List } from '@mui/material';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
 import type { DailyReportsListProps } from '../../types/components';
-
-import type { DateString } from '../../../types/domain';
-
-// 日付文字列に曜日を追加する関数
-const formatDateWithWeekday = (dateString: DateString): string => {
-  const date = new Date(dateString);
-  const weekday = format(date, '(E)', { locale: ja });
-  return `${dateString}${weekday}`;
-};
+import { DailyReportItem } from './DailyReportItem';
+import { DailyReportsLoading } from './DailyReportsLoading';
+import { DailyReportsError } from './DailyReportsError';
+import { DailyReportsEmpty } from './DailyReportsEmpty';
 
 export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   selectedDate,
@@ -57,98 +39,26 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   }, []);
 
   if (loading) {
-    return (
-      <Box sx={{ p: 1 }}>
-        {[...Array(5)].map((_, index) => (
-          <Skeleton 
-            key={index} 
-            variant="rectangular" 
-            height={72} 
-            sx={{ mb: 1, borderRadius: 1 }}
-          />
-        ))}
-      </Box>
-    );
+    return <DailyReportsLoading />;
   }
 
   if (error) {
-    return (
-      <Box p={2}>
-        <Alert severity="error" sx={{ bgcolor: 'error.dark', color: 'white' }}>{error}</Alert>
-      </Box>
-    );
+    return <DailyReportsError message={error} />;
   }
 
   if (reports.length === 0) {
-    return (
-      <Box p={2}>
-        <Typography sx={{ color: 'white' }}>過去の日報がありません</Typography>
-      </Box>
-    );
+    return <DailyReportsEmpty />;
   }
 
   return (
     <List sx={{ p: 0 }}>
       {reports.map((report) => (
-        <ListItem key={report.date} disablePadding>
-          <ListItemButton
-            selected={selectedDate === report.date}
-            onClick={() => onDateSelect(report.date, { title: report.title, tags: report.tags || [] })}
-            sx={{
-              borderBottom: 1,
-              borderColor: 'divider',
-              '&.Mui-selected': {
-                bgcolor: 'action.selected',
-                '&:hover': {
-                  bgcolor: 'action.selected',
-                },
-              },
-              '&:hover': {
-                bgcolor: 'action.hover',
-              },
-              transition: 'background-color 0.2s',
-            }}
-          >
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-              <ListItemText
-                primary={formatDateWithWeekday(report.date)}
-                secondary={report.title}
-                primaryTypographyProps={{
-                  variant: 'body2',
-                  fontWeight: selectedDate === report.date ? 'bold' : 'normal',
-                  color: 'white',
-                }}
-                secondaryTypographyProps={{
-                  variant: 'caption',
-                  sx: {
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    display: 'block',
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  },
-                }}
-              />
-              {report.tags && report.tags.length > 0 && (
-                <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 0.5 }}>
-                  {report.tags.map((tag) => (
-                    <Chip
-                      key={tag}
-                      label={tag}
-                      size="small"
-                      sx={{
-                        height: 20,
-                        fontSize: '0.7rem',
-                        bgcolor: 'rgba(255, 255, 255, 0.1)',
-                        color: 'rgba(255, 255, 255, 0.8)',
-                      }}
-                    />
-                  ))}
-                </Box>
-              )}
-            </Box>
-          </ListItemButton>
-        </ListItem>
+        <DailyReportItem
+          key={report.date}
+          report={report}
+          selectedDate={selectedDate}
+          onDateSelect={onDateSelect}
+        />
       ))}
     </List>
   );
