@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { searchPosts, searchDailyReport } from '../search';
 import { type SearchOption } from '../searchOptions';
 import type { AxiosInstance } from 'axios';
-import type { EsaSearchResult } from '../index';
+import type { EsaSearchResult } from '../caseConverter';
 
 // モック用のAxiosクライアント
 const mockGet = vi.fn();

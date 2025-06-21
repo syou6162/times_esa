@@ -91,8 +91,8 @@ export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitForm
       props.onSubmit(
         data.data.category,
         data.data.name,
-        data.data.body_md,
-        data.data.body_html,
+        data.data.bodyMd,
+        data.data.bodyHtml,
         data.data.tags,
       );
     } catch (err: any) {

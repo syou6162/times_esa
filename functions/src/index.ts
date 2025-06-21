@@ -5,13 +5,24 @@ import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
+import { 
+  type EsaConfig,
+  type SubmitTextRequest, 
+  type DailyReportRequest, 
+  type RecentDailyReportsRequest, 
+  type EsaErrorResponse 
+} from './types';
+import { 
+  convertEsaPostToCamelCase, 
+  convertEsaTagsToCamelCase, 
+  convertRecentDailyReportsResponseToCamelCase,
+  type EsaPost, 
+  type EsaTags,
+  type EsaSearchResult 
+} from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
-type EsaConfig = {
-  teamName: string;
-  accessToken: string;
-}
 
 const ESA_SECRETS = [
   "ESA_TEAM_NAME",
@@ -38,41 +49,8 @@ export function createAxiosClient(accessToken?: string): AxiosInstance {
   });
 }
 
-export type EsaPost = {
-  // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
-  body_md: string;
-  body_html: string;
-  number: number;
-  name: string;
-  tags: string[];
-}
 
-type TimesEsaPostRequest = {
-  category: DailyReportCategory;
-  tags: string[];
-  title: string;
-  text: string;
-}
 
-export type EsaSearchResult = {
-  posts: EsaPost[];
-  total_count: number;
-}
-
-export type Tag = {
-  name: string;
-  posts_count: number;
-}
-
-export type EsaTags = {
-  tags: Tag[]
-}
-
-// ref: https://docs.esa.io/posts/102#%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9
-type EsaErrorResponse = {
-  error: string;
-  message: string;
-}
 
 /**
  * 複数のセッションから並行編集されたタイトルをマージする
@@ -209,7 +187,7 @@ export function checkAuthTokenEmail(context: CallableRequest): void {
 export const submitTextToEsa = onCall(
   { secrets: ESA_SECRETS},
   async (
-    req: CallableRequest<TimesEsaPostRequest>,
+    req: CallableRequest<SubmitTextRequest>,
   ) => {
     checkAuthTokenEmail(req);
 
@@ -223,42 +201,24 @@ export const submitTextToEsa = onCall(
       req.data.title,
       req.data.text,
     );
-    return result;
+    return convertEsaPostToCamelCase(result);
   }
 );
 
-type TimesEsaDailyReportRequest = {
-  category: DailyReportCategory;
-}
 
-type RecentDailyReportsRequest = {
-  days?: number; // 過去何日分を取得するか（デフォルト: 10）
-}
 
-export type DailyReportSummary = {
-  date: DateString; // yyyy-MM-dd形式
-  title: string;
-  category: DailyReportCategory;
-  updated_at: string;
-  number: number; // esa投稿番号
-}
-
-export type RecentDailyReportsResponse = {
-  reports: DailyReportSummary[];
-  total_count: number;
-}
 
 export const dailyReport = onCall(
   { secrets: ESA_SECRETS},
   async (
-    req: CallableRequest<TimesEsaDailyReportRequest>,
+    req: CallableRequest<DailyReportRequest>,
   ) => {
     checkAuthTokenEmail(req);
 
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getDailyReport(axios, esaConfig, req.data.category);
-    return result;
+    return convertEsaPostToCamelCase(result);
   }
 );
 
@@ -272,7 +232,7 @@ export const tagList = onCall(
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getTagList(axios, esaConfig);
-    return result;
+    return convertEsaTagsToCamelCase(result);
   }
 );
 
@@ -293,7 +253,7 @@ export const recentDailyReports = onCall(
     
     try {
       const result = await getRecentDailyReports(days);
-      return result;
+      return convertRecentDailyReportsResponseToCamelCase(result);
     } catch (error) {
       console.error('recentDailyReports error:', error);
       throw new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました');

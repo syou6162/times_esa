@@ -4,7 +4,8 @@
 
 import { AxiosInstance } from 'axios';
 import { SearchOption, combineOptions } from './searchOptions';
-import { createAxiosClient, getEsaConfig, type EsaSearchResult } from './index';
+import { createAxiosClient, getEsaConfig } from './index';
+import { type EsaSearchResult } from './caseConverter';
 
 /**
  * 検索パラメータの型定義
