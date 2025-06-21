@@ -63,12 +63,14 @@ export async function getRecentDailyReports(
   
   // 結果を日報サマリー形式に変換
   const reports = result.posts
-    .filter(post => {
+    .filter((post: EsaPost) => {
       // 念のため日報カテゴリのみをフィルタリング
-      const postWithCategory = post as EsaPost & { category?: string };
-      return postWithCategory.category ? isDailyReportCategory(postWithCategory.category) : false;
+      return isDailyReportCategory(post.category);
     })
-    .map(post => extractDailyReportSummary(post as EsaPost & { category: DailyReportCategory; updated_at: string }));
+    .map((post: EsaPost) => extractDailyReportSummary({
+      ...post,
+      category: post.category as DailyReportCategory
+    }));
   
   return {
     reports,

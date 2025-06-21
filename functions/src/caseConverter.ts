@@ -27,6 +27,11 @@ export type EsaTags = {
   total_count: number;
 }
 
+export type EsaSearchResult = {
+  posts: EsaPost[];
+  total_count: number;
+}
+
 // 変換後の型定義（キャメルケース、フロントエンドで使用）
 export type EsaPostCamelCase = {
   bodyMd: string;

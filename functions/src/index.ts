@@ -6,21 +6,23 @@ import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
 import { 
+  type EsaConfig,
+  type SubmitTextRequest, 
+  type DailyReportRequest, 
+  type RecentDailyReportsRequest, 
+  type EsaErrorResponse 
+} from './types';
+import { 
   convertEsaPostToCamelCase, 
   convertEsaTagsToCamelCase, 
   convertRecentDailyReportsResponseToCamelCase,
-  EsaPost, 
-  EsaTags,
-  type DailyReportSummary,
-  type RecentDailyReportsResponse 
+  type EsaPost, 
+  type EsaTags,
+  type EsaSearchResult 
 } from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
-type EsaConfig = {
-  teamName: string;
-  accessToken: string;
-}
 
 const ESA_SECRETS = [
   "ESA_TEAM_NAME",
@@ -47,23 +49,8 @@ export function createAxiosClient(accessToken?: string): AxiosInstance {
   });
 }
 
-type SubmitTextRequest = {
-  category: DailyReportCategory;
-  tags: string[];
-  title: string;
-  text: string;
-}
 
-export type EsaSearchResult = {
-  posts: EsaPost[];
-  total_count: number;
-}
 
-// ref: https://docs.esa.io/posts/102#%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9
-type EsaErrorResponse = {
-  error: string;
-  message: string;
-}
 
 /**
  * 複数のセッションから並行編集されたタイトルをマージする
@@ -218,13 +205,7 @@ export const submitTextToEsa = onCall(
   }
 );
 
-type DailyReportRequest = {
-  category: DailyReportCategory;
-}
 
-type RecentDailyReportsRequest = {
-  days?: number; // 過去何日分を取得するか（デフォルト: 10）
-}
 
 
 export const dailyReport = onCall(
