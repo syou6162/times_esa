@@ -166,11 +166,12 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             top: 16,
             left: 16,
             zIndex: theme.zIndex.drawer + 1,
-            bgcolor: 'background.paper',
-            boxShadow: 2,
+            bgcolor: 'action.hover',
+            boxShadow: 1,
             '&:hover': {
-              bgcolor: 'action.hover',
+              bgcolor: 'background.paper',
               transform: 'scale(1.05)',
+              boxShadow: 2,
             },
             transition: 'all 0.2s',
           }}
