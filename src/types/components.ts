@@ -20,6 +20,7 @@ export type DailyReportProps = {
   esaText: string;
   esaHtml: string;
   reloadDailyReport: () => void;
+  isReadOnly?: boolean;
 }
 
 // DailyReport内部のコンポーネントProps

@@ -151,6 +151,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
         size="small"
         color="secondary"
         onClick={props.reloadDailyReport}
+        disabled={props.isReadOnly}
       >
         Update
       </Button>

@@ -287,6 +287,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         esaText={esaText}
         esaHtml={esaHtml}
         reloadDailyReport={() => { loadDailyReport(); }}
+        isReadOnly={!!selectedDate}
       />
     </Container>
     </Box>
