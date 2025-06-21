@@ -75,6 +75,7 @@ export function convertEsaTagsToCamelCase(esaTags: EsaTagsSnakeCase): EsaTags {
 export type DailyReportSummarySnakeCase = {
   date: DateString;
   title: string;
+  tags: string[];
   category: DailyReportCategory;
   updated_at: string;
   number: number;
@@ -93,6 +94,7 @@ export function convertDailyReportSummaryToCamelCase(summary: DailyReportSummary
   return {
     date: summary.date,
     title: summary.title,
+    tags: summary.tags,
     category: summary.category,
     updatedAt: summary.updated_at,
     number: summary.number

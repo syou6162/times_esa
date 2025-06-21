@@ -9,6 +9,7 @@ import {
   Typography,
   Alert,
   Skeleton,
+  Chip,
 } from '@mui/material';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
@@ -97,25 +98,44 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
               transition: 'background-color 0.2s',
             }}
           >
-            <ListItemText
-              primary={report.date}
-              secondary={report.title}
-              primaryTypographyProps={{
-                variant: 'body2',
-                fontWeight: selectedDate === report.date ? 'bold' : 'normal',
-                color: 'white',
-              }}
-              secondaryTypographyProps={{
-                variant: 'caption',
-                sx: {
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  display: 'block',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                },
-              }}
-            />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+              <ListItemText
+                primary={report.date}
+                secondary={report.title}
+                primaryTypographyProps={{
+                  variant: 'body2',
+                  fontWeight: selectedDate === report.date ? 'bold' : 'normal',
+                  color: 'white',
+                }}
+                secondaryTypographyProps={{
+                  variant: 'caption',
+                  sx: {
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    display: 'block',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  },
+                }}
+              />
+              {report.tags && report.tags.length > 0 && (
+                <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 0.5 }}>
+                  {report.tags.map((tag) => (
+                    <Chip
+                      key={tag}
+                      label={tag}
+                      size="small"
+                      sx={{
+                        height: 20,
+                        fontSize: '0.7rem',
+                        bgcolor: 'rgba(255, 255, 255, 0.1)',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                      }}
+                    />
+                  ))}
+                </Box>
+              )}
+            </Box>
           </ListItemButton>
         </ListItem>
       ))}
