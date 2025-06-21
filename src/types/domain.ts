@@ -32,6 +32,17 @@ export type DailyReportContent = {
   category: string;
 };
 
+// 日報データ（アプリ内部で使用する形式、camelCase）
+export type DailyReportData = {
+  updatedAt: string;
+  url: string;
+  text: string;      // body_md → text
+  html: string;      // body_html → html
+  tags: string[];
+  title: string;     // name → title
+  category: string;
+};
+
 // ユーザー情報
 export type GoogleUser = {
   email: string;

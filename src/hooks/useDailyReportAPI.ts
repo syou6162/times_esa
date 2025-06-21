@@ -7,19 +7,9 @@ import {
   TagListRequestType,
   TagListResponseType
 } from '../types/api';
-import { Tag } from '../types/domain';
+import { Tag, DailyReportData } from '../types/domain';
+import { convertDailyReportResponse } from '../utils/converters/dailyReport';
 
-// アプリ内部で使用する日報データ（camelCase）
-// API responseのDailyReportResponseTypeをcamelCaseに変換した形式
-export type DailyReportData = {
-  updatedAt: string;
-  url: string;
-  text: string;      // body_md → text
-  html: string;      // body_html → html
-  tags: string[];
-  title: string;     // name → title
-  category: string;
-}
 
 export type UseDailyReportAPIReturn = {
   fetching: boolean;
@@ -63,15 +53,8 @@ export const useDailyReportAPI = (canFetchEndpoints: boolean): UseDailyReportAPI
       });
 
       const response = result.data;
-      setDailyReportData({
-        updatedAt: response.updated_at,
-        url: response.url,
-        text: response.body_md,
-        html: response.body_html,
-        tags: response.tags,
-        title: response.name,
-        category: response.category,
-      });
+      const convertedData = convertDailyReportResponse(response);
+      setDailyReportData(convertedData);
 
       setFetching(false);
     } catch (error: any) {
