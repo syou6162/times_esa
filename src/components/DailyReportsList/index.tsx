@@ -17,8 +17,10 @@ import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
 import type { DailyReportsListProps } from '../../types/components';
 
+import type { DateString } from '../../../types/domain';
+
 // 日付文字列に曜日を追加する関数
-const formatDateWithWeekday = (dateString: string): string => {
+const formatDateWithWeekday = (dateString: DateString): string => {
   const date = new Date(dateString);
   const weekday = format(date, '(E)', { locale: ja });
   return `${dateString}${weekday}`;
