@@ -17,7 +17,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
           <h6
             class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1wmifpn-MuiTypography-root"
           >
-            過去の日報
+            過去の日報一覧
           </h6>
         </div>
         <hr
@@ -60,7 +60,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
       </div>
     </div>
     <div
-      class="MuiContainer-root css-17p0z1o-MuiContainer-root"
+      class="MuiContainer-root css-cd0f9j-MuiContainer-root"
     >
       <a
         href=""

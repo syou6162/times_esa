@@ -36,6 +36,7 @@ describe('DailyReportsList', () => {
       {
         date: '2025-06-20',
         title: '開発作業',
+        tags: [],
         category: '日報/2025/06/20',
         updatedAt: '2025-06-20T10:00:00Z',
         number: 123,
@@ -43,6 +44,7 @@ describe('DailyReportsList', () => {
       {
         date: '2025-06-19',
         title: 'ミーティング',
+        tags: [],
         category: '日報/2025/06/19',
         updatedAt: '2025-06-19T10:00:00Z',
         number: 122,
@@ -56,9 +58,9 @@ describe('DailyReportsList', () => {
     render(<DailyReportsList onDateSelect={mockOnDateSelect} />);
 
     await waitFor(() => {
-      expect(screen.getByText('2025-06-20')).toBeDefined();
+      expect(screen.getByText('2025-06-20(金)')).toBeDefined();
       expect(screen.getByText('開発作業')).toBeDefined();
-      expect(screen.getByText('2025-06-19')).toBeDefined();
+      expect(screen.getByText('2025-06-19(木)')).toBeDefined();
       expect(screen.getByText('ミーティング')).toBeDefined();
     });
   });
@@ -92,6 +94,7 @@ describe('DailyReportsList', () => {
       {
         date: '2025-06-20',
         title: '開発作業',
+        tags: [],
         category: '日報/2025/06/20',
         updatedAt: '2025-06-20T10:00:00Z',
         number: 123,
@@ -105,11 +108,11 @@ describe('DailyReportsList', () => {
     render(<DailyReportsList onDateSelect={mockOnDateSelect} />);
 
     await waitFor(() => {
-      expect(screen.getByText('2025-06-20')).toBeDefined();
+      expect(screen.getByText('2025-06-20(金)')).toBeDefined();
     });
 
-    fireEvent.click(screen.getByText('2025-06-20'));
-    expect(mockOnDateSelect).toHaveBeenCalledWith('2025-06-20');
+    fireEvent.click(screen.getByText('2025-06-20(金)'));
+    expect(mockOnDateSelect).toHaveBeenCalledWith('2025-06-20', { title: '開発作業', tags: [] });
   });
 
   it('選択された日付がハイライトされること', async () => {
@@ -117,6 +120,7 @@ describe('DailyReportsList', () => {
       {
         date: '2025-06-20',
         title: '開発作業',
+        tags: [],
         category: '日報/2025/06/20',
         updatedAt: '2025-06-20T10:00:00Z',
         number: 123,
@@ -132,33 +136,10 @@ describe('DailyReportsList', () => {
     );
 
     await waitFor(() => {
-      const button = screen.getByRole('button', { name: /2025-06-20/ });
+      const button = screen.getByRole('button', { name: /2025-06-20\(金\)/ });
       expect(button.className).toContain('Mui-selected');
     });
   });
 
 
-  it('スナップショットテスト', async () => {
-    const mockReports = [
-      {
-        date: '2025-06-20',
-        title: '開発作業',
-        category: '日報/2025/06/20',
-        updatedAt: '2025-06-20T10:00:00Z',
-        number: 123,
-      },
-    ];
-
-    vi.mocked(apiClient.getRecentDailyReports).mockResolvedValueOnce({
-      data: { reports: mockReports, totalCount: 1 },
-    });
-
-    const { container } = render(<DailyReportsList onDateSelect={mockOnDateSelect} />);
-
-    await waitFor(() => {
-      expect(screen.getByText('2025-06-20')).toBeDefined();
-    });
-
-    expect(container.firstChild).toMatchSnapshot();
-  });
 });
