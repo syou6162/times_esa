@@ -5,7 +5,7 @@
 import { AxiosInstance } from 'axios';
 import { searchPosts } from './search';
 import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory, type DailyReportCategory } from './dateUtils';
-import { type DailyReportSummary, type EsaPost } from './index';
+import { type EsaPost, type DailyReportSummary } from './caseConverter';
 
 /**
  * 複数の日報カテゴリをOR検索クエリとして結合する
@@ -63,12 +63,11 @@ export async function getRecentDailyReports(
   
   // 結果を日報サマリー形式に変換
   const reports = result.posts
-    .filter(post => {
+    .filter((post: EsaPost): post is EsaPost & { category: DailyReportCategory } => {
       // 念のため日報カテゴリのみをフィルタリング
-      const postWithCategory = post as EsaPost & { category?: string };
-      return postWithCategory.category ? isDailyReportCategory(postWithCategory.category) : false;
+      return isDailyReportCategory(post.category);
     })
-    .map(post => extractDailyReportSummary(post as EsaPost & { category: DailyReportCategory; updated_at: string }));
+    .map((post) => extractDailyReportSummary(post));
   
   return {
     reports,

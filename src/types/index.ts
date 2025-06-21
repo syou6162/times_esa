@@ -7,10 +7,10 @@ export type GoogleUser = {
   photoURL: string;
 }
 
-// タグの型定義
+// タグの型定義（バックエンドのEsaTagCamelCaseと同じ構造）
 export type Tag = {
   name: string;
-  posts_count: number;
+  postsCount: number;
 }
 
 // 日報表示タイプのenum

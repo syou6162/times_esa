@@ -45,11 +45,11 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
 
     try {
       const res = await getDailyReport(makeDefaultEsaCategory(new Date()));
-      setUpdatedAt(res.data.updated_at);
+      setUpdatedAt(res.data.updatedAt);
       setEsaUrl(res.data.url);
 
-      setEsaText(res.data.body_md);
-      setEsaHtml(res.data.body_html);
+      setEsaText(res.data.bodyMd);
+      setEsaHtml(res.data.bodyHtml);
       setEsaTags(res.data.tags);
       setEsaTitle(res.data.name);
       setEsaCategory(res.data.category);

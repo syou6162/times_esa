@@ -6,7 +6,9 @@ import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 vi.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags, type RecentDailyReportsRequest } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList } from '../index';
+import { type EsaPost, type EsaTags, type EsaSearchResult } from '../caseConverter';
+import { type RecentDailyReportsRequest } from '../types';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 
@@ -792,7 +794,7 @@ describe('Firebase Functions Tests', () => {
       };
 
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(invalidContext)
       ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
     });
@@ -806,7 +808,7 @@ describe('Firebase Functions Tests', () => {
       };
 
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(noAuthContext)
       ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
     });
@@ -833,7 +835,7 @@ describe('Firebase Functions Tests', () => {
 
       const { recentDailyReports } = await import('../index');
       
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+       
       const result = await recentDailyReports.run(mockContext);
 
       expect(mockGetRecentDailyReports).toHaveBeenCalledWith(10); // デフォルト値
@@ -858,7 +860,7 @@ describe('Firebase Functions Tests', () => {
         data: { days: 20 },
       };
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+       
       await recentDailyReports.run(contextWithDays);
 
       expect(mockGetRecentDailyReports).toHaveBeenCalledWith(20);
@@ -875,7 +877,7 @@ describe('Firebase Functions Tests', () => {
       };
 
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(contextWithZeroDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
       
@@ -886,7 +888,7 @@ describe('Firebase Functions Tests', () => {
       };
       
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(contextWithNegativeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
     });
@@ -902,7 +904,7 @@ describe('Firebase Functions Tests', () => {
       };
 
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(contextWithLargeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
       
@@ -913,7 +915,7 @@ describe('Firebase Functions Tests', () => {
       };
       
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(contextWithVeryLargeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
     });
@@ -928,7 +930,7 @@ describe('Firebase Functions Tests', () => {
       const { recentDailyReports } = await import('../index');
       
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+         
         recentDailyReports.run(mockContext)
       ).rejects.toThrow(new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました'));
     });
