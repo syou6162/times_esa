@@ -29,7 +29,7 @@ const App: React.FC = () => {
       setUser({
         email: 'mock@example.com',
         displayName: 'モックユーザー',
-        photoURL: '',
+        photoURL: 'https://avatars.githubusercontent.com/u/18356?s=96&v=4',
       });
       setIsSignedIn(true);
       setHasUserLanded(true);
