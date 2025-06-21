@@ -19,3 +19,7 @@ export enum DailyReportType {
   TEXT = 'TEXT',
   SHARE = 'SHARE',
 }
+
+// Form要素のイベントハンドラー型
+export type InputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
+export type TextAreaChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => void;

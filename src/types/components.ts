@@ -2,7 +2,7 @@
 
 import { Auth } from 'firebase/auth';
 import { AutocompleteChangeReason, AutocompleteChangeDetails } from '@mui/material';
-import { GoogleUser } from './index';
+import { GoogleUser, InputChangeHandler, TextAreaChangeHandler } from './index';
 
 // Body Component Props
 export type BodyProps = {
@@ -64,14 +64,14 @@ export type EsaTitleFieldProps = {
   fetching: boolean;
   sending: boolean;
   title: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: InputChangeHandler;
 }
 
 // EsaTextField Props
 export type EsaTextFieldProps = {
   sending: boolean;
   text: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange: TextAreaChangeHandler;
 }
 
 // EsaTagsField Props
