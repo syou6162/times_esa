@@ -1,7 +1,7 @@
 // コンポーネントのProps型定義をまとめたファイル
 
 import { Auth } from 'firebase/auth';
-import { AutocompleteChangeReason, AutocompleteChangeDetails } from '@mui/material';
+import { AutocompleteProps } from '@mui/material/Autocomplete';
 import { GoogleUser, InputChangeHandler, TextAreaChangeHandler } from './index';
 
 // Body Component Props
@@ -74,18 +74,16 @@ export type EsaTextFieldProps = {
   onChange: TextAreaChangeHandler;
 }
 
+// Autocomplete用の型エイリアス
+type AutocompleteChangeHandler<T> = AutocompleteProps<T, true, false, true>['onChange'];
+
 // EsaTagsField Props
 export type EsaTagsFieldProps = {
   fetching: boolean;
   sending: boolean;
   tags: string[];
   tagCandidates: string[];
-  onChange: (
-    event: React.SyntheticEvent,
-    value: string[],
-    reason: AutocompleteChangeReason,
-    detail?: AutocompleteChangeDetails<string>
-  ) => void;
+  onChange: AutocompleteChangeHandler<string>;
 }
 
 // TimesEsa Props
