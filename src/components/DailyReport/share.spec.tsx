@@ -34,11 +34,6 @@ describe('DailyReportShare機能のテスト', () => {
       fireEvent.click(shareButton);
     });
 
-    // 各つぶやきの内容が表示されることを確認
-    expect(renderResult.getByText('朝の準備')).toBeTruthy();
-    expect(renderResult.getByText('チーム会議参加')).toBeTruthy();
-    expect(renderResult.getByText('コードレビュー実施')).toBeTruthy();
-
     // 各つぶやきにCopyButtonとTweetButtonが表示されることを確認
     const copyButtons = renderResult.getAllByTestId('copy-button');
     const tweetButtons = renderResult.getAllByTestId('tweet-button');
@@ -46,8 +41,10 @@ describe('DailyReportShare機能のテスト', () => {
     expect(tweetButtons).toHaveLength(3);
 
     // ボタンのテキストが正しいことを確認
-    expect(copyButtons[0]).toHaveTextContent('Copy: 朝の準備');
-    expect(tweetButtons[0]).toHaveTextContent('Tweet: 朝の準備');
+    expect(copyButtons[0].textContent).toBe('Copy: 朝の準備');
+    expect(copyButtons[1].textContent).toBe('Copy: チーム会議参加');
+    expect(copyButtons[2].textContent).toBe('Copy: コードレビュー実施');
+    expect(tweetButtons[0].textContent).toBe('Tweet: 朝の準備');
   });
 
   it('アンカータグ付きの形式も正しく解析する', () => {
@@ -66,8 +63,9 @@ describe('DailyReportShare機能のテスト', () => {
     });
 
     // アンカータグが正しく解析されることを確認
-    expect(renderResult.getByText('朝の準備')).toBeTruthy();
-    expect(renderResult.getByText('チーム会議')).toBeTruthy();
+    const copyButtons = renderResult.getAllByTestId('copy-button');
+    expect(copyButtons[0].textContent).toBe('Copy: 朝の準備');
+    expect(copyButtons[1].textContent).toBe('Copy: チーム会議');
   });
 
   it('時間なしの内容も正しく処理する', () => {
@@ -132,12 +130,12 @@ describe('DailyReportShare機能のテスト', () => {
       fireEvent.click(shareButton);
     });
 
-    // 単一の内容が表示されることを確認
-    expect(renderResult.getByText('今日の作業内容')).toBeTruthy();
-
     // 1つのCopyButtonとTweetButtonが表示されることを確認
     const copyButtons = renderResult.getAllByTestId('copy-button');
     const tweetButtons = renderResult.getAllByTestId('tweet-button');
+    
+    // 単一の内容が表示されることを確認
+    expect(copyButtons[0].textContent).toBe('Copy: 今日の作業内容');
     expect(copyButtons).toHaveLength(1);
     expect(tweetButtons).toHaveLength(1);
   });

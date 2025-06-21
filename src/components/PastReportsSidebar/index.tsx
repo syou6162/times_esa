@@ -16,11 +16,18 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
   onSelectReport,
 }) => {
   return (
-    <Box sx={{ width: SIDEBAR_WIDTH, height: '100%', bgcolor: '#1e1e1e', p: 2 }}>
+    <Box sx={{ 
+      width: SIDEBAR_WIDTH, 
+      height: '100%', 
+      bgcolor: '#1e1e1e', 
+      p: 2,
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
       <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
         日報一覧
       </Typography>
-      <List>
+      <List sx={{ flexGrow: 1, overflow: 'auto' }}>
         {/* 今日の日報 */}
         <ListItem
           component="button"
@@ -33,6 +40,10 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
             '&:hover': {
               bgcolor: 'rgba(255, 255, 255, 0.05)',
             },
+            border: 'none',
+            width: '100%',
+            textAlign: 'left',
+            cursor: 'pointer',
           }}
         >
           <ListItemText
@@ -61,6 +72,10 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
               alignItems: 'stretch',
               px: 2,
               py: 1.5,
+              border: 'none',
+              width: '100%',
+              textAlign: 'left',
+              cursor: 'pointer',
             }}
           >
             <Box sx={{ width: '100%' }}>

@@ -58,7 +58,8 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     return content ? {
       esaText: content.body_md,
       esaHtml: content.body_html,
-    } : { esaText: '', esaHtml: '' };
+      esaUrl: content.url,
+    } : { esaText: '', esaHtml: '', esaUrl: undefined };
   }, []);
 
   // 今日の日報表示用のプロパティを最適化
@@ -82,11 +83,12 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   const pastReportProps = useMemo(() => {
     if (isToday || !currentReport) return null;
     
-    const { esaText, esaHtml } = getPastReportContent(currentReport.date);
+    const { esaText, esaHtml, esaUrl } = getPastReportContent(currentReport.date);
     return {
       report: currentReport,
       esaText,
       esaHtml,
+      esaUrl,
       fetching: false,
       fetchErrorMessage: '',
       reloadDailyReport: () => {},

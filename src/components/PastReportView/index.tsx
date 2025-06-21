@@ -7,6 +7,7 @@ export type PastReportViewProps = {
   report: DailyReportSummary;
   esaText: string;
   esaHtml: string;
+  esaUrl?: string;
   fetching?: boolean;
   fetchErrorMessage?: string;
   reloadDailyReport?: () => void;
@@ -16,13 +17,14 @@ export const PastReportView: React.FC<PastReportViewProps> = memo(({
   report,
   esaText,
   esaHtml,
+  esaUrl,
   fetching = false,
   fetchErrorMessage = '',
   reloadDailyReport = () => {},
 }) => {
   return (
     <>
-      <PastReportHeader report={report} isReadOnly={true} />
+      <PastReportHeader report={report} isReadOnly={true} reportUrl={esaUrl} />
       
       <hr style={{
         borderTop: '2px dashed #bbb',

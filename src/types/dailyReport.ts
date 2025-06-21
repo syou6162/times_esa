@@ -13,6 +13,7 @@ export type DailyReportSummary = {
   postsCount: number;
   tags: string[];
   formattedDate: string; // 日本語日付（例: "6月19日(水)"）
+  url?: string; // esaのURL
 };
 
 export type DailyReportContent = {
