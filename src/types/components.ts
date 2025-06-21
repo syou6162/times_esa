@@ -110,7 +110,9 @@ export type StyledFirebaseAuthProps = {
 
 // Footer Props
 export type FooterProps = {
-  loggedInUserName: string;
+  isSignedIn: boolean;
+  user: GoogleUser;
+  firebaseAuth: Auth | null;
 }
 
 // WelcomeMessage Props (GoogleUserと同じなので、GoogleUserを使う)

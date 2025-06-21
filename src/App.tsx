@@ -8,7 +8,7 @@ import {
 import { firebaseAuth } from './firebase/index';
 import { Body } from './components/Body';
 import { Footer } from './components/Footer';
-import { GoogleUser } from './util';
+import { GoogleUser } from './types';
 import { config } from './config';
 
 const App: React.FC = () => {

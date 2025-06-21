@@ -24,12 +24,12 @@ const StyledFirebaseAuth = (props: Props) => {
     }
 
     // We track the auth state to reset firebaseUi if the user signs out.
-    const unregisterAuthObserver = onAuthStateChanged(props.firebaseAuth, (user) => {
+    const unregisterAuthObserver = props.firebaseAuth ? onAuthStateChanged(props.firebaseAuth, (user) => {
       if (!user && userSignedIn) {
         firebaseUiWidget.reset();
       }
       setUserSignedIn(!!user);
-    });
+    }) : () => {};
 
     // Render the firebaseUi Widget.
     // @ts-ignore
