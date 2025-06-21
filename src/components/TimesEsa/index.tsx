@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Box } from '@mui/material';
+import { Container, Button, Box, Typography, Chip } from '@mui/material';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
@@ -9,6 +9,7 @@ import { getDailyReport, getTagList } from '../../api';
 import { Tag } from '../../types';
 import { TimesEsaProps } from '../../types/components';
 import type { DateString } from '../../../types/domain';
+import { format } from 'date-fns';
 
 
 
@@ -45,12 +46,13 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     setEsaCategory('');
   };
 
-  const loadDailyReport = async () => {
+  const loadDailyReport = async (date?: Date) => {
     setFetching(true);
     setfetchErrorMessage('');
 
     try {
-      const res = await getDailyReport(makeDefaultEsaCategory(new Date()));
+      const targetDate = date || new Date();
+      const res = await getDailyReport(makeDefaultEsaCategory(targetDate));
       setUpdatedAt(res.data.updatedAt);
       setEsaUrl(res.data.url);
 
@@ -100,6 +102,15 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
 
   return (
     <Container maxWidth={false}>
+      {selectedDate && (
+        <Box sx={{ mb: 2 }}>
+          <Chip 
+            label={`${selectedDate}の日報を表示中`} 
+            color="primary" 
+            sx={{ mr: 1 }}
+          />
+        </Box>
+      )}
       <a
         href={esaUrl}
         target="_blank"
@@ -107,30 +118,32 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       >
         #times_esa
       </a>
-      {`: 今日は${getPostsCount(esaText)}個つぶやいたよ`}
-      <EsaSubmitForm
-        key="esa_form"
-        category={esaCategory}
-        title={esaTitle}
-        tags={esaTags}
-        tagCandidates={esaTagCandidates}
-        fetching={fetching}
-        onSubmit={(
-          category: string,
-          title: string,
-          md: string,
-          html: string,
-          tags: string[],
-        ) => {
-          setfetchErrorMessage('');
+      {`: ${selectedDate ? selectedDate : '今日'}は${getPostsCount(esaText)}個つぶやいたよ`}
+      {!selectedDate && (
+        <EsaSubmitForm
+          key="esa_form"
+          category={esaCategory}
+          title={esaTitle}
+          tags={esaTags}
+          tagCandidates={esaTagCandidates}
+          fetching={fetching}
+          onSubmit={(
+            category: string,
+            title: string,
+            md: string,
+            html: string,
+            tags: string[],
+          ) => {
+            setfetchErrorMessage('');
 
-          setEsaCategory(category);
-          setEsaTitle(title);
-          setEsaText(md);
-          setEsaHtml(html);
-          setEsaTags(tags);
-        }}
-      />
+            setEsaCategory(category);
+            setEsaTitle(title);
+            setEsaText(md);
+            setEsaHtml(html);
+            setEsaTags(tags);
+          }}
+        />
+      )}
       <hr style={{
         borderTop: '2px dashed #bbb', borderBottom: 'none',
       }}
@@ -153,14 +166,28 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           {showPastReports ? '過去の日報を非表示' : '過去の日報を表示（開発用）'}
         </Button>
 
+        {selectedDate && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              setSelectedDate(undefined);
+              loadDailyReport(); // 今日の日報を読み込む
+            }}
+            sx={{ mb: 2, ml: 2 }}
+          >
+            今日の日報に戻る
+          </Button>
+        )}
+
         {showPastReports && (
           <Box sx={{ mt: 2, p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
             <DailyReportsList
               selectedDate={selectedDate}
               onDateSelect={(date) => {
                 setSelectedDate(date);
-                // TODO: フェーズ3で選択した日報の詳細を表示
-                console.log('Selected date:', date);
+                // 選択した日付の日報を読み込む
+                const selectedDateObj = new Date(date);
+                loadDailyReport(selectedDateObj);
               }}
             />
           </Box>
