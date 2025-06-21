@@ -82,7 +82,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
         <ListItem key={report.date} disablePadding>
           <ListItemButton
             selected={selectedDate === report.date}
-            onClick={() => onDateSelect(report.date)}
+            onClick={() => onDateSelect(report.date, { title: report.title, tags: report.tags })}
             sx={{
               borderBottom: 1,
               borderColor: 'divider',

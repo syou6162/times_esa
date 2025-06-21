@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Fade, Divider } from '@mui/material';
+import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import DailyReport from '../DailyReport';
@@ -34,6 +34,8 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
 
   // 選択中の日付
   const [selectedDate, setSelectedDate] = useState<DateString | undefined>(undefined);
+  // 選択中の日報の詳細情報
+  const [selectedReportInfo, setSelectedReportInfo] = useState<{ title: string; tags: string[] } | undefined>(undefined);
 
   // モバイル用Drawerの開閉状態
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -126,6 +128,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
               fullWidth
               onClick={() => {
                 setSelectedDate(undefined);
+                setSelectedReportInfo(undefined);
                 loadDailyReport();
                 if (isMobile) setMobileOpen(false);
               }}
@@ -142,8 +145,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
         <DailyReportsList
           selectedDate={selectedDate}
-          onDateSelect={(date) => {
+          onDateSelect={(date, reportInfo) => {
             setSelectedDate(date);
+            setSelectedReportInfo(reportInfo);
             const selectedDateObj = new Date(date);
             loadDailyReport(selectedDateObj);
             if (isMobile) setMobileOpen(false);
@@ -221,19 +225,27 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         p: 3,
         pt: 1,
       }}>
-      {selectedDate && (
-        <Fade in={true}>
-          <Box sx={{ mb: 2 }}>
-            <Chip 
-              label={`${selectedDate}の日報を表示中`} 
-              color="primary" 
-              sx={{ 
-                mr: 1,
-                fontWeight: 'medium',
-              }}
-            />
-          </Box>
-        </Fade>
+      {selectedDate && selectedReportInfo && (
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h5" gutterBottom>
+            {selectedReportInfo.title}
+          </Typography>
+          {selectedReportInfo.tags.length > 0 && (
+            <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+              {selectedReportInfo.tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
+                  size="small"
+                  sx={{
+                    bgcolor: 'primary.light',
+                    color: 'primary.contrastText',
+                  }}
+                />
+              ))}
+            </Box>
+          )}
+        </Box>
       )}
       <a
         href={esaUrl}

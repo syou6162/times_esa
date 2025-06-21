@@ -95,7 +95,7 @@ export type TimesEsaProps = {
 // DailyReportsList Props
 export type DailyReportsListProps = {
   selectedDate?: DateString;
-  onDateSelect: (date: DateString) => void;
+  onDateSelect: (date: DateString, reportInfo: { title: string; tags: string[] }) => void;
 }
 
 // SignInDialog Props
