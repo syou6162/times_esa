@@ -226,21 +226,18 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         pt: 1,
       }}>
       {selectedDate && selectedReportInfo && (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2, textAlign: 'center' }}>
           <Typography variant="h5" gutterBottom>
             {selectedReportInfo.title}
           </Typography>
           {selectedReportInfo.tags && selectedReportInfo.tags.length > 0 && (
-            <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+            <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', justifyContent: 'center' }}>
               {selectedReportInfo.tags.map((tag) => (
                 <Chip
                   key={tag}
                   label={tag}
                   size="small"
-                  sx={{
-                    bgcolor: 'primary.light',
-                    color: 'primary.contrastText',
-                  }}
+                  color="secondary"
                 />
               ))}
             </Box>
