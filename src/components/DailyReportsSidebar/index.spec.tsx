@@ -2,7 +2,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { DailyReportsSidebar, DailyReportsSidebarProps } from '.';
-import { DailyReportSummary } from '../../types/dailyReport';
+import { DailyReportSummary } from '../../types/domain';
 
 const mockReports: DailyReportSummary[] = [
   {

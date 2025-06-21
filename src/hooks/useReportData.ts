@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DailyReportSummary, SelectedDateState } from '../types/dailyReport';
+import { DailyReportSummary, SelectedDateState } from '../types/domain';
 import { mockDailyReports } from '../data/mockReports';
 
 export type UseReportDataReturn = {

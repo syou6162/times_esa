@@ -1,12 +1,17 @@
 /**
- * 日報関連の型定義
+ * ドメインモデルの型定義
+ * 
+ * アプリケーション内で使用するドメインモデルの型を定義
+ * 基本的にcamelCaseを使用
  */
 
+// タグ情報
 export type Tag = {
   name: string;
   posts_count: number; // eslint-disable-line camelcase
 };
 
+// 日報サマリー（一覧表示用）
 export type DailyReportSummary = {
   date: string; // yyyy-MM-dd形式
   title: string;
@@ -16,6 +21,7 @@ export type DailyReportSummary = {
   url?: string; // esaのURL
 };
 
+// 日報コンテンツ（API responseの形式）
 export type DailyReportContent = {
   updated_at: string;
   url: string;
@@ -26,33 +32,15 @@ export type DailyReportContent = {
   category: string;
 };
 
-export type DailyReportRequestType = {
-  category: string;
+// ユーザー情報
+export type GoogleUser = {
+  email: string;
+  displayName: string;
+  photoURL: string;
 };
 
-export type DailyReportResponseType = DailyReportContent;
-
-export type TagListRequestType = Record<string, never>;
-
-export type TagListResponseType = {
-  tags: Tag[];
-};
-
-export type RecentDailyReportsRequest = {
-  days?: number; // 過去何日分を取得するか（デフォルト: 10）
-};
-
-export type RecentDailyReportsResponse = {
-  reports: DailyReportSummary[];
-  total_count: number;
-};
-
-/**
- * 日報の表示モード
- */
+// 日報の表示モード
 export type ReportViewMode = 'today' | 'past';
 
-/**
- * 日報選択の状態
- */
+// 日報選択の状態
 export type SelectedDateState = 'today' | string; // 'today' または yyyy-MM-dd形式

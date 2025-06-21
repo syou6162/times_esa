@@ -2,7 +2,7 @@
  * モックデータ定義
  */
 
-import { DailyReportSummary, DailyReportContent } from '../types/dailyReport';
+import { DailyReportSummary, DailyReportContent } from '../types/domain';
 
 export const mockDailyReports: DailyReportSummary[] = [
   { 

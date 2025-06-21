@@ -2,7 +2,7 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { DailyReportDetailView, DailyReportDetailViewProps } from '.';
-import { DailyReportSummary } from '../../types/dailyReport';
+import { DailyReportSummary } from '../../types/domain';
 
 describe('DailyReportDetailViewが正しく表示される', () => {
   const mockReport: DailyReportSummary = {

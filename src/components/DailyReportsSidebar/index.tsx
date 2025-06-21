@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Chip } from '@mui/material';
-import { DailyReportSummary, SelectedDateState } from '../../types/dailyReport';
+import { DailyReportSummary, SelectedDateState } from '../../types/domain';
 
 const SIDEBAR_WIDTH = 280;
 

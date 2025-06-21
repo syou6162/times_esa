@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import DailyReportHeader from '../DailyReportHeader';
 import DailyReport from '../DailyReport';
-import { DailyReportSummary } from '../../types/dailyReport';
+import { DailyReportSummary } from '../../types/domain';
 
 export type DailyReportDetailViewProps = {
   report: DailyReportSummary;

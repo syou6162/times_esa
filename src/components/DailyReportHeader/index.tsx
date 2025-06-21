@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
-import { DailyReportSummary } from '../../types/dailyReport';
+import { DailyReportSummary } from '../../types/domain';
 
 export type DailyReportHeaderProps = {
   report: DailyReportSummary;

@@ -1,32 +1,13 @@
 import { useState, useCallback } from 'react';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { functionsRegion, makeDefaultEsaCategory } from '../util';
-
-type DailyReportRequestType = {
-  category: string;
-}
-
-type DailyReportResponseType = {
-  updated_at: string;
-  url: string;
-  body_md: string;
-  body_html: string;
-  tags: string[];
-  name: string;
-  category: string;
-}
-
-type TagListRequestType = {
-}
-
-export type Tag = {
-  name: string;
-  posts_count: number;
-}
-
-type TagListResponseType = {
-  tags: Tag[];
-}
+import { 
+  DailyReportRequestType, 
+  DailyReportResponseType,
+  TagListRequestType,
+  TagListResponseType
+} from '../types/api';
+import { Tag } from '../types/domain';
 
 export type DailyReportData = {
   updatedAt: string;

@@ -7,6 +7,7 @@ import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
 import { makeDefaultEsaCategory, functionsRegion } from '../../util';
+import { SubmitTextToEsaRequestType, SubmitTextToEsaResponseType } from '../../types/api';
 
 export type EsaSubmitFormProps = {
   category: string;
@@ -53,34 +54,16 @@ const transformTitle = (title: string): string => {
   }).join('、');
 };
 
-type submitTextToEsaRequestType = {
-  category: string;
-  tags: string[];
-  title: string;
-  text: string;
-}
-
-type submitTextToEsaResponseType = {
-  updated_at: string;
-  url: string;
-
-  body_md: string;
-  body_html: string;
-  tags: string[];
-  name: string;
-  category: string;
-}
-
 export const submitTextToEsa = (
   category: string,
   tags: string[],
   title: string,
   text: string,
-): Promise<HttpsCallableResult<submitTextToEsaResponseType>> => {
+): Promise<HttpsCallableResult<SubmitTextToEsaResponseType>> => {
   const functions = getFunctions();
   functions.region = functionsRegion;
 
-  const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
+  const submit = httpsCallable<SubmitTextToEsaRequestType, SubmitTextToEsaResponseType>(
     functions,
     'submitTextToEsa',
     {

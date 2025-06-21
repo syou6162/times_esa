@@ -2,7 +2,7 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { DailyReportHeader, DailyReportHeaderProps } from '.';
-import { DailyReportSummary } from '../../types/dailyReport';
+import { DailyReportSummary } from '../../types/domain';
 
 const mockReport: DailyReportSummary = {
   date: '2024-06-19',
