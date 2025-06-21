@@ -230,7 +230,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           <Typography variant="h5" gutterBottom>
             {selectedReportInfo.title}
           </Typography>
-          {selectedReportInfo.tags.length > 0 && (
+          {selectedReportInfo.tags && selectedReportInfo.tags.length > 0 && (
             <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
               {selectedReportInfo.tags.map((tag) => (
                 <Chip
