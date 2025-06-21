@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 
@@ -38,7 +38,7 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const theme = createTheme({
+  const theme = useMemo(() => createTheme({
     palette: {
       primary: {
         main: '#3f51b5',
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         main: '#c51162',
       },
     },
-  });
+  }), []);
 
   return (
     <ThemeProvider theme={theme}>
