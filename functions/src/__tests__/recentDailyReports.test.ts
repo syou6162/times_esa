@@ -5,7 +5,7 @@ import {
   getRecentDailyReports 
 } from '../recentDailyReports';
 import * as search from '../search';
-import type { EsaPost } from '../index';
+import type { EsaPost } from '../caseConverter';
 
 // searchPostsをモック
 vi.mock('../search');

@@ -6,7 +6,8 @@ import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 vi.mock('axios');
 
 // Import the functions to test
-import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type EsaPost, type EsaTags, type RecentDailyReportsRequest } from '../index';
+import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList, type EsaSearchResult, type RecentDailyReportsRequest } from '../index';
+import { type EsaPost, type EsaTags } from '../caseConverter';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 
