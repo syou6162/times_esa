@@ -84,8 +84,8 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     const { esaText, esaHtml, esaUrl } = getPastReportContent(currentReport.date);
     return {
       report: currentReport,
-      esaText,
-      esaHtml,
+      esaText: esaText || '',
+      esaHtml: esaHtml || '',
       esaUrl,
       fetching: false,
       fetchErrorMessage: '',
