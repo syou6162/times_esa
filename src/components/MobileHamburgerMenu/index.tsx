@@ -39,6 +39,12 @@ export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = memo(({
         onClose={onToggle}
         PaperProps={{
           sx: {
+            backgroundColor: '#121212',
+            WebkitOverflowScrolling: 'touch',
+            '& *': {
+              scrollbarWidth: 'thin',
+              scrollbarColor: 'rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05)',
+            },
             '& ::-webkit-scrollbar': {
               width: '8px',
             },

@@ -11,7 +11,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
       日報一覧
     </h6>
     <ul
-      class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
+      class="MuiList-root MuiList-padding css-107wtre-MuiList-root"
     >
       <button
         class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1nbyyxq-MuiListItem-root"
@@ -137,7 +137,7 @@ exports[`PastReportsSidebarが正しく表示される > 空の日報リスト�
       日報一覧
     </h6>
     <ul
-      class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
+      class="MuiList-root MuiList-padding css-107wtre-MuiList-root"
     >
       <button
         class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1nbyyxq-MuiListItem-root"
@@ -173,7 +173,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
       日報一覧
     </h6>
     <ul
-      class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
+      class="MuiList-root MuiList-padding css-107wtre-MuiList-root"
     >
       <button
         class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-58bp3r-MuiListItem-root"

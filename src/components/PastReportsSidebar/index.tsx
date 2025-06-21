@@ -41,7 +41,25 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
       <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.87)', mb: 2 }}>
         日報一覧
       </Typography>
-      <List sx={{ flexGrow: 1, overflow: 'auto' }}>
+      <List sx={{ 
+        flexGrow: 1, 
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        '&::-webkit-scrollbar': {
+          width: '8px',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: '4px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'rgba(255, 255, 255, 0.2)',
+          borderRadius: '4px',
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.3)',
+          },
+        },
+      }}>
         {/* 今日の日報 */}
         <ListItem
           component="button"
