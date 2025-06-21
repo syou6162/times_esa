@@ -9,13 +9,15 @@ import {
 } from '../types/api';
 import { Tag } from '../types/domain';
 
+// アプリ内部で使用する日報データ（camelCase）
+// API responseのDailyReportResponseTypeをcamelCaseに変換した形式
 export type DailyReportData = {
   updatedAt: string;
   url: string;
-  text: string;
-  html: string;
+  text: string;      // body_md → text
+  html: string;      // body_html → html
   tags: string[];
-  title: string;
+  title: string;     // name → title
   category: string;
 }
 
