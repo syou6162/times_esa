@@ -39,7 +39,7 @@ export function createAxiosClient(accessToken?: string): AxiosInstance {
   });
 }
 
-type TimesEsaPostRequest = {
+type SubmitTextRequest = {
   category: DailyReportCategory;
   tags: string[];
   title: string;
@@ -192,7 +192,7 @@ export function checkAuthTokenEmail(context: CallableRequest): void {
 export const submitTextToEsa = onCall(
   { secrets: ESA_SECRETS},
   async (
-    req: CallableRequest<TimesEsaPostRequest>,
+    req: CallableRequest<SubmitTextRequest>,
   ) => {
     checkAuthTokenEmail(req);
 
@@ -210,7 +210,7 @@ export const submitTextToEsa = onCall(
   }
 );
 
-type TimesEsaDailyReportRequest = {
+type DailyReportRequest = {
   category: DailyReportCategory;
 }
 
@@ -247,7 +247,7 @@ export type RecentDailyReportsResponseCamelCase = {
 export const dailyReport = onCall(
   { secrets: ESA_SECRETS},
   async (
-    req: CallableRequest<TimesEsaDailyReportRequest>,
+    req: CallableRequest<DailyReportRequest>,
   ) => {
     checkAuthTokenEmail(req);
 
