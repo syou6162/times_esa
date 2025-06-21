@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { EsaSubmitForm } from '../EsaSubmitForm';
 import DailyReport from '../DailyReport';
-import { getPostsCount, formatTodayPostsText } from '../../utils/dailyReportUtils';
+import { getPostsCount } from '../../utils/dailyReportUtils';
 
 export type TodayReportViewProps = {
   // ESA関連のデータ

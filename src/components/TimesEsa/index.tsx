@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { Container, Box } from '@mui/material';
 
-import { EsaSubmitForm } from '../EsaSubmitForm';
 import PastReportsSidebar from '../PastReportsSidebar';
 import MobileHamburgerMenu from '../MobileHamburgerMenu';
 import TodayReportView from '../TodayReportView';
@@ -10,7 +9,6 @@ import { useReportData } from '../../hooks/useReportData';
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { useDailyReportAPI } from '../../hooks/useDailyReportAPI';
 import { makeDefaultEsaCategory } from '../../util';
-import { getPostsCount } from '../../utils/dailyReportUtils';
 import { mockPastReportContent } from '../../data/mockReports';
 
 const SIDEBAR_WIDTH = 280;
