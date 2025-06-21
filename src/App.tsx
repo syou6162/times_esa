@@ -67,6 +67,18 @@ const App: React.FC = () => {
         main: '#c51162',
       },
     },
+    typography: {
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Hiragino Sans"',
+        '"Hiragino Kaku Gothic ProN"',
+        '"Yu Gothic"',
+        'Meiryo',
+        'IPAGothic',
+        'sans-serif'
+      ].join(','),
+    },
   });
 
   return (
