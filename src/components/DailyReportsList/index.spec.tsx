@@ -135,27 +135,6 @@ describe('DailyReportsList', () => {
     });
   });
 
-  it('タイトルがない日報は「無題の日報」と表示すること', async () => {
-    const mockReports = [
-      {
-        date: '2025-06-20',
-        title: '',
-        category: '日報/2025/06/20',
-        updatedAt: '2025-06-20T10:00:00Z',
-        number: 123,
-      },
-    ];
-
-    vi.mocked(apiClient.getRecentDailyReports).mockResolvedValueOnce({
-      data: { reports: mockReports, totalCount: 1 },
-    });
-
-    render(<DailyReportsList onDateSelect={mockOnDateSelect} />);
-
-    await waitFor(() => {
-      expect(screen.getByText('無題の日報')).toBeDefined();
-    });
-  });
 
   it('スナップショットテスト', async () => {
     const mockReports = [

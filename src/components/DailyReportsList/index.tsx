@@ -77,7 +77,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = ({
           >
             <ListItemText
               primary={report.date}
-              secondary={report.title || '無題の日報'}
+              secondary={report.title}
             />
           </ListItemButton>
         </ListItem>
