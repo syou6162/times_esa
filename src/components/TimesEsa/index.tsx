@@ -114,7 +114,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   };
 
   const drawerContent = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'text.primary' }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'white' }}>
       <Box sx={{ p: 2 }}>
         <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <CalendarTodayIcon fontSize="small" />
