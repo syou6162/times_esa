@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleUser } from '../../util';
+import { GoogleUser } from '../../types';
 
 const WelcomeMessage: React.FC<GoogleUser> = (props: GoogleUser) => {
   return (
