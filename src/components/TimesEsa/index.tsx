@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { Container, Box } from '@mui/material';
 
 import { EsaSubmitForm } from '../EsaSubmitForm';
@@ -41,7 +41,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   }, [props.canFetchCloudFunctionEndpoints, loadDailyReport, loadTagList]);
 
   // 日報を選択した時の処理
-  const handleSelectReport = (date: string) => {
+  const handleSelectReport = useCallback((date: string) => {
     setSelectedDate(date);
     if (isMobile) {
       setSidebarOpen(false);
@@ -50,16 +50,48 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     if (date === 'today') {
       loadDailyReport();
     }
-  };
+  }, [isMobile, setSidebarOpen, setSelectedDate, loadDailyReport]);
 
   // 過去の日報データ取得
-  const getPastReportContent = (date: string) => {
+  const getPastReportContent = useCallback((date: string) => {
     const content = mockPastReportContent[date as keyof typeof mockPastReportContent];
     return content ? {
       esaText: content.body_md,
       esaHtml: content.body_html,
     } : { esaText: '', esaHtml: '' };
-  };
+  }, []);
+
+  // 今日の日報表示用のプロパティを最適化
+  const todayReportProps = useMemo(() => {
+    if (!dailyReportData) return null;
+    
+    return {
+      esaCategory: dailyReportData.category || makeDefaultEsaCategory(new Date()),
+      esaTitle: dailyReportData.title || '日報',
+      esaTags: dailyReportData.tags || [],
+      esaTagCandidates: tagCandidates,
+      esaUrl: dailyReportData.url || '',
+      esaText: dailyReportData.text || '',
+      esaHtml: dailyReportData.html || '',
+      fetching,
+      fetchErrorMessage,
+    };
+  }, [dailyReportData, tagCandidates, fetching, fetchErrorMessage]);
+
+  // 過去の日報表示用のプロパティを最適化
+  const pastReportProps = useMemo(() => {
+    if (isToday || !currentReport) return null;
+    
+    const { esaText, esaHtml } = getPastReportContent(currentReport.date);
+    return {
+      report: currentReport,
+      esaText,
+      esaHtml,
+      fetching: false,
+      fetchErrorMessage: '',
+      reloadDailyReport: () => {},
+    };
+  }, [isToday, currentReport, getPastReportContent]);
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
@@ -95,17 +127,10 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           pt: isMobile ? 4 : 2
         }}>
           {/* 今日の日報表示 */}
-          {isToday && dailyReportData && (
+          {isToday && todayReportProps && (
             <TodayReportView
-              esaCategory={dailyReportData.category || makeDefaultEsaCategory(new Date())}
-              esaTitle={dailyReportData.title || '日報'}
-              esaTags={dailyReportData.tags || []}
+              {...todayReportProps}
               esaTagCandidates={tagCandidates}
-              esaUrl={dailyReportData.url || ''}
-              esaText={dailyReportData.text || ''}
-              esaHtml={dailyReportData.html || ''}
-              fetching={fetching}
-              fetchErrorMessage={fetchErrorMessage}
               onSubmit={(category, title, md, html, tags) => {
                 // フォーム送信の処理は後で実装
                 console.log('Form submitted:', { category, title, md, html, tags });
@@ -115,19 +140,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           )}
 
           {/* 過去の日報表示 */}
-          {!isToday && currentReport && (() => {
-            const { esaText, esaHtml } = getPastReportContent(currentReport.date);
-            return (
-              <PastReportView
-                report={currentReport}
-                esaText={esaText}
-                esaHtml={esaHtml}
-                fetching={false}
-                fetchErrorMessage=""
-                reloadDailyReport={() => {}}
-              />
-            );
-          })()}
+          {pastReportProps && (
+            <PastReportView {...pastReportProps} />
+          )}
         </Container>
       </Box>
     </Box>

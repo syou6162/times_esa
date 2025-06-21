@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
 import { DailyReportSummary } from '../../types/dailyReport';
 
@@ -7,7 +7,7 @@ export type PastReportHeaderProps = {
   isReadOnly?: boolean;
 };
 
-export const PastReportHeader: React.FC<PastReportHeaderProps> = ({
+export const PastReportHeader: React.FC<PastReportHeaderProps> = memo(({
   report,
   isReadOnly = true,
 }) => {
@@ -38,6 +38,8 @@ export const PastReportHeader: React.FC<PastReportHeaderProps> = ({
       </Typography>
     </Box>
   );
-};
+});
+
+PastReportHeader.displayName = 'PastReportHeader';
 
 export default PastReportHeader;

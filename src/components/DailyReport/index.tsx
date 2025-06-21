@@ -48,14 +48,34 @@ type DailyReportShareProps = {
 
 const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportShareProps) => {
   const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n')
-    .split('\n---\n\n').slice(0, -1).map((t) => {
+    .split('\n---\n').filter(t => t.trim() !== '').map((t) => {
+      const trimmedText = t.trim();
+      
+      // アンカータグ付きの形式: <a id="1234" href="#1234">12:34</a> 内容
       const anchorRegex = /^<a id="\d{4}" href="#\d{4}">(?<time>\d\d:\d\d)<\/a>\s?(?<tweet>[\s\S]*?)\s?$/;
-      const plainRegex = /^(?<time>\d\d:\d\d)?\s?(?<tweet>[\s\S]*?)\s?$/;
-      const match = t.match(anchorRegex) || t.match(plainRegex);
-      if (match != null && match.groups) {
-        return [match.groups.time, match.groups.tweet];
+      
+      // プレーンな形式: 12:34 内容
+      const plainRegex = /^(?<time>\d\d:\d\d)\s+(?<tweet>[\s\S]*?)$/;
+      
+      // 時間なしの形式: 内容のみ
+      const noTimeRegex = /^(?<tweet>[\s\S]+)$/;
+      
+      const anchorMatch = trimmedText.match(anchorRegex);
+      if (anchorMatch && anchorMatch.groups) {
+        return [anchorMatch.groups.time || '', anchorMatch.groups.tweet || ''];
       }
-      return ['', ''];
+      
+      const plainMatch = trimmedText.match(plainRegex);
+      if (plainMatch && plainMatch.groups) {
+        return [plainMatch.groups.time || '', plainMatch.groups.tweet || ''];
+      }
+      
+      const noTimeMatch = trimmedText.match(noTimeRegex);
+      if (noTimeMatch && noTimeMatch.groups) {
+        return ['', noTimeMatch.groups.tweet || ''];
+      }
+      
+      return ['', trimmedText];
     });
   return (
     <div>

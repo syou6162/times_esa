@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, IconButton, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -8,7 +8,7 @@ export type MobileHamburgerMenuProps = {
   children: React.ReactNode;
 };
 
-export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = ({
+export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = memo(({
   isOpen,
   onToggle,
   children,
@@ -42,6 +42,8 @@ export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = ({
       </Drawer>
     </>
   );
-};
+});
+
+MobileHamburgerMenu.displayName = 'MobileHamburgerMenu';
 
 export default MobileHamburgerMenu;

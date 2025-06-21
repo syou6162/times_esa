@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { EsaSubmitForm } from '../EsaSubmitForm';
 import DailyReport from '../DailyReport';
 import { getPostsCount, formatTodayPostsText } from '../../utils/dailyReportUtils';
@@ -29,7 +29,7 @@ export type TodayReportViewProps = {
 };
 
 
-export const TodayReportView: React.FC<TodayReportViewProps> = ({
+export const TodayReportView: React.FC<TodayReportViewProps> = memo(({
   esaCategory,
   esaTitle,
   esaTags,
@@ -77,6 +77,8 @@ export const TodayReportView: React.FC<TodayReportViewProps> = ({
       />
     </>
   );
-};
+});
+
+TodayReportView.displayName = 'TodayReportView';
 
 export default TodayReportView;

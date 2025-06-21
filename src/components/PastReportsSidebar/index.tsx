@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Chip } from '@mui/material';
 import { DailyReportSummary, SelectedDateState } from '../../types/dailyReport';
 
@@ -10,7 +10,7 @@ export type PastReportsSidebarProps = {
   onSelectReport: (date: SelectedDateState) => void;
 };
 
-export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = ({
+export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
   reports,
   selectedDate,
   onSelectReport,
@@ -114,6 +114,8 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = ({
       </List>
     </Box>
   );
-};
+});
+
+PastReportsSidebar.displayName = 'PastReportsSidebar';
 
 export default PastReportsSidebar;
