@@ -200,7 +200,6 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             '& .MuiDrawer-paper': { 
               boxSizing: 'border-box', 
               width: 280,
-              bgcolor: 'background.paper',
             },
           }}
         >
@@ -214,7 +213,6 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             borderRight: 1,
             borderColor: 'divider',
             overflow: 'auto',
-            bgcolor: 'background.paper',
           }}
         >
           {drawerContent}
