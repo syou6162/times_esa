@@ -11,9 +11,18 @@ import {
   Skeleton,
   Chip,
 } from '@mui/material';
+import { format } from 'date-fns';
+import { ja } from 'date-fns/locale';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
 import type { DailyReportsListProps } from '../../types/components';
+
+// 日付文字列に曜日を追加する関数
+const formatDateWithWeekday = (dateString: string): string => {
+  const date = new Date(dateString);
+  const weekday = format(date, '(E)', { locale: ja });
+  return `${dateString}${weekday}`;
+};
 
 export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   selectedDate,
@@ -100,7 +109,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
               <ListItemText
-                primary={report.date}
+                primary={formatDateWithWeekday(report.date)}
                 secondary={report.title}
                 primaryTypographyProps={{
                   variant: 'body2',
