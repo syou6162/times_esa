@@ -21,8 +21,6 @@ jobs:
           node-version: '22'
       - run: npm install
         working-directory: ./functions
-      - run: npm run build
-        working-directory: ./functions
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
       # 認証情報を保持するjsonファイルをGOOGLE_APPLICATION_CREDENTIALSで指定したpassに生成
