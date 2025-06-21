@@ -245,7 +245,7 @@ export const recentDailyReports = onCall(
     checkAuthTokenEmail(req);
 
     const { getRecentDailyReports } = await import('./recentDailyReports');
-    const days = req.data?.days ?? 10; // req.dataがnullの場合も考慮
+    const days = req.data.days ?? 10; // nullish coalescingで0を許可
     
     // daysパラメータのバリデーション（1〜31の範囲）
     if (days < 1 || days > 31) {
