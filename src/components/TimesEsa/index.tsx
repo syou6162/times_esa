@@ -218,7 +218,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         flexGrow: 1, 
         overflow: 'auto', 
         p: 3,
-        pt: 3,
+        pt: 1,
       }}>
       {selectedDate && (
         <Fade in={true}>
