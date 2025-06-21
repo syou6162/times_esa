@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { Container, Box } from '@mui/material';
 
-import PastReportsSidebar from '../PastReportsSidebar';
+import DailyReportsSidebar from '../DailyReportsSidebar';
 import MobileHamburgerMenu from '../MobileHamburgerMenu';
 import TodayReportView from '../TodayReportView';
-import PastReportView from '../PastReportView';
+import DailyReportDetailView from '../DailyReportDetailView';
 import { useReportData } from '../../hooks/useReportData';
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { useDailyReportAPI } from '../../hooks/useDailyReportAPI';
 import { makeDefaultEsaCategory } from '../../util';
-import { mockPastReportContent } from '../../data/mockReports';
+import { mockDailyReportContent } from '../../data/mockReports';
 
 const SIDEBAR_WIDTH = 280;
 
@@ -50,9 +50,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     }
   }, [isMobile, setSidebarOpen, setSelectedDate, loadDailyReport]);
 
-  // 過去の日報データ取得
-  const getPastReportContent = useCallback((date: string) => {
-    const content = mockPastReportContent[date as keyof typeof mockPastReportContent];
+  // 日報データ取得
+  const getDailyReportContent = useCallback((date: string) => {
+    const content = mockDailyReportContent[date as keyof typeof mockDailyReportContent];
     return content ? {
       esaText: content.body_md,
       esaHtml: content.body_html,
@@ -77,11 +77,11 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     };
   }, [dailyReportData, tagCandidates, fetching, fetchErrorMessage]);
 
-  // 過去の日報表示用のプロパティを最適化
-  const pastReportProps = useMemo(() => {
+  // 日報詳細表示用のプロパティを最適化
+  const dailyReportDetailProps = useMemo(() => {
     if (isToday || !currentReport) return null;
     
-    const { esaText, esaHtml, esaUrl } = getPastReportContent(currentReport.date);
+    const { esaText, esaHtml, esaUrl } = getDailyReportContent(currentReport.date);
     return {
       report: currentReport,
       esaText: esaText || '',
@@ -91,14 +91,14 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       fetchErrorMessage: '',
       reloadDailyReport: () => {},
     };
-  }, [isToday, currentReport, getPastReportContent]);
+  }, [isToday, currentReport, getDailyReportContent]);
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       {/* サイドバー（デスクトップ） */}
       {!isMobile && (
         <Box sx={{ flexShrink: 0, width: SIDEBAR_WIDTH }}>
-          <PastReportsSidebar
+          <DailyReportsSidebar
             reports={reports}
             selectedDate={selectedDate}
             onSelectReport={handleSelectReport}
@@ -112,7 +112,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
         >
-          <PastReportsSidebar
+          <DailyReportsSidebar
             reports={reports}
             selectedDate={selectedDate}
             onSelectReport={handleSelectReport}
@@ -139,9 +139,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             />
           )}
 
-          {/* 過去の日報表示 */}
-          {pastReportProps && (
-            <PastReportView {...pastReportProps} />
+          {/* 日報詳細表示 */}
+          {dailyReportDetailProps && (
+            <DailyReportDetailView {...dailyReportDetailProps} />
           )}
         </Container>
       </Box>

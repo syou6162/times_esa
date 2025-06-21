@@ -10,7 +10,7 @@ describe('useReportData', () => {
     expect(result.current.selectedDate).toBe('today');
     expect(result.current.isToday).toBe(true);
     expect(result.current.currentReport).toBeNull();
-    expect(result.current.reports).toHaveLength(8); // mockPastReportsの数
+    expect(result.current.reports).toHaveLength(8); // mockDailyReportsの数
   });
 
   it('今日の日報が選択されている時の状態が正しい', () => {

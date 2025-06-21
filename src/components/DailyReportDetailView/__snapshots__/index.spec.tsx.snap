@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PastReportViewが正しく表示される > エラー状態が正しく表示される 1`] = `
+exports[`DailyReportDetailViewが正しく表示される > エラー状態が正しく表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"
@@ -94,7 +94,7 @@ exports[`PastReportViewが正しく表示される > エラー状態が正しく
 </DocumentFragment>
 `;
 
-exports[`PastReportViewが正しく表示される > フェッチ中の状態が正しく表示される 1`] = `
+exports[`DailyReportDetailViewが正しく表示される > フェッチ中の状態が正しく表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"
@@ -188,7 +188,7 @@ exports[`PastReportViewが正しく表示される > フェッチ中の状態が
 </DocumentFragment>
 `;
 
-exports[`PastReportViewが正しく表示される > 過去の日報が正しく表示される 1`] = `
+exports[`DailyReportDetailViewが正しく表示される > 過去の日報が正しく表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"

@@ -4,7 +4,7 @@ import {
   formatDateToJapanese,
   formatPostsCountText,
   formatTodayPostsText,
-  generateMockPastReportUrl,
+  generateMockDailyReportUrl,
   generateMockUpdatedAt,
 } from './dailyReportUtils';
 
@@ -52,10 +52,10 @@ describe('dailyReportUtils', () => {
     });
   });
 
-  describe('generateMockPastReportUrl', () => {
+  describe('generateMockDailyReportUrl', () => {
     it('モック用のURLを正しく生成する', () => {
-      expect(generateMockPastReportUrl('2024-06-19')).toBe('https://example.esa.io/posts/mock-2024-06-19');
-      expect(generateMockPastReportUrl('2024-12-25')).toBe('https://example.esa.io/posts/mock-2024-12-25');
+      expect(generateMockDailyReportUrl('2024-06-19')).toBe('https://example.esa.io/posts/mock-2024-06-19');
+      expect(generateMockDailyReportUrl('2024-12-25')).toBe('https://example.esa.io/posts/mock-2024-12-25');
     });
   });
 

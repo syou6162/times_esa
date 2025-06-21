@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { PastReportHeader, PastReportHeaderProps } from '.';
+import { DailyReportHeader, DailyReportHeaderProps } from '.';
 import { DailyReportSummary } from '../../types/dailyReport';
 
 const mockReport: DailyReportSummary = {
@@ -12,14 +12,14 @@ const mockReport: DailyReportSummary = {
   formattedDate: '6月19日(水)'
 };
 
-describe('PastReportHeaderが正しく表示される', () => {
+describe('DailyReportHeaderが正しく表示される', () => {
   it('読み取り専用モードで表示される', () => {
-    const props: PastReportHeaderProps = {
+    const props: DailyReportHeaderProps = {
       report: mockReport,
       isReadOnly: true,
     };
 
-    const renderResult = render(<PastReportHeader {...props} />);
+    const renderResult = render(<DailyReportHeader {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
@@ -30,12 +30,12 @@ describe('PastReportHeaderが正しく表示される', () => {
   });
 
   it('編集可能モードで表示される', () => {
-    const props: PastReportHeaderProps = {
+    const props: DailyReportHeaderProps = {
       report: mockReport,
       isReadOnly: false,
     };
 
-    const renderResult = render(<PastReportHeader {...props} />);
+    const renderResult = render(<DailyReportHeader {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('6月19日(水)の日報')).toBeTruthy();
@@ -50,12 +50,12 @@ describe('PastReportHeaderが正しく表示される', () => {
       tags: [],
       url: 'https://example.esa.io/posts/123',
     };
-    const props: PastReportHeaderProps = {
+    const props: DailyReportHeaderProps = {
       report: reportWithoutTags,
       isReadOnly: true,
     };
 
-    const renderResult = render(<PastReportHeader {...props} />);
+    const renderResult = render(<DailyReportHeader {...props} />);
     
     const link = renderResult.getByRole('link', { name: '6月19日(水)の日報' });
     expect(link).toBeTruthy();
@@ -69,12 +69,12 @@ describe('PastReportHeaderが正しく表示される', () => {
       ...mockReport,
       postsCount: 5,
     };
-    const props: PastReportHeaderProps = {
+    const props: DailyReportHeaderProps = {
       report: reportWithZeroPosts,
       isReadOnly: true,
     };
 
-    const renderResult = render(<PastReportHeader {...props} />);
+    const renderResult = render(<DailyReportHeader {...props} />);
 
     // URLがない場合、リンクではなくテキストとして表示される
     expect(renderResult.queryByRole('link')).toBeNull();

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PastReportsSidebarが正しく表示される > 今日の日報が選択された状態で表示される 1`] = `
+exports[`DailyReportsSidebarが正しく表示される > 今日の日報が選択された状態で表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-kak0am"
@@ -126,7 +126,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
 </DocumentFragment>
 `;
 
-exports[`PastReportsSidebarが正しく表示される > 空の日報リストでも正しく表示される 1`] = `
+exports[`DailyReportsSidebarが正しく表示される > 空の日報リストでも正しく表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-kak0am"
@@ -162,7 +162,7 @@ exports[`PastReportsSidebarが正しく表示される > 空の日報リスト�
 </DocumentFragment>
 `;
 
-exports[`PastReportsSidebarが正しく表示される > 過去の日報が選択された状態で表示される 1`] = `
+exports[`DailyReportsSidebarが正しく表示される > 過去の日報が選択された状態で表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-kak0am"

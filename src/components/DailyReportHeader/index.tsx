@@ -2,13 +2,13 @@ import React, { memo } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
 import { DailyReportSummary } from '../../types/dailyReport';
 
-export type PastReportHeaderProps = {
+export type DailyReportHeaderProps = {
   report: DailyReportSummary;
   isReadOnly?: boolean;
   reportUrl?: string;
 };
 
-export const PastReportHeader: React.FC<PastReportHeaderProps> = memo(({
+export const DailyReportHeader: React.FC<DailyReportHeaderProps> = memo(({
   report,
   isReadOnly = true,
   reportUrl,
@@ -57,6 +57,6 @@ export const PastReportHeader: React.FC<PastReportHeaderProps> = memo(({
   );
 });
 
-PastReportHeader.displayName = 'PastReportHeader';
+DailyReportHeader.displayName = 'DailyReportHeader';
 
-export default PastReportHeader;
+export default DailyReportHeader;

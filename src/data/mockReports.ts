@@ -4,7 +4,7 @@
 
 import { DailyReportSummary, DailyReportContent } from '../types/dailyReport';
 
-export const mockPastReports: DailyReportSummary[] = [
+export const mockDailyReports: DailyReportSummary[] = [
   { 
     date: '2024-06-19', 
     title: '開発、会議、レビュー', 
@@ -71,7 +71,7 @@ export const mockPastReports: DailyReportSummary[] = [
   },
 ];
 
-export const mockPastReportContent: Record<string, Partial<DailyReportContent>> = {
+export const mockDailyReportContent: Record<string, Partial<DailyReportContent>> = {
   '2024-06-19': {
     body_md: '09:30 朝の準備\n---\n10:00 チーム会議参加\n---\n14:00 コードレビュー実施\n---\n16:30 新機能の設計検討\n---\n18:00 今日の振り返り',
     body_html: '<p>09:30 朝の準備</p><hr><p>10:00 チーム会議参加</p><hr><p>14:00 コードレビュー実施</p><hr><p>16:30 新機能の設計検討</p><hr><p>18:00 今日の振り返り</p>',
@@ -98,12 +98,12 @@ export const mockPastReportContent: Record<string, Partial<DailyReportContent>> 
  * 指定された日付のモック日報コンテンツを取得
  */
 export const getMockReportContent = (date: string): Partial<DailyReportContent> | null => {
-  return mockPastReportContent[date] || null;
+  return mockDailyReportContent[date] || null;
 };
 
 /**
  * 指定された日付のモック日報サマリーを取得
  */
 export const getMockReportSummary = (date: string): DailyReportSummary | null => {
-  return mockPastReports.find(report => report.date === date) || null;
+  return mockDailyReports.find(report => report.date === date) || null;
 };

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { fireEvent, render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { PastReportsSidebar, PastReportsSidebarProps } from '.';
+import { DailyReportsSidebar, DailyReportsSidebarProps } from '.';
 import { DailyReportSummary } from '../../types/dailyReport';
 
 const mockReports: DailyReportSummary[] = [
@@ -21,16 +21,16 @@ const mockReports: DailyReportSummary[] = [
   },
 ];
 
-describe('PastReportsSidebarが正しく表示される', () => {
+describe('DailyReportsSidebarが正しく表示される', () => {
   it('今日の日報が選択された状態で表示される', () => {
     const mockOnSelectReport = vi.fn();
-    const props: PastReportsSidebarProps = {
+    const props: DailyReportsSidebarProps = {
       reports: mockReports,
       selectedDate: 'today',
       onSelectReport: mockOnSelectReport,
     };
 
-    const renderResult = render(<PastReportsSidebar {...props} />);
+    const renderResult = render(<DailyReportsSidebar {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('今日の日報')).toBeTruthy();
@@ -41,13 +41,13 @@ describe('PastReportsSidebarが正しく表示される', () => {
 
   it('過去の日報が選択された状態で表示される', () => {
     const mockOnSelectReport = vi.fn();
-    const props: PastReportsSidebarProps = {
+    const props: DailyReportsSidebarProps = {
       reports: mockReports,
       selectedDate: '2024-06-19',
       onSelectReport: mockOnSelectReport,
     };
 
-    const renderResult = render(<PastReportsSidebar {...props} />);
+    const renderResult = render(<DailyReportsSidebar {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
@@ -58,13 +58,13 @@ describe('PastReportsSidebarが正しく表示される', () => {
 
   it('今日の日報をクリックするとコールバックが呼ばれる', () => {
     const mockOnSelectReport = vi.fn();
-    const props: PastReportsSidebarProps = {
+    const props: DailyReportsSidebarProps = {
       reports: mockReports,
       selectedDate: '2024-06-19',
       onSelectReport: mockOnSelectReport,
     };
 
-    const renderResult = render(<PastReportsSidebar {...props} />);
+    const renderResult = render(<DailyReportsSidebar {...props} />);
 
     fireEvent.click(renderResult.getByText('今日の日報'));
     expect(mockOnSelectReport).toHaveBeenCalledWith('today');
@@ -72,13 +72,13 @@ describe('PastReportsSidebarが正しく表示される', () => {
 
   it('過去の日報をクリックするとコールバックが呼ばれる', () => {
     const mockOnSelectReport = vi.fn();
-    const props: PastReportsSidebarProps = {
+    const props: DailyReportsSidebarProps = {
       reports: mockReports,
       selectedDate: 'today',
       onSelectReport: mockOnSelectReport,
     };
 
-    const renderResult = render(<PastReportsSidebar {...props} />);
+    const renderResult = render(<DailyReportsSidebar {...props} />);
 
     fireEvent.click(renderResult.getByText('開発、会議、レビュー'));
     expect(mockOnSelectReport).toHaveBeenCalledWith('2024-06-19');
@@ -86,13 +86,13 @@ describe('PastReportsSidebarが正しく表示される', () => {
 
   it('空の日報リストでも正しく表示される', () => {
     const mockOnSelectReport = vi.fn();
-    const props: PastReportsSidebarProps = {
+    const props: DailyReportsSidebarProps = {
       reports: [],
       selectedDate: 'today',
       onSelectReport: mockOnSelectReport,
     };
 
-    const renderResult = render(<PastReportsSidebar {...props} />);
+    const renderResult = render(<DailyReportsSidebar {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('日報一覧')).toBeTruthy();

@@ -21,7 +21,7 @@ export const formatTodayPostsText = (count: number): string => {
   return `今日は${count}個つぶやいたよ`;
 };
 
-export const generateMockPastReportUrl = (date: string): string => {
+export const generateMockDailyReportUrl = (date: string): string => {
   return `https://example.esa.io/posts/mock-${date}`;
 };
 

@@ -4,13 +4,13 @@ import { DailyReportSummary, SelectedDateState } from '../../types/dailyReport';
 
 const SIDEBAR_WIDTH = 280;
 
-export type PastReportsSidebarProps = {
+export type DailyReportsSidebarProps = {
   reports: DailyReportSummary[];
   selectedDate: SelectedDateState;
   onSelectReport: (date: SelectedDateState) => void;
 };
 
-export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
+export const DailyReportsSidebar: React.FC<DailyReportsSidebarProps> = memo(({
   reports,
   selectedDate,
   onSelectReport,
@@ -163,6 +163,6 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
   );
 });
 
-PastReportsSidebar.displayName = 'PastReportsSidebar';
+DailyReportsSidebar.displayName = 'DailyReportsSidebar';
 
-export default PastReportsSidebar;
+export default DailyReportsSidebar;

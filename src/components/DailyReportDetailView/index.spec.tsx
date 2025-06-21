@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { PastReportView, PastReportViewProps } from '.';
+import { DailyReportDetailView, DailyReportDetailViewProps } from '.';
 import { DailyReportSummary } from '../../types/dailyReport';
 
-describe('PastReportViewが正しく表示される', () => {
+describe('DailyReportDetailViewが正しく表示される', () => {
   const mockReport: DailyReportSummary = {
     date: '2024-06-19',
     title: '開発、会議、レビュー',
@@ -13,7 +13,7 @@ describe('PastReportViewが正しく表示される', () => {
     formattedDate: '6月19日(水)',
   };
 
-  const defaultProps: PastReportViewProps = {
+  const defaultProps: DailyReportDetailViewProps = {
     report: mockReport,
     esaText: '10:00 朝の準備\n---\n14:00 会議参加\n---\n18:00 振り返り',
     esaHtml: '<p>10:00 朝の準備</p><hr><p>14:00 会議参加</p><hr><p>18:00 振り返り</p>',
@@ -23,7 +23,7 @@ describe('PastReportViewが正しく表示される', () => {
   };
 
   it('過去の日報が正しく表示される', () => {
-    const renderResult = render(<PastReportView {...defaultProps} />);
+    const renderResult = render(<DailyReportDetailView {...defaultProps} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
@@ -36,7 +36,7 @@ describe('PastReportViewが正しく表示される', () => {
       ...defaultProps,
       fetching: true,
     };
-    const renderResult = render(<PastReportView {...fetchingProps} />);
+    const renderResult = render(<DailyReportDetailView {...fetchingProps} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
@@ -46,7 +46,7 @@ describe('PastReportViewが正しく表示される', () => {
       ...defaultProps,
       fetchErrorMessage: 'NOT_FOUND: 日報が見つかりません',
     };
-    const renderResult = render(<PastReportView {...errorProps} />);
+    const renderResult = render(<DailyReportDetailView {...errorProps} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
@@ -58,7 +58,7 @@ describe('PastReportViewが正しく表示される', () => {
       esaHtml: '<p>コンテンツ</p>',
       esaUrl: 'https://example.esa.io/posts/789',
     };
-    const renderResult = render(<PastReportView {...emptyProps} />);
+    const renderResult = render(<DailyReportDetailView {...emptyProps} />);
 
     const link = renderResult.getByRole('link', { name: '6月19日(水)の日報' });
     expect(link).toBeTruthy();
@@ -74,7 +74,7 @@ describe('PastReportViewが正しく表示される', () => {
         tags: ['開発', 'times_esa', 'レビュー', 'ミーティング'],
       },
     };
-    const renderResult = render(<PastReportView {...multiTagProps} />);
+    const renderResult = render(<DailyReportDetailView {...multiTagProps} />);
 
     expect(renderResult.getByText('開発')).toBeTruthy();
     expect(renderResult.getByText('times_esa')).toBeTruthy();
@@ -87,7 +87,7 @@ describe('PastReportViewが正しく表示される', () => {
       ...defaultProps,
       reloadDailyReport: undefined,
     };
-    const renderResult = render(<PastReportView {...propsWithoutReload} />);
+    const renderResult = render(<DailyReportDetailView {...propsWithoutReload} />);
 
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
   });

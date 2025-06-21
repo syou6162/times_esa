@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DailyReportSummary, SelectedDateState } from '../types/dailyReport';
-import { mockPastReports } from '../data/mockReports';
+import { mockDailyReports } from '../data/mockReports';
 
 export type UseReportDataReturn = {
   reports: DailyReportSummary[];
@@ -11,7 +11,7 @@ export type UseReportDataReturn = {
 };
 
 export const useReportData = (): UseReportDataReturn => {
-  const [reports] = useState<DailyReportSummary[]>(mockPastReports);
+  const [reports] = useState<DailyReportSummary[]>(mockDailyReports);
   const [selectedDate, setSelectedDate] = useState<SelectedDateState>('today');
 
   const currentReport = selectedDate === 'today' 

@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
-import PastReportHeader from '../PastReportHeader';
+import DailyReportHeader from '../DailyReportHeader';
 import DailyReport from '../DailyReport';
 import { DailyReportSummary } from '../../types/dailyReport';
 
-export type PastReportViewProps = {
+export type DailyReportDetailViewProps = {
   report: DailyReportSummary;
   esaText: string;
   esaHtml: string;
@@ -13,7 +13,7 @@ export type PastReportViewProps = {
   reloadDailyReport?: () => void;
 };
 
-export const PastReportView: React.FC<PastReportViewProps> = memo(({
+export const DailyReportDetailView: React.FC<DailyReportDetailViewProps> = memo(({
   report,
   esaText,
   esaHtml,
@@ -24,7 +24,7 @@ export const PastReportView: React.FC<PastReportViewProps> = memo(({
 }) => {
   return (
     <>
-      <PastReportHeader report={report} isReadOnly={true} reportUrl={esaUrl} />
+      <DailyReportHeader report={report} isReadOnly={true} reportUrl={esaUrl} />
       
       <hr style={{
         borderTop: '2px dashed #bbb',
@@ -43,6 +43,6 @@ export const PastReportView: React.FC<PastReportViewProps> = memo(({
   );
 });
 
-PastReportView.displayName = 'PastReportView';
+DailyReportDetailView.displayName = 'DailyReportDetailView';
 
-export default PastReportView;
+export default DailyReportDetailView;

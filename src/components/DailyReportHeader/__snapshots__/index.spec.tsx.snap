@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PastReportHeaderが正しく表示される > レポートURLがある場合リンクとして表示される 1`] = `
+exports[`DailyReportHeaderが正しく表示される > レポートURLがある場合リンクとして表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"
@@ -38,7 +38,7 @@ exports[`PastReportHeaderが正しく表示される > レポートURLがある�
 </DocumentFragment>
 `;
 
-exports[`PastReportHeaderが正しく表示される > 編集可能モードで表示される 1`] = `
+exports[`DailyReportHeaderが正しく表示される > 編集可能モードで表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"
@@ -92,7 +92,7 @@ exports[`PastReportHeaderが正しく表示される > 編集可能モードで�
 </DocumentFragment>
 `;
 
-exports[`PastReportHeaderが正しく表示される > 読み取り専用モードで表示される 1`] = `
+exports[`DailyReportHeaderが正しく表示される > 読み取り専用モードで表示される 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-i3pbo"
