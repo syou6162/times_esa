@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Fade, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import TodayIcon from '@mui/icons-material/Today';
 
 import DailyReport from '../DailyReport';
@@ -115,10 +114,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
 
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'white' }}>
-      <Box sx={{ p: 2, pt: isMobile ? 8 : 2 }}>
-        <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CalendarTodayIcon fontSize="small" />
-          日報一覧
+      <Box sx={{ p: 2, pt: isMobile ? 2 : 2, pl: isMobile ? 8 : 2 }}>
+        <Typography variant="h6" gutterBottom>
+          過去の日報
         </Typography>
       </Box>
       {selectedDate && (
@@ -228,7 +226,6 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         <Fade in={true}>
           <Box sx={{ mb: 2 }}>
             <Chip 
-              icon={<CalendarTodayIcon />}
               label={`${selectedDate}の日報を表示中`} 
               color="primary" 
               sx={{ 
