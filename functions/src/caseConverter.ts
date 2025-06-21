@@ -1,54 +1,96 @@
 /**
  * スネークケースからキャメルケースへの変換ユーティリティ
+ * esa APIのレスポンス構造に特化
  */
 
 /**
  * スネークケースの文字列をキャメルケースに変換
  * @example "body_md" -> "bodyMd"
  */
-export function snakeToCamel(str: string): string {
-  return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+function snakeToCamel(str: string): string {
+  return str.replace(/_([a-z])/g, (_, letter: string) => letter.toUpperCase());
 }
 
-/**
- * オブジェクトのキーをスネークケースからキャメルケースに変換
- * ネストされたオブジェクトや配列にも対応
- */
-export function convertKeysToCamelCase<T = any>(obj: any): T {
-  if (obj === null || obj === undefined) {
-    return obj;
-  }
+// EsaのAPI型定義（スネークケース）
+interface EsaPostApi {
+  body_md: string;
+  body_html: string;
+  number: number;
+  name: string;
+  tags: string[];  // タグ名の文字列配列（変換不要）
+  updated_at?: string;
+  url?: string;
+  category?: string;
+  [key: string]: unknown;
+}
 
-  if (Array.isArray(obj)) {
-    return obj.map(item => convertKeysToCamelCase(item)) as any;
-  }
+interface EsaTagApi {
+  name: string;  // タグ名（変換不要）
+  posts_count: number;
+}
 
-  if (obj instanceof Date || typeof obj !== 'object') {
-    return obj;
-  }
+interface EsaTagsApi {
+  tags: EsaTagApi[];
+  total_count?: number;
+}
 
-  const converted: any = {};
-  
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const camelKey = snakeToCamel(key);
-      converted[camelKey] = convertKeysToCamelCase(obj[key]);
-    }
-  }
+// 変換後の型定義（キャメルケース）
+interface EsaPostResponse {
+  bodyMd: string;
+  bodyHtml: string;
+  number: number;
+  name: string;
+  tags: string[];  // タグ名はそのまま保持
+  updatedAt?: string;
+  url?: string;
+  category?: string;
+  [key: string]: unknown;
+}
 
-  return converted;
+interface EsaTagResponse {
+  name: string;  // タグ名はそのまま保持
+  postsCount: number;
+}
+
+interface EsaTagsResponse {
+  tags: EsaTagResponse[];
+  totalCount?: number;
 }
 
 /**
  * EsaのAPIレスポンス（投稿）をキャメルケースに変換
+ * タグ名などの値は変換せず、フィールド名のみを変換
  */
-export function convertEsaPostToCamelCase(esaPost: any): any {
-  return convertKeysToCamelCase(esaPost);
+export function convertEsaPostToCamelCase(esaPost: EsaPostApi): EsaPostResponse {
+  return {
+    bodyMd: esaPost.body_md,
+    bodyHtml: esaPost.body_html,
+    number: esaPost.number,
+    name: esaPost.name,
+    tags: esaPost.tags,  // タグ名の配列はそのまま
+    ...(esaPost.updated_at !== undefined && { updatedAt: esaPost.updated_at }),
+    ...(esaPost.url !== undefined && { url: esaPost.url }),
+    ...(esaPost.category !== undefined && { category: esaPost.category }),
+    // その他の未知のフィールドも変換
+    ...Object.keys(esaPost)
+      .filter(key => !['body_md', 'body_html', 'number', 'name', 'tags', 'updated_at', 'url', 'category'].includes(key))
+      .reduce((acc, key) => ({
+        ...acc,
+        [snakeToCamel(key)]: esaPost[key]
+      }), {})
+  };
 }
 
 /**
  * EsaのAPIレスポンス（タグリスト）をキャメルケースに変換
+ * タグ名は変換せず、フィールド名のみを変換
  */
-export function convertEsaTagsToCamelCase(esaTags: any): any {
-  return convertKeysToCamelCase(esaTags);
+export function convertEsaTagsToCamelCase(esaTags: EsaTagsApi): EsaTagsResponse {
+  return {
+    tags: esaTags.tags.map(tag => ({
+      name: tag.name,  // タグ名はそのまま
+      postsCount: tag.posts_count
+    })),
+    ...(esaTags.total_count !== undefined && { totalCount: esaTags.total_count })
+  };
 }
