@@ -9,9 +9,6 @@ import SignInDialog from '../SignInDialog';
 import WelcomeMessage from '../WelcomeMessage';
 import SignOutButton from '../SignOutButton';
 
-
-export type { BodyProps } from '../../types/components';
-
 export const Body: React.FC<BodyProps> = (props: BodyProps) => {
   const isShowSignedInDialog = (): boolean => {
     return props.hasUserLanded && !props.isSignedIn;

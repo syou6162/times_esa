@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
-import { EsaSubmitForm, EsaSubmitFormProps, getDay } from '.'
+import { EsaSubmitForm, getDay } from '.'
+import { EsaSubmitFormProps } from '../../types/components'
 import { makeDefaultEsaCategory } from '../../util';
 import * as api from '../../api';
 

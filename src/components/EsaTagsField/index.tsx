@@ -19,8 +19,6 @@ const TagTextField = styled(TextField)({
   },
 });
 
-export type { EsaTagsFieldProps } from '../../types/components';
-
 export const EsaTagsField: React.FC<EsaTagsFieldProps> = (props: EsaTagsFieldProps) => {
   return (
     <Autocomplete

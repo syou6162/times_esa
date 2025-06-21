@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, it, expect } from "vitest"
-import { DailyReport, DailyReportProps } from '.'
+import { DailyReport } from '.'
+import { DailyReportProps } from '../../types/components'
 
 describe('DailyReportが正しく表示される', () => {
   it('ディフォルトではhtmlが表示される', () => {
