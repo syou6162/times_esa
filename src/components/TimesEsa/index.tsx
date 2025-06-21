@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Fade, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import TodayIcon from '@mui/icons-material/Today';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
@@ -125,7 +124,6 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             <Button
               variant="contained"
               fullWidth
-              startIcon={<TodayIcon />}
               onClick={() => {
                 setSelectedDate(undefined);
                 loadDailyReport();
