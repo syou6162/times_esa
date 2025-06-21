@@ -3,14 +3,6 @@
  * esa APIのレスポンス構造に特化
  */
 
-/**
- * スネークケースの文字列をキャメルケースに変換
- * @example "body_md" -> "bodyMd"
- */
-function snakeToCamel(str: string): string {
-  return str.replace(/_([a-z])/g, (_, letter: string) => letter.toUpperCase());
-}
-
 // EsaのAPI型定義（スネークケース）
 type EsaPostApi = {
   body_md: string;
@@ -21,7 +13,6 @@ type EsaPostApi = {
   updated_at?: string;
   url?: string;
   category?: string;
-  [key: string]: unknown;
 }
 
 type EsaTagApi = {
@@ -44,7 +35,6 @@ type EsaPostResponse = {
   updatedAt?: string;
   url?: string;
   category?: string;
-  [key: string]: unknown;
 }
 
 type EsaTagResponse = {
@@ -70,14 +60,7 @@ export function convertEsaPostToCamelCase(esaPost: EsaPostApi): EsaPostResponse 
     tags: esaPost.tags,  // タグ名の配列はそのまま
     ...(esaPost.updated_at !== undefined && { updatedAt: esaPost.updated_at }),
     ...(esaPost.url !== undefined && { url: esaPost.url }),
-    ...(esaPost.category !== undefined && { category: esaPost.category }),
-    // その他の未知のフィールドも変換
-    ...Object.keys(esaPost)
-      .filter(key => !['body_md', 'body_html', 'number', 'name', 'tags', 'updated_at', 'url', 'category'].includes(key))
-      .reduce((acc, key) => ({
-        ...acc,
-        [snakeToCamel(key)]: esaPost[key]
-      }), {})
+    ...(esaPost.category !== undefined && { category: esaPost.category })
   };
 }
 

@@ -56,20 +56,6 @@ describe('convertEsaPostToCamelCase', () => {
     expect(result.tags).toEqual(['snake_case_tag', 'another_snake_tag']);
   });
 
-  it('未知のフィールドも変換される', () => {
-    const input = {
-      body_md: 'Content',
-      body_html: '<p>Content</p>',
-      number: 123,
-      name: 'Title',
-      tags: [],
-      custom_field: 'value',
-      another_custom: 'test'
-    };
-    const result = convertEsaPostToCamelCase(input);
-    expect(result.customField).toBe('value');
-    expect(result.anotherCustom).toBe('test');
-  });
 });
 
 describe('convertEsaTagsToCamelCase', () => {
