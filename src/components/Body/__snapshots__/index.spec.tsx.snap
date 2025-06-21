@@ -6,50 +6,61 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
     class="MuiBox-root css-1yeiifd"
   >
     <div
-      class="MuiBox-root css-7o1dxy"
+      class="MuiBox-root css-17qwxri"
     >
       <div
-        class="MuiBox-root css-19midj6"
-      >
-        <h6
-          class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1wmifpn-MuiTypography-root"
-        >
-          日報一覧
-        </h6>
-      </div>
-      <div
-        class="MuiBox-root css-19midj6"
+        class="MuiBox-root css-13vbkc2"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-3lhuho-MuiPaper-root-MuiAlert-root"
-          role="alert"
-          style="--Paper-shadow: none;"
+          class="MuiBox-root css-1f8c1s4"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1wmifpn-MuiTypography-root"
+          >
+            過去の日報
+          </h6>
+        </div>
+        <hr
+          class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
+        />
+        <div
+          class="MuiBox-root css-oa138a"
         >
           <div
-            class="MuiAlert-icon css-vab54s-MuiAlert-icon"
+            class="MuiBox-root css-19midj6"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-              data-testid="ErrorOutlineIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-kwrhju-MuiPaper-root-MuiAlert-root"
+              role="alert"
+              style="--Paper-shadow: none;"
             >
-              <path
-                d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-              />
-            </svg>
-          </div>
-          <div
-            class="MuiAlert-message css-zioonp-MuiAlert-message"
-          >
-            日報の一覧を取得できませんでした
+              <div
+                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                  data-testid="ErrorOutlineIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message css-zioonp-MuiAlert-message"
+              >
+                日報の一覧を取得できませんでした
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="MuiContainer-root css-qzb0t8-MuiContainer-root"
+      class="MuiContainer-root css-17p0z1o-MuiContainer-root"
     >
       <a
         href=""

@@ -19,14 +19,16 @@ describe('DailyReportsList', () => {
     vi.clearAllMocks();
   });
 
-  it('ローディング中はスピナーを表示すること', () => {
+  it('ローディング中はスケルトンを表示すること', () => {
     vi.mocked(apiClient.getRecentDailyReports).mockImplementation(
       () => new Promise(() => {}) // 永遠に待つPromise
     );
 
     render(<DailyReportsList onDateSelect={mockOnDateSelect} />);
 
-    expect(screen.getByRole('progressbar')).toBeDefined();
+    // Skeletonコンポーネントは特定のroleを持たないため、クラス名で確認
+    const skeletons = document.querySelectorAll('.MuiSkeleton-root');
+    expect(skeletons.length).toBe(5);
   });
 
   it('日報の一覧を表示すること', async () => {
