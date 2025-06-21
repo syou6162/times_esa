@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress, Box, Alert, ButtonGroup } from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import { Button, CircularProgress, Box, Alert } from '@mui/material';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
 import { DailyReportType } from '../../types';
@@ -143,41 +142,21 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
 
   return (
     <div>
-      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-        <Button
-          variant="contained"
-          size="small"
-          color="secondary"
-          onClick={props.reloadDailyReport}
-          startIcon={<RefreshIcon />}
-          sx={{ textTransform: 'none' }}
-        >
-          Update
-        </Button>
-        <ButtonGroup variant="contained" size="small" color="secondary">
-          <Button
-            onClick={() => setDailyReportType(DailyReportType.HTML)}
-            variant={dailyReportType === DailyReportType.HTML ? 'contained' : 'outlined'}
-            sx={{ textTransform: 'none' }}
-          >
-            html
-          </Button>
-          <Button
-            onClick={() => setDailyReportType(DailyReportType.TEXT)}
-            variant={dailyReportType === DailyReportType.TEXT ? 'contained' : 'outlined'}
-            sx={{ textTransform: 'none' }}
-          >
-            text
-          </Button>
-          <Button
-            onClick={() => setDailyReportType(DailyReportType.SHARE)}
-            variant={dailyReportType === DailyReportType.SHARE ? 'contained' : 'outlined'}
-            sx={{ textTransform: 'none' }}
-          >
-            share
-          </Button>
-        </ButtonGroup>
-      </Box>
+      <Button
+        style={{
+          margin: '3px',
+          textTransform: 'none',
+        }}
+        variant="contained"
+        size="small"
+        color="secondary"
+        onClick={props.reloadDailyReport}
+      >
+        Update
+      </Button>
+      { getDailyReportTypeButton('html', DailyReportType.HTML) }
+      { getDailyReportTypeButton('text', DailyReportType.TEXT) }
+      { getDailyReportTypeButton('share', DailyReportType.SHARE) }
       { /* eslint no-nested-ternary: 0 */ }
       <div>
         { getDailyReport() }
