@@ -206,7 +206,6 @@ export const submitTextToEsa = onCall(
       req.data.title,
       req.data.text,
     );
-    // スネークケースからキャメルケースに変換して返す
     return convertEsaPostToCamelCase(result);
   }
 );
@@ -242,7 +241,6 @@ export const dailyReport = onCall(
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getDailyReport(axios, esaConfig, req.data.category);
-    // スネークケースからキャメルケースに変換して返す
     return convertEsaPostToCamelCase(result);
   }
 );
@@ -257,7 +255,6 @@ export const tagList = onCall(
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getTagList(axios, esaConfig);
-    // スネークケースからキャメルケースに変換して返す
     return convertEsaTagsToCamelCase(result);
   }
 );
