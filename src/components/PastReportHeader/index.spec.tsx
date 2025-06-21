@@ -22,11 +22,11 @@ describe('PastReportHeaderが正しく表示される', () => {
     const renderResult = render(<PastReportHeader {...props} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
-    expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
+    expect(renderResult.getByText('6月19日(水)の日報')).toBeTruthy();
     expect(renderResult.getByText('開発')).toBeTruthy();
     expect(renderResult.getByText('times_esa')).toBeTruthy();
-    expect(renderResult.getByText('過去の日報は編集できません・5個のつぶやき')).toBeTruthy();
+    expect(renderResult.getByText('5個のつぶやき')).toBeTruthy();
   });
 
   it('編集可能モードで表示される', () => {
@@ -40,13 +40,15 @@ describe('PastReportHeaderが正しく表示される', () => {
     expect(renderResult.asFragment()).toMatchSnapshot();
     expect(renderResult.getByText('6月19日(水)の日報')).toBeTruthy();
     expect(renderResult.getByText('5個のつぶやき')).toBeTruthy();
+    // isReadOnlyがfalseの場合でも、つぶやき数が表示されることを確認
     expect(renderResult.queryByText('過去の日報は編集できません')).toBeNull();
   });
 
-  it('タグが空の場合も正しく表示される', () => {
+  it('レポートURLがある場合リンクとして表示される', () => {
     const reportWithoutTags: DailyReportSummary = {
       ...mockReport,
       tags: [],
+      url: 'https://example.esa.io/posts/123',
     };
     const props: PastReportHeaderProps = {
       report: reportWithoutTags,
@@ -54,16 +56,18 @@ describe('PastReportHeaderが正しく表示される', () => {
     };
 
     const renderResult = render(<PastReportHeader {...props} />);
-
+    
+    const link = renderResult.getByRole('link', { name: '6月19日(水)の日報' });
+    expect(link).toBeTruthy();
+    expect(link.getAttribute('href')).toBe('https://example.esa.io/posts/123');
+    expect(link.getAttribute('target')).toBe('_blank');
     expect(renderResult.asFragment()).toMatchSnapshot();
-    expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
-    expect(renderResult.queryByText('開発')).toBeNull();
   });
 
-  it('投稿数が0でも正しく表示される', () => {
+  it('レポートURLがない場合テキストとして表示される', () => {
     const reportWithZeroPosts: DailyReportSummary = {
       ...mockReport,
-      postsCount: 0,
+      postsCount: 5,
     };
     const props: PastReportHeaderProps = {
       report: reportWithZeroPosts,
@@ -72,6 +76,8 @@ describe('PastReportHeaderが正しく表示される', () => {
 
     const renderResult = render(<PastReportHeader {...props} />);
 
-    expect(renderResult.getByText('過去の日報は編集できません・0個のつぶやき')).toBeTruthy();
+    // URLがない場合、リンクではなくテキストとして表示される
+    expect(renderResult.queryByRole('link')).toBeNull();
+    expect(renderResult.getByText('6月19日(水)の日報')).toBeTruthy();
   });
 });

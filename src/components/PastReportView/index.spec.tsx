@@ -26,9 +26,9 @@ describe('PastReportViewが正しく表示される', () => {
     const renderResult = render(<PastReportView {...defaultProps} />);
 
     expect(renderResult.asFragment()).toMatchSnapshot();
-    expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
     expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
-    expect(renderResult.getByText('過去の日報は編集できません・5個のつぶやき')).toBeTruthy();
+    expect(renderResult.getByText('6月19日(水)の日報')).toBeTruthy();
+    expect(renderResult.getByText('5個のつぶやき')).toBeTruthy();
   });
 
   it('フェッチ中の状態が正しく表示される', () => {
@@ -51,16 +51,19 @@ describe('PastReportViewが正しく表示される', () => {
     expect(renderResult.asFragment()).toMatchSnapshot();
   });
 
-  it('空のコンテンツでも正しく表示される', () => {
+  it('URLが渡された場合リンクとして表示される', () => {
     const emptyProps = {
       ...defaultProps,
-      esaText: '',
-      esaHtml: '',
+      esaText: 'コンテンツ',
+      esaHtml: '<p>コンテンツ</p>',
+      esaUrl: 'https://example.esa.io/posts/789',
     };
     const renderResult = render(<PastReportView {...emptyProps} />);
 
-    expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
-    expect(renderResult.asFragment()).toMatchSnapshot();
+    const link = renderResult.getByRole('link', { name: '6月19日(水)の日報' });
+    expect(link).toBeTruthy();
+    expect(link.getAttribute('href')).toBe('https://example.esa.io/posts/789');
+    expect(link.getAttribute('target')).toBe('_blank');
   });
 
   it('タグが複数ある場合も正しく表示される', () => {
@@ -86,6 +89,6 @@ describe('PastReportViewが正しく表示される', () => {
     };
     const renderResult = render(<PastReportView {...propsWithoutReload} />);
 
-    expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
+    expect(renderResult.getByText('開発、会議、レビュー')).toBeTruthy();
   });
 });

@@ -104,8 +104,12 @@ describe('TimesEsa統合テスト', () => {
     fireEvent.click(pastReportItem);
 
     // 過去の日報表示に切り替わることを確認
-    expect(renderResult.getByText('6月19日(水)の日報（読み取り専用）')).toBeTruthy();
-    expect(renderResult.getByText('過去の日報は編集できません・5個のつぶやき')).toBeTruthy();
+    // タイトルはh5要素として表示される
+    const title = renderResult.getByRole('heading', { name: '開発、会議、レビュー', level: 5 });
+    expect(title).toBeTruthy();
+    // メインコンテンツ内の「5個のつぶやき」を探す（複数ある場合は最初の1つ）
+    const postsCount = renderResult.getAllByText('5個のつぶやき');
+    expect(postsCount.length).toBeGreaterThan(0);
   });
 
   it('コンポーネント間のプロパティ受け渡しが正しく動作する', () => {

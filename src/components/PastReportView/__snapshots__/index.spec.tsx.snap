@@ -11,14 +11,18 @@ exports[`PastReportViewが正しく表示される > エラー状態が正しく
       <h5
         class="MuiTypography-root MuiTypography-h5 css-1tlweu2-MuiTypography-root"
       >
-        6月19日(水)の日報（読み取り専用）
+        開発、会議、レビュー
       </h5>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+    <div
+      class="MuiBox-root css-1qm1lh"
     >
-      開発、会議、レビュー
-    </h6>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1voyyme-MuiTypography-root"
+      >
+        6月19日(水)の日報
+      </p>
+    </div>
     <div
       class="MuiBox-root css-1ppihqm"
     >
@@ -44,7 +48,7 @@ exports[`PastReportViewが正しく表示される > エラー状態が正しく
     <p
       class="MuiTypography-root MuiTypography-body2 css-jyouah-MuiTypography-root"
     >
-      過去の日報は編集できません・5個のつぶやき
+      5個のつぶやき
     </p>
   </div>
   <hr
@@ -101,14 +105,18 @@ exports[`PastReportViewが正しく表示される > フェッチ中の状態が
       <h5
         class="MuiTypography-root MuiTypography-h5 css-1tlweu2-MuiTypography-root"
       >
-        6月19日(水)の日報（読み取り専用）
+        開発、会議、レビュー
       </h5>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+    <div
+      class="MuiBox-root css-1qm1lh"
     >
-      開発、会議、レビュー
-    </h6>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1voyyme-MuiTypography-root"
+      >
+        6月19日(水)の日報
+      </p>
+    </div>
     <div
       class="MuiBox-root css-1ppihqm"
     >
@@ -134,7 +142,7 @@ exports[`PastReportViewが正しく表示される > フェッチ中の状態が
     <p
       class="MuiTypography-root MuiTypography-body2 css-jyouah-MuiTypography-root"
     >
-      過去の日報は編集できません・5個のつぶやき
+      5個のつぶやき
     </p>
   </div>
   <hr
@@ -180,98 +188,6 @@ exports[`PastReportViewが正しく表示される > フェッチ中の状態が
 </DocumentFragment>
 `;
 
-exports[`PastReportViewが正しく表示される > 空のコンテンツでも正しく表示される 1`] = `
-<DocumentFragment>
-  <div
-    class="MuiBox-root css-i3pbo"
-  >
-    <div
-      class="MuiBox-root css-cxlzap"
-    >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 css-1tlweu2-MuiTypography-root"
-      >
-        6月19日(水)の日報（読み取り専用）
-      </h5>
-    </div>
-    <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
-    >
-      開発、会議、レビュー
-    </h6>
-    <div
-      class="MuiBox-root css-1ppihqm"
-    >
-      <div
-        class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-2mpvrf-MuiChip-root"
-      >
-        <span
-          class="MuiChip-label MuiChip-labelMedium css-16cgrcw-MuiChip-label"
-        >
-          開発
-        </span>
-      </div>
-      <div
-        class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-outlinedDefault css-2mpvrf-MuiChip-root"
-      >
-        <span
-          class="MuiChip-label MuiChip-labelMedium css-16cgrcw-MuiChip-label"
-        >
-          times_esa
-        </span>
-      </div>
-    </div>
-    <p
-      class="MuiTypography-root MuiTypography-body2 css-jyouah-MuiTypography-root"
-    >
-      過去の日報は編集できません・5個のつぶやき
-    </p>
-  </div>
-  <hr
-    style="border-top: 2px dashed #bbb; margin: 20px 0px;"
-  />
-  <div>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-1mgi02a-MuiButtonBase-root-MuiButton-root"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      Update
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-1mgi02a-MuiButtonBase-root-MuiButton-root"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      html
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-1mgi02a-MuiButtonBase-root-MuiButton-root"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      text
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-1mgi02a-MuiButtonBase-root-MuiButton-root"
-      style="margin: 3px; text-transform: none;"
-      tabindex="0"
-      type="button"
-    >
-      share
-    </button>
-    <div>
-      <div
-        style="white-space: normal; overflow: hidden; text-align: left; justify-content: left; align-items: left;"
-      />
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`PastReportViewが正しく表示される > 過去の日報が正しく表示される 1`] = `
 <DocumentFragment>
   <div
@@ -283,14 +199,18 @@ exports[`PastReportViewが正しく表示される > 過去の日報が正しく
       <h5
         class="MuiTypography-root MuiTypography-h5 css-1tlweu2-MuiTypography-root"
       >
-        6月19日(水)の日報（読み取り専用）
+        開発、会議、レビュー
       </h5>
     </div>
-    <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+    <div
+      class="MuiBox-root css-1qm1lh"
     >
-      開発、会議、レビュー
-    </h6>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1voyyme-MuiTypography-root"
+      >
+        6月19日(水)の日報
+      </p>
+    </div>
     <div
       class="MuiBox-root css-1ppihqm"
     >
@@ -316,7 +236,7 @@ exports[`PastReportViewが正しく表示される > 過去の日報が正しく
     <p
       class="MuiTypography-root MuiTypography-body2 css-jyouah-MuiTypography-root"
     >
-      過去の日報は編集できません・5個のつぶやき
+      5個のつぶやき
     </p>
   </div>
   <hr
