@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
+import { StyledFirebaseAuthProps } from '../../types/components';
 
-type Props = {
+type Props = StyledFirebaseAuthProps & {
   // The Firebase UI Web UI Config object.
   // See: https://github.com/firebase/firebaseui-web#configuration
   uiConfig: firebaseui.auth.Config;
-  firebaseAuth: any; // As firebaseui-web
 }
 
 const StyledFirebaseAuth = (props: Props) => {

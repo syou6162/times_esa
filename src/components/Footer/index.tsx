@@ -1,15 +1,11 @@
 import React from 'react';
-import { Auth } from 'firebase/auth';
 import WelcomeMessage from '../WelcomeMessage';
 import SignOutButton from '../SignOutButton';
-import { GoogleUser, isValidEmail } from '../../util';
+import { isValidEmail } from '../../util';
 import { config } from '../../config';
+import { GoogleUser } from '../../types';
+import { FooterProps } from '../../types/components';
 
-export type FooterProps = {
-  isSignedIn: boolean;
-  user: GoogleUser;
-  firebaseAuth: Auth | null;
-}
 
 export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
   const hr = (

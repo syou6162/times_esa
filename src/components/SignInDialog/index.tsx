@@ -1,10 +1,8 @@
 import React from 'react';
-import { Auth, GoogleAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 import StyledFirebaseAuth from '../StyledFirebaseAuth';
+import { SignInDialogProps } from '../../types/components';
 
-export type SignInDialogProps = {
-  firebaseAuth: Auth | null;
-}
 
 const SignInDialog: React.FC<SignInDialogProps> = (props: SignInDialogProps) => {
   const uiConfig = {
