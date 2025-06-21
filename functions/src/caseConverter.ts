@@ -12,7 +12,7 @@ function snakeToCamel(str: string): string {
 }
 
 // EsaのAPI型定義（スネークケース）
-interface EsaPostApi {
+type EsaPostApi = {
   body_md: string;
   body_html: string;
   number: number;
@@ -24,18 +24,18 @@ interface EsaPostApi {
   [key: string]: unknown;
 }
 
-interface EsaTagApi {
+type EsaTagApi = {
   name: string;  // タグ名（変換不要）
   posts_count: number;
 }
 
-interface EsaTagsApi {
+type EsaTagsApi = {
   tags: EsaTagApi[];
   total_count?: number;
 }
 
 // 変換後の型定義（キャメルケース）
-interface EsaPostResponse {
+type EsaPostResponse = {
   bodyMd: string;
   bodyHtml: string;
   number: number;
@@ -47,12 +47,12 @@ interface EsaPostResponse {
   [key: string]: unknown;
 }
 
-interface EsaTagResponse {
+type EsaTagResponse = {
   name: string;  // タグ名はそのまま保持
   postsCount: number;
 }
 
-interface EsaTagsResponse {
+type EsaTagsResponse = {
   tags: EsaTagResponse[];
   totalCount?: number;
 }
