@@ -62,7 +62,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   if (error) {
     return (
       <Box p={2}>
-        <Alert severity="error">{error}</Alert>
+        <Alert severity="error" sx={{ bgcolor: 'error.dark', color: 'white' }}>{error}</Alert>
       </Box>
     );
   }
@@ -70,7 +70,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   if (reports.length === 0) {
     return (
       <Box p={2}>
-        <Typography color="text.secondary">過去の日報がありません</Typography>
+        <Typography sx={{ color: 'white' }}>過去の日報がありません</Typography>
       </Box>
     );
   }
@@ -103,6 +103,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
               primaryTypographyProps={{
                 variant: 'body2',
                 fontWeight: selectedDate === report.date ? 'bold' : 'normal',
+                color: 'white',
               }}
               secondaryTypographyProps={{
                 variant: 'caption',
@@ -111,6 +112,7 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                   display: 'block',
+                  color: 'rgba(255, 255, 255, 0.7)',
                 },
               }}
             />
