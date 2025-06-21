@@ -22,7 +22,7 @@ export type Tag = {
 
 export type EsaTags = {
   tags: Tag[];
-  total_count?: number;
+  total_count: number;
 }
 
 // 変換後の型定義（キャメルケース、フロントエンドで使用）
@@ -44,7 +44,7 @@ type EsaTagCamelCase = {
 
 type EsaTagsCamelCase = {
   tags: EsaTagCamelCase[];
-  totalCount?: number;
+  totalCount: number;
 }
 
 /**
@@ -74,6 +74,6 @@ export function convertEsaTagsToCamelCase(esaTags: EsaTags): EsaTagsCamelCase {
       name: tag.name,  // タグ名はそのまま
       postsCount: tag.posts_count
     })),
-    ...(esaTags.total_count !== undefined && { totalCount: esaTags.total_count })
+    totalCount: esaTags.total_count
   };
 }

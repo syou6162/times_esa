@@ -70,24 +70,12 @@ describe('convertEsaTagsToCamelCase', () => {
       tags: [
         { name: 'snake_case_tag', posts_count: 5 },
         { name: 'another_snake_tag', posts_count: 3 }
-      ]
+      ],
+      total_count: 2
     };
     const result = convertEsaTagsToCamelCase(input);
     expect(result.tags[0].name).toBe('snake_case_tag');
     expect(result.tags[1].name).toBe('another_snake_tag');
   });
 
-  it('total_countがない場合も正しく処理される', () => {
-    const input = {
-      tags: [
-        { name: 'tag1', posts_count: 10 }
-      ]
-    };
-    const expected = {
-      tags: [
-        { name: 'tag1', postsCount: 10 }
-      ]
-    };
-    expect(convertEsaTagsToCamelCase(input)).toEqual(expected);
-  });
 });
