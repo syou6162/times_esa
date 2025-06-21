@@ -1,37 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
-import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
-import { functionsRegion, makeDefaultEsaCategory } from '../../util';
+import { makeDefaultEsaCategory } from '../../util';
+import { getDailyReport, getTagList } from '../../api';
 
 export type Tag = {
   name: string;
   posts_count: number; // eslint-disable-line camelcase
 }
 
-type dailyReportRequestType = {
-  category: string;
-}
-
-type dailyReportResponseType = {
-  updated_at: string;
-  url: string;
-
-  body_md: string;
-  body_html: string;
-  tags: string[];
-  name: string;
-  category: string;
-}
-
-type tagListRequestType = {
-}
-
-type tagListResponseType = {
-  tags: Tag[];
-}
 
 const getPostsCount = (md: string): number => {
   return md.split('---').length - 1;
@@ -65,22 +44,12 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     setEsaCategory('');
   };
 
-  const loadDailyReport = () => {
+  const loadDailyReport = async () => {
     setFetching(true);
     setfetchErrorMessage('');
 
-    const functions = getFunctions();
-    functions.region = functionsRegion;
-    const getDailyReport = httpsCallable<dailyReportRequestType, dailyReportResponseType>(functions, 'dailyReport');
-    // ローカルで試したいときはこれを使う
-    // const functions = firebase.functions();
-    // functions.useFunctionsEmulator('http://localhost:5001');
-    // const getDailyReport = functions.httpsCallable('dailyReport');
-
-    const data = getDailyReport({
-      category: makeDefaultEsaCategory(new Date()),
-    });
-    data.then((res) => {
+    try {
+      const res = await getDailyReport(makeDefaultEsaCategory(new Date()));
       setUpdatedAt(res.data.updated_at);
       setEsaUrl(res.data.url);
 
@@ -91,35 +60,30 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       setEsaCategory(res.data.category);
 
       setFetching(false);
-    }).catch((error) => {
+    } catch (error: any) {
       if (error.code === 'NOT_FOUND') {
         clearEsaFields();
       }
       setfetchErrorMessage(`${error.code}: ${error.message}`);
       setFetching(false);
-    });
+    }
   };
 
-  const loadTagList = () => {
+  const loadTagList = async () => {
     setFetching(true);
     setfetchErrorMessage('');
 
-    const functions = getFunctions();
-    functions.region = functionsRegion;
-
-    const getTagList = httpsCallable<tagListRequestType, tagListResponseType>(functions, 'tagList');
-    const data = getTagList();
-
-    data.then((res) => {
+    try {
+      const res = await getTagList();
       setEsaTagCandidates(res.data.tags.map((esaTag: Tag) => {
         return esaTag.name;
       }));
 
       setFetching(false);
-    }).catch((error) => {
+    } catch (error: any) {
       setfetchErrorMessage(`${error.code}: ${error.message}`);
       setFetching(false);
-    });
+    }
   };
 
   useEffect(() => {

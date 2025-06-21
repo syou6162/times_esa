@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { format } from 'date-fns';
-import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
 
 import EsaTitleField from '../EsaTitleField';
 import EsaTextField from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
-import { makeDefaultEsaCategory, functionsRegion } from '../../util';
+import { makeDefaultEsaCategory } from '../../util';
+import { submitTextToEsa as submitTextToEsaApi } from '../../api';
 
 export type EsaSubmitFormProps = {
   category: string;
@@ -53,46 +53,13 @@ const transformTitle = (title: string): string => {
   }).join('、');
 };
 
-type submitTextToEsaRequestType = {
-  category: string;
-  tags: string[];
-  title: string;
-  text: string;
-}
-
-type submitTextToEsaResponseType = {
-  updated_at: string;
-  url: string;
-
-  body_md: string;
-  body_html: string;
-  tags: string[];
-  name: string;
-  category: string;
-}
-
 export const submitTextToEsa = (
   category: string,
   tags: string[],
   title: string,
   text: string,
-): Promise<HttpsCallableResult<submitTextToEsaResponseType>> => {
-  const functions = getFunctions();
-  functions.region = functionsRegion;
-
-  const submit = httpsCallable<submitTextToEsaRequestType, submitTextToEsaResponseType>(
-    functions,
-    'submitTextToEsa',
-    {
-      timeout: 10000, // 10秒
-    },
-  );
-  return submit({
-    category,
-    tags,
-    title,
-    text,
-  });
+) => {
+  return submitTextToEsaApi(category, tags, title, text);
 };
 
 export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
