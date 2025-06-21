@@ -3,7 +3,7 @@
  * esa APIのレスポンス構造に特化
  */
 
-import { type DateString, type DailyReportCategory } from './dateUtils';
+import { type DateString, type DailyReportCategory } from '../../types/domain';
 // 変換後の型定義をインポート
 import type { 
   EsaPost,

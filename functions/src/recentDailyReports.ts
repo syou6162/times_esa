@@ -4,7 +4,8 @@
 
 import { AxiosInstance } from 'axios';
 import { searchPosts } from './search';
-import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory, type DailyReportCategory } from './dateUtils';
+import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory } from './dateUtils';
+import { type DailyReportCategory } from '../../types/domain';
 import { type EsaPostSnakeCase, type DailyReportSummarySnakeCase } from './caseConverter';
 
 /**

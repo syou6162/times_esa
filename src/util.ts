@@ -1,5 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { type DailyReportCategory } from '../types/domain';
 
 export const moveCursorToEnd = (
   event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -14,7 +15,7 @@ export const moveCursorToEnd = (
   target.scrollLeft = target.scrollWidth;
 };
 
-export const makeDefaultEsaCategory = (date: Date): string => {
+export const makeDefaultEsaCategory = (date: Date): DailyReportCategory => {
   return `日報/${format(date, 'yyyy/MM/dd')}`;
 };
 

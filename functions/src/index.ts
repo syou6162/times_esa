@@ -4,7 +4,8 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
-import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
+import { formatCategoryToDate } from './dateUtils';
+import { type DailyReportCategory, type DateString } from '../../types/domain';
 import { 
   type EsaConfig,
   type SubmitTextRequest, 
