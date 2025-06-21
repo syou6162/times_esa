@@ -218,7 +218,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         flexGrow: 1, 
         overflow: 'auto', 
         p: 3,
-        pt: isMobile ? 10 : 3, // モバイルではメニューボタンの分だけ余白を追加
+        pt: 3,
       }}>
       {selectedDate && (
         <Fade in={true}>
