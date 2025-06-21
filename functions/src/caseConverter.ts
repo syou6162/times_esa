@@ -4,6 +4,13 @@
  */
 
 import { type DateString, type DailyReportCategory } from './dateUtils';
+// 変換後の型定義をインポート
+import type { 
+  EsaPostResponse as EsaPostCamelCase,
+  EsaTagsResponse as EsaTagsCamelCase,
+  DailyReportSummary as DailyReportSummaryCamelCase,
+  RecentDailyReportsResponse as RecentDailyReportsResponseCamelCase
+} from '../../types/api';
 
 // esa APIからのレスポンス型定義（スネークケース）
 export type EsaPost = {
@@ -32,27 +39,6 @@ export type EsaSearchResult = {
   total_count: number;
 }
 
-// 変換後の型定義（キャメルケース、フロントエンドで使用）
-export type EsaPostCamelCase = {
-  bodyMd: string;
-  bodyHtml: string;
-  number: number;
-  name: string;
-  tags: string[];  // タグ名はそのまま保持
-  updatedAt: string;
-  url: string;
-  category: string;
-}
-
-export type EsaTagCamelCase = {
-  name: string;  // タグ名はそのまま保持
-  postsCount: number;
-}
-
-export type EsaTagsCamelCase = {
-  tags: EsaTagCamelCase[];
-  totalCount: number;
-}
 
 /**
  * EsaのAPIレスポンス（投稿）をキャメルケースに変換
@@ -99,19 +85,6 @@ export type RecentDailyReportsResponse = {
   total_count: number;
 }
 
-// 日報サマリー関連の型定義（キャメルケース）
-export type DailyReportSummaryCamelCase = {
-  date: DateString;
-  title: string;
-  category: DailyReportCategory;
-  updatedAt: string;
-  number: number;
-}
-
-export type RecentDailyReportsResponseCamelCase = {
-  reports: DailyReportSummaryCamelCase[];
-  totalCount: number;
-}
 
 /**
  * 日報サマリーをキャメルケースに変換
