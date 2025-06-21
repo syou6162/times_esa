@@ -99,6 +99,14 @@ export type DailyReportsListProps = {
   onDateSelect: (date: DateString, reportInfo: { title: string; tags: string[] }) => void;
 }
 
+// DailyReportsSidebar Props
+export type DailyReportsSidebarProps = {
+  selectedDate?: DateString;
+  onDateSelect: (date: DateString, reportInfo: { title: string; tags: string[] }) => void;
+  onTodayClick: () => void;
+  isMobile: boolean;
+}
+
 // SignInDialog Props
 export type SignInDialogProps = {
   firebaseAuth: Auth | null;

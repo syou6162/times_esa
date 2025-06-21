@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Divider, Fade } from '@mui/material';
+import { Container, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
-import { DailyReportsList } from '../DailyReportsList';
+import { DailyReportsSidebar } from '../DailyReportsSidebar';
 import { makeDefaultEsaCategory } from '../../util';
 import { getDailyReport, getTagList } from '../../api';
 import { Tag } from '../../types';
@@ -113,49 +113,20 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawerContent = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'white' }}>
-      <Box sx={{ p: 2, pt: isMobile ? 2 : 2, pl: isMobile ? 8 : 2 }}>
-        <Typography variant="h6" gutterBottom>
-          過去の日報一覧
-        </Typography>
-      </Box>
-      {selectedDate && (
-        <Fade in={true}>
-          <Box sx={{ p: 2 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              onClick={() => {
-                setSelectedDate(undefined);
-                setSelectedReportInfo(undefined);
-                loadDailyReport();
-                if (isMobile) setMobileOpen(false);
-              }}
-              sx={{ 
-                mb: 1,
-              }}
-            >
-              今日の日報に戻る
-            </Button>
-          </Box>
-        </Fade>
-      )}
-      <Divider />
-      <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
-        <DailyReportsList
-          selectedDate={selectedDate}
-          onDateSelect={(date, reportInfo) => {
-            setSelectedDate(date);
-            setSelectedReportInfo(reportInfo);
-            const selectedDateObj = new Date(date);
-            loadDailyReport(selectedDateObj);
-            if (isMobile) setMobileOpen(false);
-          }}
-        />
-      </Box>
-    </Box>
-  );
+  const handleDateSelect = (date: DateString, reportInfo: { title: string; tags: string[] }) => {
+    setSelectedDate(date);
+    setSelectedReportInfo(reportInfo);
+    const selectedDateObj = new Date(date);
+    loadDailyReport(selectedDateObj);
+    if (isMobile) setMobileOpen(false);
+  };
+
+  const handleTodayClick = () => {
+    setSelectedDate(undefined);
+    setSelectedReportInfo(undefined);
+    loadDailyReport();
+    if (isMobile) setMobileOpen(false);
+  };
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
@@ -201,7 +172,12 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             },
           }}
         >
-          {drawerContent}
+          <DailyReportsSidebar
+            selectedDate={selectedDate}
+            onDateSelect={handleDateSelect}
+            onTodayClick={handleTodayClick}
+            isMobile={isMobile}
+          />
         </Drawer>
       ) : (
         <Box
@@ -214,7 +190,12 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             bgcolor: '#1a1a1a',
           }}
         >
-          {drawerContent}
+          <DailyReportsSidebar
+            selectedDate={selectedDate}
+            onDateSelect={handleDateSelect}
+            onTodayClick={handleTodayClick}
+            isMobile={isMobile}
+          />
         </Box>
       )}
 
