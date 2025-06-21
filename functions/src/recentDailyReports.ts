@@ -5,8 +5,7 @@
 import { AxiosInstance } from 'axios';
 import { searchPosts } from './search';
 import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory, type DailyReportCategory } from './dateUtils';
-import { type DailyReportSummary } from './index';
-import { type EsaPost } from './caseConverter';
+import { type EsaPost, type DailyReportSummary } from './caseConverter';
 
 /**
  * 複数の日報カテゴリをOR検索クエリとして結合する

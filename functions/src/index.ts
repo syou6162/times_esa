@@ -5,7 +5,15 @@ import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
-import { convertEsaPostToCamelCase, convertEsaTagsToCamelCase, EsaPost, EsaTags } from './caseConverter';
+import { 
+  convertEsaPostToCamelCase, 
+  convertEsaTagsToCamelCase, 
+  convertRecentDailyReportsResponseToCamelCase,
+  EsaPost, 
+  EsaTags,
+  type DailyReportSummary,
+  type RecentDailyReportsResponse 
+} from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -218,31 +226,6 @@ type RecentDailyReportsRequest = {
   days?: number; // 過去何日分を取得するか（デフォルト: 10）
 }
 
-export type DailyReportSummary = {
-  date: DateString; // yyyy-MM-dd形式
-  title: string;
-  category: DailyReportCategory;
-  updated_at: string;
-  number: number; // esa投稿番号
-}
-
-export type DailyReportSummaryCamelCase = {
-  date: DateString;
-  title: string;
-  category: DailyReportCategory;
-  updatedAt: string;
-  number: number;
-}
-
-export type RecentDailyReportsResponse = {
-  reports: DailyReportSummary[];
-  total_count: number;
-}
-
-export type RecentDailyReportsResponseCamelCase = {
-  reports: DailyReportSummaryCamelCase[];
-  totalCount: number;
-}
 
 export const dailyReport = onCall(
   { secrets: ESA_SECRETS},
@@ -289,17 +272,7 @@ export const recentDailyReports = onCall(
     
     try {
       const result = await getRecentDailyReports(days);
-      // キャメルケースに変換
-      return {
-        reports: result.reports.map(report => ({
-          date: report.date,
-          title: report.title,
-          category: report.category,
-          updatedAt: report.updated_at,
-          number: report.number
-        })),
-        totalCount: result.total_count
-      };
+      return convertRecentDailyReportsResponseToCamelCase(result);
     } catch (error) {
       console.error('recentDailyReports error:', error);
       throw new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました');

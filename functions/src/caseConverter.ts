@@ -3,6 +3,8 @@
  * esa APIのレスポンス構造に特化
  */
 
+import { type DateString, type DailyReportCategory } from './dateUtils';
+
 // esa APIからのレスポンス型定義（スネークケース）
 export type EsaPost = {
   body_md: string;
@@ -75,5 +77,56 @@ export function convertEsaTagsToCamelCase(esaTags: EsaTags): EsaTagsCamelCase {
       postsCount: tag.posts_count
     })),
     totalCount: esaTags.total_count
+  };
+}
+
+// 日報サマリー関連の型定義（スネークケース）
+export type DailyReportSummary = {
+  date: DateString;
+  title: string;
+  category: DailyReportCategory;
+  updated_at: string;
+  number: number;
+}
+
+export type RecentDailyReportsResponse = {
+  reports: DailyReportSummary[];
+  total_count: number;
+}
+
+// 日報サマリー関連の型定義（キャメルケース）
+export type DailyReportSummaryCamelCase = {
+  date: DateString;
+  title: string;
+  category: DailyReportCategory;
+  updatedAt: string;
+  number: number;
+}
+
+export type RecentDailyReportsResponseCamelCase = {
+  reports: DailyReportSummaryCamelCase[];
+  totalCount: number;
+}
+
+/**
+ * 日報サマリーをキャメルケースに変換
+ */
+export function convertDailyReportSummaryToCamelCase(summary: DailyReportSummary): DailyReportSummaryCamelCase {
+  return {
+    date: summary.date,
+    title: summary.title,
+    category: summary.category,
+    updatedAt: summary.updated_at,
+    number: summary.number
+  };
+}
+
+/**
+ * 最近の日報リストレスポンスをキャメルケースに変換
+ */
+export function convertRecentDailyReportsResponseToCamelCase(response: RecentDailyReportsResponse): RecentDailyReportsResponseCamelCase {
+  return {
+    reports: response.reports.map(report => convertDailyReportSummaryToCamelCase(report)),
+    totalCount: response.total_count
   };
 }

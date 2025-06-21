@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { convertEsaPostToCamelCase, convertEsaTagsToCamelCase } from './caseConverter';
+import { 
+  convertEsaPostToCamelCase, 
+  convertEsaTagsToCamelCase,
+  convertDailyReportSummaryToCamelCase,
+  convertRecentDailyReportsResponseToCamelCase
+} from './caseConverter';
 
 describe('convertEsaPostToCamelCase', () => {
   it('Esa投稿のレスポンスを変換する', () => {
@@ -78,4 +83,68 @@ describe('convertEsaTagsToCamelCase', () => {
     expect(result.tags[1].name).toBe('another_snake_tag');
   });
 
+});
+
+describe('convertDailyReportSummaryToCamelCase', () => {
+  it('日報サマリーをキャメルケースに変換する', () => {
+    const input = {
+      date: '2024-01-01',
+      title: '日報',
+      category: '日報/2024/01/01',
+      updated_at: '2024-01-01T12:00:00Z',
+      number: 123
+    };
+    const expected = {
+      date: '2024-01-01',
+      title: '日報',
+      category: '日報/2024/01/01',
+      updatedAt: '2024-01-01T12:00:00Z',
+      number: 123
+    };
+    expect(convertDailyReportSummaryToCamelCase(input)).toEqual(expected);
+  });
+});
+
+describe('convertRecentDailyReportsResponseToCamelCase', () => {
+  it('最近の日報リストレスポンスを変換する', () => {
+    const input = {
+      reports: [
+        {
+          date: '2024-01-01',
+          title: '日報',
+          category: '日報/2024/01/01',
+          updated_at: '2024-01-01T12:00:00Z',
+          number: 123
+        },
+        {
+          date: '2024-01-02',
+          title: '開発、ミーティング',
+          category: '日報/2024/01/02',
+          updated_at: '2024-01-02T12:00:00Z',
+          number: 124
+        }
+      ],
+      total_count: 2
+    };
+    const expected = {
+      reports: [
+        {
+          date: '2024-01-01',
+          title: '日報',
+          category: '日報/2024/01/01',
+          updatedAt: '2024-01-01T12:00:00Z',
+          number: 123
+        },
+        {
+          date: '2024-01-02',
+          title: '開発、ミーティング',
+          category: '日報/2024/01/02',
+          updatedAt: '2024-01-02T12:00:00Z',
+          number: 124
+        }
+      ],
+      totalCount: 2
+    };
+    expect(convertRecentDailyReportsResponseToCamelCase(input)).toEqual(expected);
+  });
 });
