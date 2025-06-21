@@ -26,7 +26,7 @@ export type EsaTags = {
 }
 
 // 変換後の型定義（キャメルケース、フロントエンドで使用）
-type EsaPostCamelCase = {
+export type EsaPostCamelCase = {
   bodyMd: string;
   bodyHtml: string;
   number: number;
@@ -37,12 +37,12 @@ type EsaPostCamelCase = {
   category: string;
 }
 
-type EsaTagCamelCase = {
+export type EsaTagCamelCase = {
   name: string;  // タグ名はそのまま保持
   postsCount: number;
 }
 
-type EsaTagsCamelCase = {
+export type EsaTagsCamelCase = {
   tags: EsaTagCamelCase[];
   totalCount: number;
 }

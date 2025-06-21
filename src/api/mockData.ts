@@ -75,31 +75,42 @@ export const mockTagListData = {
 export const mockRecentDailyReportsData = {
   reports: [
     {
-      date: format(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd'),
-      url: 'https://example.esa.io/posts/12344',
-      postsCount: 8,
+      date: format(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      title: '日報',
+      category: `日報/${format(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd')}`,
+      updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      number: 12344,
     },
     {
-      date: format(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd'),
-      url: 'https://example.esa.io/posts/12343',
-      postsCount: 12,
+      date: format(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      title: '日報、開発',
+      category: `日報/${format(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd')}`,
+      updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      number: 12343,
     },
     {
-      date: format(new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd'),
-      url: 'https://example.esa.io/posts/12342',
-      postsCount: 6,
+      date: format(new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      title: 'ミーティング、レビュー',
+      category: `日報/${format(new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd')}`,
+      updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      number: 12342,
     },
     {
-      date: format(new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd'),
-      url: 'https://example.esa.io/posts/12341',
-      postsCount: 10,
+      date: format(new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      title: '開発、タスクA',
+      category: `日報/${format(new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd')}`,
+      updatedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+      number: 12341,
     },
     {
-      date: format(new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd'),
-      url: 'https://example.esa.io/posts/12340',
-      postsCount: 7,
+      date: format(new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      title: '日報',
+      category: `日報/${format(new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), 'yyyy/MM/dd')}`,
+      updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      number: 12340,
     },
   ],
+  totalCount: 5
 };
 
 // 投稿時のレスポンスモック（既存の日報に追記される想定）

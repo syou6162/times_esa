@@ -1,11 +1,7 @@
 import type { HttpsCallableResult } from 'firebase/functions';
 
-// リクエスト/レスポンスの型定義
-export type DailyReportRequest = {
-  category: string;
-}
-
-export type DailyReportResponse = {
+// 共通の型定義
+export type EsaPostResponse = {
   updatedAt: string;
   url: string;
   bodyMd: string;
@@ -13,7 +9,15 @@ export type DailyReportResponse = {
   tags: string[];
   name: string;
   category: string;
+  number: number;
 }
+
+// リクエスト/レスポンスの型定義
+export type DailyReportRequest = {
+  category: string;
+}
+
+export type DailyReportResponse = EsaPostResponse;
 
 export type TagListRequest = {}
 
@@ -32,24 +36,19 @@ export type SubmitTextToEsaRequest = {
   text: string;
 }
 
-export type SubmitTextToEsaResponse = {
-  updatedAt: string;
-  url: string;
-  bodyMd: string;
-  bodyHtml: string;
-  tags: string[];
-  name: string;
-  category: string;
-}
+export type SubmitTextToEsaResponse = EsaPostResponse;
 
 export type RecentDailyReportsRequest = {}
 
 export type RecentDailyReportsResponse = {
   reports: Array<{
     date: string;
-    url: string;
-    posts_count: number;
+    title: string;
+    category: string;
+    updatedAt: string;
+    number: number;
   }>;
+  totalCount: number;
 }
 
 // APIクライアントのインターフェース

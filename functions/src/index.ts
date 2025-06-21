@@ -226,9 +226,22 @@ export type DailyReportSummary = {
   number: number; // esa投稿番号
 }
 
+export type DailyReportSummaryCamelCase = {
+  date: DateString;
+  title: string;
+  category: DailyReportCategory;
+  updatedAt: string;
+  number: number;
+}
+
 export type RecentDailyReportsResponse = {
   reports: DailyReportSummary[];
   total_count: number;
+}
+
+export type RecentDailyReportsResponseCamelCase = {
+  reports: DailyReportSummaryCamelCase[];
+  totalCount: number;
 }
 
 export const dailyReport = onCall(
@@ -276,7 +289,17 @@ export const recentDailyReports = onCall(
     
     try {
       const result = await getRecentDailyReports(days);
-      return result;
+      // キャメルケースに変換
+      return {
+        reports: result.reports.map(report => ({
+          date: report.date,
+          title: report.title,
+          category: report.category,
+          updatedAt: report.updated_at,
+          number: report.number
+        })),
+        totalCount: result.total_count
+      };
     } catch (error) {
       console.error('recentDailyReports error:', error);
       throw new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました');
