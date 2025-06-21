@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Button, Box } from '@mui/material';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
+import { DailyReportsList } from '../DailyReportsList';
 import { makeDefaultEsaCategory } from '../../util';
 import { getDailyReport, getTagList } from '../../api';
 import { Tag } from '../../types';
 import { TimesEsaProps } from '../../types/components';
+import type { DateString } from '../../../types/domain';
 
 
 
@@ -27,6 +29,10 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   const [esaTagCandidates, setEsaTagCandidates] = useState<string[]>([]);
   const [esaTitle, setEsaTitle] = useState<string>('日報');
   const [esaCategory, setEsaCategory] = useState<string>('');
+
+  // 開発用: 過去の日報表示
+  const [showPastReports, setShowPastReports] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<DateString | undefined>(undefined);
 
   const clearEsaFields = () => {
     setUpdatedAt('');
@@ -136,6 +142,30 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         esaHtml={esaHtml}
         reloadDailyReport={() => { loadDailyReport(); }}
       />
+
+      {/* 開発用: 過去の日報表示機能 */}
+      <Box sx={{ mt: 4 }}>
+        <Button
+          variant="outlined"
+          onClick={() => setShowPastReports(!showPastReports)}
+          sx={{ mb: 2 }}
+        >
+          {showPastReports ? '過去の日報を非表示' : '過去の日報を表示（開発用）'}
+        </Button>
+
+        {showPastReports && (
+          <Box sx={{ mt: 2, p: 2, border: '1px solid #ccc', borderRadius: 1 }}>
+            <DailyReportsList
+              selectedDate={selectedDate}
+              onDateSelect={(date) => {
+                setSelectedDate(date);
+                // TODO: フェーズ3で選択した日報の詳細を表示
+                console.log('Selected date:', date);
+              }}
+            />
+          </Box>
+        )}
+      </Box>
     </Container>
   );
 };

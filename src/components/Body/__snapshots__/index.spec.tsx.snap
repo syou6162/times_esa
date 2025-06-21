@@ -184,6 +184,17 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
         />
       </div>
     </div>
+    <div
+      class="MuiBox-root css-h5fkc8"
+    >
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1p0lr0l-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        過去の日報を表示（開発用）
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;
