@@ -77,12 +77,12 @@ const App: React.FC = () => {
           hasUserLanded={hasUserLanded}
           isSignedIn={isSignedIn}
           user={user}
-          firebaseAuth={firebaseAuth!}
+          firebaseAuth={firebaseAuth}
         />
         <Footer
           isSignedIn={isSignedIn}
           user={user}
-          firebaseAuth={firebaseAuth!}
+          firebaseAuth={firebaseAuth}
         />
       </div>
     </ThemeProvider>
