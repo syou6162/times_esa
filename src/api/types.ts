@@ -1,13 +1,8 @@
 import type { HttpsCallableResult } from 'firebase/functions';
 import type {
-  EsaPostResponse,
-  DailyReportRequest,
   DailyReportResponse,
-  TagListRequest,
   TagListResponse,
-  SubmitTextToEsaRequest,
   SubmitTextToEsaResponse,
-  RecentDailyReportsRequest,
   RecentDailyReportsResponse
 } from '../../types/api';
 
