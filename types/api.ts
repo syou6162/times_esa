@@ -2,7 +2,7 @@
 // バックエンドとフロントエンドで共有される型
 
 // Esa APIレスポンスの基本型（キャメルケース）
-export type EsaPostResponse = {
+export type EsaPost = {
   bodyMd: string;
   bodyHtml: string;
   number: number;
@@ -13,13 +13,13 @@ export type EsaPostResponse = {
   category: string;
 }
 
-export type EsaTagResponse = {
+export type EsaTag = {
   name: string;
   postsCount: number;
 }
 
-export type EsaTagsResponse = {
-  tags: EsaTagResponse[];
+export type EsaTags = {
+  tags: EsaTag[];
   totalCount: number;
 }
 
@@ -42,11 +42,11 @@ export type DailyReportRequest = {
   category: string;
 }
 
-export type DailyReportResponse = EsaPostResponse;
+export type DailyReportResponse = EsaPost;
 
 export type TagListRequest = {}
 
-export type TagListResponse = EsaTagsResponse;
+export type TagListResponse = EsaTags;
 
 export type SubmitTextToEsaRequest = {
   category: string;
@@ -55,7 +55,7 @@ export type SubmitTextToEsaRequest = {
   text: string;
 }
 
-export type SubmitTextToEsaResponse = EsaPostResponse;
+export type SubmitTextToEsaResponse = EsaPost;
 
 export type RecentDailyReportsRequest = {
   days?: number;

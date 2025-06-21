@@ -5,7 +5,7 @@
 import { AxiosInstance } from 'axios';
 import { searchPosts } from './search';
 import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory, type DailyReportCategory } from './dateUtils';
-import { type EsaPost, type DailyReportSummary } from './caseConverter';
+import { type EsaPostSnakeCase, type DailyReportSummarySnakeCase } from './caseConverter';
 
 /**
  * 複数の日報カテゴリをOR検索クエリとして結合する
@@ -27,7 +27,7 @@ export function createMultipleCategoryQuery(categories: DailyReportCategory[]): 
  * @param post - ESA投稿
  * @returns 日報サマリー
  */
-export function extractDailyReportSummary(post: EsaPost & { category: DailyReportCategory; updated_at: string }): DailyReportSummary {
+export function extractDailyReportSummary(post: EsaPostSnakeCase & { category: DailyReportCategory; updated_at: string }): DailyReportSummarySnakeCase {
   return {
     date: formatCategoryToDate(post.category),
     title: post.name,
@@ -46,7 +46,7 @@ export function extractDailyReportSummary(post: EsaPost & { category: DailyRepor
 export async function getRecentDailyReports(
   days: number = 10,
   axiosClient?: AxiosInstance
-): Promise<{ reports: DailyReportSummary[]; total_count: number }> {
+): Promise<{ reports: DailyReportSummarySnakeCase[]; total_count: number }> {
   // 過去N日分のカテゴリを生成
   const categories = getDateRangeCategories(days);
   
@@ -63,7 +63,7 @@ export async function getRecentDailyReports(
   
   // 結果を日報サマリー形式に変換
   const reports = result.posts
-    .filter((post: EsaPost): post is EsaPost & { category: DailyReportCategory } => {
+    .filter((post: EsaPostSnakeCase): post is EsaPostSnakeCase & { category: DailyReportCategory } => {
       // 念のため日報カテゴリのみをフィルタリング
       return isDailyReportCategory(post.category);
     })
