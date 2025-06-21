@@ -8,12 +8,13 @@ import {
   Box,
   Typography,
   Alert,
+  Skeleton,
 } from '@mui/material';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
 import type { DailyReportsListProps } from '../../types/components';
 
-export const DailyReportsList: React.FC<DailyReportsListProps> = ({
+export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
   selectedDate,
   onDateSelect,
 }) => {
@@ -45,8 +46,15 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = ({
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
-        <CircularProgress />
+      <Box sx={{ p: 1 }}>
+        {[...Array(5)].map((_, index) => (
+          <Skeleton 
+            key={index} 
+            variant="rectangular" 
+            height={72} 
+            sx={{ mb: 1, borderRadius: 1 }}
+          />
+        ))}
       </Box>
     );
   }
@@ -68,20 +76,47 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = ({
   }
 
   return (
-    <List>
+    <List sx={{ p: 0 }}>
       {reports.map((report) => (
         <ListItem key={report.date} disablePadding>
           <ListItemButton
             selected={selectedDate === report.date}
             onClick={() => onDateSelect(report.date)}
+            sx={{
+              borderBottom: 1,
+              borderColor: 'divider',
+              '&.Mui-selected': {
+                bgcolor: 'action.selected',
+                '&:hover': {
+                  bgcolor: 'action.selected',
+                },
+              },
+              '&:hover': {
+                bgcolor: 'action.hover',
+              },
+              transition: 'background-color 0.2s',
+            }}
           >
             <ListItemText
               primary={report.date}
               secondary={report.title}
+              primaryTypographyProps={{
+                variant: 'body2',
+                fontWeight: selectedDate === report.date ? 'bold' : 'normal',
+              }}
+              secondaryTypographyProps={{
+                variant: 'caption',
+                sx: {
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  display: 'block',
+                },
+              }}
             />
           </ListItemButton>
         </ListItem>
       ))}
     </List>
   );
-};
+});

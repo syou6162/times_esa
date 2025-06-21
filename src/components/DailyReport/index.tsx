@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, CircularProgress, Box, Alert, ButtonGroup } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
 import { DailyReportType } from '../../types';
@@ -121,31 +122,62 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
   };
   const getDailyReport = () => {
     if (props.fetching) {
-      return '今日の日報を取得中です...';
+      return (
+        <Box display="flex" alignItems="center" justifyContent="center" py={4}>
+          <CircularProgress size={40} />
+          <Box ml={2}>日報を取得中です...</Box>
+        </Box>
+      );
     // eslint-disable-next-line no-else-return
     } else if (props.fetchErrorMessage !== '') {
-      return props.fetchErrorMessage;
+      return (
+        <Box py={2}>
+          <Alert severity="error" variant="outlined">
+            {props.fetchErrorMessage}
+          </Alert>
+        </Box>
+      );
     }
     return getDailyReportByType(dailyReportType);
   };
 
   return (
     <div>
-      <Button
-        style={{
-          margin: '3px',
-          textTransform: 'none',
-        }}
-        variant="contained"
-        size="small"
-        color="secondary"
-        onClick={props.reloadDailyReport}
-      >
-        Update
-      </Button>
-      { getDailyReportTypeButton('html', DailyReportType.HTML) }
-      { getDailyReportTypeButton('text', DailyReportType.TEXT) }
-      { getDailyReportTypeButton('share', DailyReportType.SHARE) }
+      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+        <Button
+          variant="contained"
+          size="small"
+          color="secondary"
+          onClick={props.reloadDailyReport}
+          startIcon={<RefreshIcon />}
+          sx={{ textTransform: 'none' }}
+        >
+          Update
+        </Button>
+        <ButtonGroup variant="contained" size="small" color="secondary">
+          <Button
+            onClick={() => setDailyReportType(DailyReportType.HTML)}
+            variant={dailyReportType === DailyReportType.HTML ? 'contained' : 'outlined'}
+            sx={{ textTransform: 'none' }}
+          >
+            html
+          </Button>
+          <Button
+            onClick={() => setDailyReportType(DailyReportType.TEXT)}
+            variant={dailyReportType === DailyReportType.TEXT ? 'contained' : 'outlined'}
+            sx={{ textTransform: 'none' }}
+          >
+            text
+          </Button>
+          <Button
+            onClick={() => setDailyReportType(DailyReportType.SHARE)}
+            variant={dailyReportType === DailyReportType.SHARE ? 'contained' : 'outlined'}
+            sx={{ textTransform: 'none' }}
+          >
+            share
+          </Button>
+        </ButtonGroup>
+      </Box>
       { /* eslint no-nested-ternary: 0 */ }
       <div>
         { getDailyReport() }
