@@ -114,5 +114,3 @@ export type FooterProps = {
   user: GoogleUser;
   firebaseAuth: Auth | null;
 }
-
-// WelcomeMessage Props (GoogleUserと同じなので、GoogleUserを使う)
