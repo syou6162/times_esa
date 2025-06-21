@@ -5,6 +5,7 @@ import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
+import { convertEsaPostToCamelCase, convertEsaTagsToCamelCase } from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -223,7 +224,8 @@ export const submitTextToEsa = onCall(
       req.data.title,
       req.data.text,
     );
-    return result;
+    // スネークケースからキャメルケースに変換して返す
+    return convertEsaPostToCamelCase(result);
   }
 );
 
@@ -258,7 +260,8 @@ export const dailyReport = onCall(
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getDailyReport(axios, esaConfig, req.data.category);
-    return result;
+    // スネークケースからキャメルケースに変換して返す
+    return convertEsaPostToCamelCase(result);
   }
 );
 
@@ -272,7 +275,8 @@ export const tagList = onCall(
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
     const result = await getTagList(axios, esaConfig);
-    return result;
+    // スネークケースからキャメルケースに変換して返す
+    return convertEsaTagsToCamelCase(result);
   }
 );
 
