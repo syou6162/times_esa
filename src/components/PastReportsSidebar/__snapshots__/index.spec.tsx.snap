@@ -3,10 +3,10 @@
 exports[`PastReportsSidebarが正しく表示される > 今日の日報が選択された状態で表示される 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1tl99z4"
+    class="MuiBox-root css-kak0am"
   >
     <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h6 css-31h6qn-MuiTypography-root"
     >
       日報一覧
     </h6>
@@ -14,36 +14,36 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
       class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
     >
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1errrts-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1nbyyxq-MuiListItem-root"
       >
         <div
           class="MuiListItemText-root MuiListItemText-multiline css-14ln1j6-MuiListItemText-root"
         >
           <span
-            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-5p1y0h-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-64nssn-MuiTypography-root"
           >
             今日の日報
           </span>
           <p
-            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-f8r3iy-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-3k0zn9-MuiTypography-root"
           >
             編集可能
           </p>
         </div>
       </button>
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1fq4x2u-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-wjrk7s-MuiListItem-root"
       >
         <div
           class="MuiBox-root css-8atqhb"
         >
           <h6
-            class="MuiTypography-root MuiTypography-subtitle2 css-1rr5r63-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-subtitle2 css-ii4reh-MuiTypography-root"
           >
             6月19日(水)
           </h6>
           <p
-            class="MuiTypography-root MuiTypography-body2 css-zqb1nb-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1oq2vc5-MuiTypography-root"
           >
             開発、会議、レビュー
           </p>
@@ -51,7 +51,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
             class="MuiBox-root css-107ld1r"
           >
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -60,7 +60,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -70,25 +70,25 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
             </div>
           </div>
           <span
-            class="MuiTypography-root MuiTypography-caption css-5elll3-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption css-1rrr8pd-MuiTypography-root"
           >
             5個のつぶやき
           </span>
         </div>
       </button>
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1fq4x2u-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-wjrk7s-MuiListItem-root"
       >
         <div
           class="MuiBox-root css-8atqhb"
         >
           <h6
-            class="MuiTypography-root MuiTypography-subtitle2 css-1rr5r63-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-subtitle2 css-ii4reh-MuiTypography-root"
           >
             6月18日(火)
           </h6>
           <p
-            class="MuiTypography-root MuiTypography-body2 css-zqb1nb-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1oq2vc5-MuiTypography-root"
           >
             レビュー、設計
           </p>
@@ -96,7 +96,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
             class="MuiBox-root css-107ld1r"
           >
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -105,7 +105,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -115,7 +115,7 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
             </div>
           </div>
           <span
-            class="MuiTypography-root MuiTypography-caption css-5elll3-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption css-1rrr8pd-MuiTypography-root"
           >
             3個のつぶやき
           </span>
@@ -129,10 +129,10 @@ exports[`PastReportsSidebarが正しく表示される > 今日の日報が選�
 exports[`PastReportsSidebarが正しく表示される > 空の日報リストでも正しく表示される 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1tl99z4"
+    class="MuiBox-root css-kak0am"
   >
     <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h6 css-31h6qn-MuiTypography-root"
     >
       日報一覧
     </h6>
@@ -140,18 +140,18 @@ exports[`PastReportsSidebarが正しく表示される > 空の日報リスト�
       class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
     >
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1errrts-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1nbyyxq-MuiListItem-root"
       >
         <div
           class="MuiListItemText-root MuiListItemText-multiline css-14ln1j6-MuiListItemText-root"
         >
           <span
-            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-5p1y0h-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-64nssn-MuiTypography-root"
           >
             今日の日報
           </span>
           <p
-            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-f8r3iy-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-3k0zn9-MuiTypography-root"
           >
             編集可能
           </p>
@@ -165,10 +165,10 @@ exports[`PastReportsSidebarが正しく表示される > 空の日報リスト�
 exports[`PastReportsSidebarが正しく表示される > 過去の日報が選択された状態で表示される 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1tl99z4"
+    class="MuiBox-root css-kak0am"
   >
     <h6
-      class="MuiTypography-root MuiTypography-h6 css-x3ur3e-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-h6 css-31h6qn-MuiTypography-root"
     >
       日報一覧
     </h6>
@@ -176,36 +176,36 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
       class="MuiList-root MuiList-padding css-13rb8qi-MuiList-root"
     >
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-c4qtxg-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-58bp3r-MuiListItem-root"
       >
         <div
           class="MuiListItemText-root MuiListItemText-multiline css-14ln1j6-MuiListItemText-root"
         >
           <span
-            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-5zzma5-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-plhci5-MuiTypography-root"
           >
             今日の日報
           </span>
           <p
-            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-f8r3iy-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-3k0zn9-MuiTypography-root"
           >
             編集可能
           </p>
         </div>
       </button>
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1udw6nn-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-q8c0aq-MuiListItem-root"
       >
         <div
           class="MuiBox-root css-8atqhb"
         >
           <h6
-            class="MuiTypography-root MuiTypography-subtitle2 css-1bb3555-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-subtitle2 css-spsapl-MuiTypography-root"
           >
             6月19日(水)
           </h6>
           <p
-            class="MuiTypography-root MuiTypography-body2 css-zqb1nb-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1oq2vc5-MuiTypography-root"
           >
             開発、会議、レビュー
           </p>
@@ -213,7 +213,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
             class="MuiBox-root css-107ld1r"
           >
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -222,7 +222,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -232,25 +232,25 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
             </div>
           </div>
           <span
-            class="MuiTypography-root MuiTypography-caption css-5elll3-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption css-1rrr8pd-MuiTypography-root"
           >
             5個のつぶやき
           </span>
         </div>
       </button>
       <button
-        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1fq4x2u-MuiListItem-root"
+        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-wjrk7s-MuiListItem-root"
       >
         <div
           class="MuiBox-root css-8atqhb"
         >
           <h6
-            class="MuiTypography-root MuiTypography-subtitle2 css-1rr5r63-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-subtitle2 css-ii4reh-MuiTypography-root"
           >
             6月18日(火)
           </h6>
           <p
-            class="MuiTypography-root MuiTypography-body2 css-zqb1nb-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body2 css-1oq2vc5-MuiTypography-root"
           >
             レビュー、設計
           </p>
@@ -258,7 +258,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
             class="MuiBox-root css-107ld1r"
           >
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -267,7 +267,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
               </span>
             </div>
             <div
-              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-1rlv6je-MuiChip-root"
+              class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-q1fxe1-MuiChip-root"
             >
               <span
                 class="MuiChip-label MuiChip-labelSmall css-eccknh-MuiChip-label"
@@ -277,7 +277,7 @@ exports[`PastReportsSidebarが正しく表示される > 過去の日報が選�
             </div>
           </div>
           <span
-            class="MuiTypography-root MuiTypography-caption css-5elll3-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption css-1rrr8pd-MuiTypography-root"
           >
             3個のつぶやき
           </span>

@@ -19,12 +19,26 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
     <Box sx={{ 
       width: SIDEBAR_WIDTH, 
       height: '100%', 
-      bgcolor: '#1e1e1e', 
+      bgcolor: '#121212', 
       p: 2,
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      '& ::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '& ::-webkit-scrollbar-track': {
+        background: 'rgba(255, 255, 255, 0.05)',
+        borderRadius: '4px',
+      },
+      '& ::-webkit-scrollbar-thumb': {
+        background: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: '4px',
+        '&:hover': {
+          background: 'rgba(255, 255, 255, 0.3)',
+        },
+      },
     }}>
-      <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
+      <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.87)', mb: 2 }}>
         日報一覧
       </Typography>
       <List sx={{ flexGrow: 1, overflow: 'auto' }}>
@@ -36,9 +50,9 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
           sx={{
             borderRadius: 1,
             mb: 1,
-            bgcolor: selectedDate === 'today' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+            bgcolor: selectedDate === 'today' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
             '&:hover': {
-              bgcolor: 'rgba(255, 255, 255, 0.05)',
+              bgcolor: 'rgba(255, 255, 255, 0.04)',
             },
             border: 'none',
             width: '100%',
@@ -49,8 +63,8 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
           <ListItemText
             primary="今日の日報"
             secondary="編集可能"
-            primaryTypographyProps={{ sx: { color: 'white', fontWeight: selectedDate === 'today' ? 'bold' : 'normal' } }}
-            secondaryTypographyProps={{ sx: { color: 'rgba(255, 255, 255, 0.7)' } }}
+            primaryTypographyProps={{ sx: { color: 'rgba(255, 255, 255, 0.87)', fontWeight: selectedDate === 'today' ? 'bold' : 'normal' } }}
+            secondaryTypographyProps={{ sx: { color: 'rgba(255, 255, 255, 0.6)' } }}
           />
         </ListItem>
         
@@ -64,9 +78,9 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
             sx={{
               borderRadius: 1,
               mb: 1,
-              bgcolor: selectedDate === report.date ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+              bgcolor: selectedDate === report.date ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
               '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.05)',
+                bgcolor: 'rgba(255, 255, 255, 0.04)',
               },
               flexDirection: 'column',
               alignItems: 'stretch',
@@ -82,7 +96,7 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
               <Typography 
                 variant="subtitle2" 
                 sx={{ 
-                  color: 'white', 
+                  color: 'rgba(255, 255, 255, 0.87)', 
                   fontWeight: selectedDate === report.date ? 'bold' : 'normal',
                   mb: 0.5
                 }}
@@ -92,7 +106,7 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
               <Typography 
                 variant="body2" 
                 sx={{ 
-                  color: 'white', 
+                  color: 'rgba(255, 255, 255, 0.87)', 
                   mb: 1,
                   fontSize: '0.875rem'
                 }}
@@ -106,8 +120,8 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
                     label={tag}
                     size="small"
                     sx={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      color: 'white',
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                      color: 'rgba(255, 255, 255, 0.87)',
                       fontSize: '0.75rem',
                       height: 20,
                     }}
@@ -117,7 +131,7 @@ export const PastReportsSidebar: React.FC<PastReportsSidebarProps> = memo(({
               <Typography 
                 variant="caption" 
                 sx={{ 
-                  color: 'rgba(255, 255, 255, 0.7)',
+                  color: 'rgba(255, 255, 255, 0.6)',
                   fontSize: '0.75rem'
                 }}
               >

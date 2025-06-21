@@ -37,6 +37,24 @@ export const MobileHamburgerMenu: React.FC<MobileHamburgerMenuProps> = memo(({
         anchor="left"
         open={isOpen}
         onClose={onToggle}
+        PaperProps={{
+          sx: {
+            '& ::-webkit-scrollbar': {
+              width: '8px',
+            },
+            '& ::-webkit-scrollbar-track': {
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '4px',
+            },
+            '& ::-webkit-scrollbar-thumb': {
+              background: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: '4px',
+              '&:hover': {
+                background: 'rgba(255, 255, 255, 0.3)',
+              },
+            },
+          }
+        }}
       >
         {children}
       </Drawer>
