@@ -9,8 +9,10 @@ import { firebaseAuth } from './firebase/index';
 import { Body } from './components/Body';
 import { Footer } from './components/Footer';
 import { GoogleUser } from './util';
+import { config } from './config';
 
 const App: React.FC = () => {
+  
   // firebaseのonAuthStateChangedを通過したか
   const [hasUserLanded, setHasUserLanded] = useState(false);
   // (validかどうにかに関わらず)ユーザーがサインインしたいか
@@ -22,20 +24,35 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user_) => {
-      if (!user_) {
-        setHasUserLanded(true);
-        return;
-      }
-      const u: GoogleUser = {
-        email: user_.email || '',
-        displayName: user_.displayName || '',
-        photoURL: user_.photoURL || '',
-      };
-      setUser(u);
+    // モックモードの場合は認証をスキップ
+    if (config.useMockApi) {
+      setUser({
+        email: 'mock@example.com',
+        displayName: 'モックユーザー',
+        photoURL: '',
+      });
       setIsSignedIn(true);
       setHasUserLanded(true);
-    });
+      return;
+    }
+
+    // 本番モードの場合は通常の認証フロー
+    if (firebaseAuth) {
+      onAuthStateChanged(firebaseAuth, (user_) => {
+        if (!user_) {
+          setHasUserLanded(true);
+          return;
+        }
+        const u: GoogleUser = {
+          email: user_.email || '',
+          displayName: user_.displayName || '',
+          photoURL: user_.photoURL || '',
+        };
+        setUser(u);
+        setIsSignedIn(true);
+        setHasUserLanded(true);
+      });
+    }
   }, []);
 
   const theme = createTheme({

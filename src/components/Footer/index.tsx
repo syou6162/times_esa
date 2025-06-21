@@ -3,6 +3,7 @@ import { Auth } from 'firebase/auth';
 import WelcomeMessage from '../WelcomeMessage';
 import SignOutButton from '../SignOutButton';
 import { GoogleUser, isValidEmail } from '../../util';
+import { config } from '../../config';
 
 export type FooterProps = {
   isSignedIn: boolean;
@@ -43,7 +44,8 @@ export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
       </footer>
     );
   }
-  if (!isValidEmail(props.user.email)) {
+  // モックモードではメールアドレス検証をスキップ
+  if (!config.useMockApi && !isValidEmail(props.user.email)) {
     return (
       <footer>
         {hr}
