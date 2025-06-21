@@ -3,17 +3,13 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { EsaSubmitForm, EsaSubmitFormProps, getDay } from '.'
 import { makeDefaultEsaCategory } from '../../util';
+import * as api from '../../api';
 
-const mockHttpsCallable = vi.fn();
-
-vi.mock("firebase/functions", () => ({
-  getFunctions: vi.fn(() => {
-    return {
-      region: ''
-    };
-  }),
-  httpsCallable: () => mockHttpsCallable,
+vi.mock("../../api", () => ({
+  submitTextToEsa: vi.fn(),
 }));
+
+const mockSubmitTextToEsa = api.submitTextToEsa as unknown as ReturnType<typeof vi.fn>;
 
 describe('times_esaのフォームが正しく機能する(正常系)', () => {
   const modifiedTitle = "変更後のタイトルだよ";
@@ -32,7 +28,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
       },
     };
 
-    mockHttpsCallable.mockResolvedValue(responseData);
+    mockSubmitTextToEsa.mockResolvedValue(responseData);
   });
 
   afterEach(() => {
@@ -55,7 +51,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      expect(mockHttpsCallable).toBeCalledTimes(0);
+      expect(mockSubmitTextToEsa).toBeCalledTimes(0);
       expect(asFragment()).toMatchSnapshot();
     });
   });
@@ -76,7 +72,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      expect(mockHttpsCallable).toBeCalledTimes(0);
+      expect(mockSubmitTextToEsa).toBeCalledTimes(0);
       expect(asFragment()).toMatchSnapshot();
     });
   });
@@ -117,7 +113,7 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
       <EsaSubmitForm {...props} />
     );
 
-    expect(mockHttpsCallable).toBeCalledTimes(0)
+    expect(mockSubmitTextToEsa).toBeCalledTimes(0)
     const before = asFragment();
 
     const textArea = getByTitle('esa_submit_text_field');
@@ -126,8 +122,9 @@ describe('times_esaのフォームが正しく機能する(正常系)', () => {
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      expect(mockHttpsCallable).toBeCalledTimes(1);
-      expect(mockHttpsCallable.mock.calls[0][0].tags).toStrictEqual(["日報", "BigQuery", getDay(new Date)])
+      expect(mockSubmitTextToEsa).toBeCalledTimes(1);
+      // submitTextToEsa関数の第2引数がtagsなので[0][1]でアクセス
+      expect(mockSubmitTextToEsa.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)])
       expect(getByText("BigQuery")).toBeDefined();
       expect(getByText(modifiedTitle)).toBeDefined();
       expect(asFragment()).not.toStrictEqual(before);
@@ -143,7 +140,7 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
   beforeEach(() => {
     window.alert = alertMock;
 
-    mockHttpsCallable.mockRejectedValue(new Error("Internal Error"));
+    mockSubmitTextToEsa.mockRejectedValue(new Error("Internal Error"));
   });
 
   afterEach(() => {
@@ -172,8 +169,9 @@ describe('times_esaのフォームが正しく機能する(異常系)', () => {
     fireEvent.click(getByTitle("esa_submit_form_button"));
 
     await waitFor(() => {
-      expect(mockHttpsCallable).toBeCalledTimes(1);
-      expect(mockHttpsCallable.mock.calls[0][0].tags).toStrictEqual(["日報", "BigQuery", getDay(new Date)])
+      expect(mockSubmitTextToEsa).toBeCalledTimes(1);
+      // submitTextToEsa関数の第2引数がtagsなので[0][1]でアクセス
+      expect(mockSubmitTextToEsa.mock.calls[0][1]).toStrictEqual(["日報", "BigQuery", getDay(new Date)])
       expect(alertMock).toBeCalledTimes(1);
 
       // 変更に失敗したので、DOMに変わりはない
