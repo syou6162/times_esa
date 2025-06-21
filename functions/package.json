@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "eslint \"src/**/*\"",
     "build": "tsc",
-    "gcp-build":"",
+    "gcp-build": "tsc",
     "watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
@@ -17,7 +17,7 @@
   "engines": {
     "node": "22"
   },
-  "main": "lib/index.js",
+  "main": "lib/functions/src/index.js",
   "dependencies": {
     "@types/node": "22.15.32",
     "@types/request": "2.48.12",

@@ -27,6 +27,7 @@ export type EsaTags = {
 export type DailyReportSummary = {
   date: string;  // yyyy-MM-dd形式
   title: string;
+  tags: string[];
   category: string;
   updatedAt: string;
   number: number;

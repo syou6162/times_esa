@@ -32,6 +32,7 @@ export function extractDailyReportSummary(post: EsaPostSnakeCase & { category: D
   return {
     date: formatCategoryToDate(post.category),
     title: post.name,
+    tags: post.tags,
     category: post.category,
     updated_at: post.updated_at,
     number: post.number
