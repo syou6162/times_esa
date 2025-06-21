@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DailyReportsList > スナップショットテスト 1`] = `
+<ul
+  class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
+>
+  <li
+    class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+  >
+    <div
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="MuiListItemText-root MuiListItemText-multiline css-14ln1j6-MuiListItemText-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+        >
+          2025-06-20
+        </span>
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-1a1whku-MuiTypography-root"
+        >
+          開発作業
+        </p>
+      </div>
+    </div>
+  </li>
+</ul>
+`;

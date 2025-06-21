@@ -91,6 +91,12 @@ export type TimesEsaProps = {
   canFetchCloudFunctionEndpoints: boolean;
 }
 
+// DailyReportsList Props
+export type DailyReportsListProps = {
+  selectedDate?: string;
+  onDateSelect: (date: string) => void;
+}
+
 // SignInDialog Props
 export type SignInDialogProps = {
   firebaseAuth: Auth | null;
