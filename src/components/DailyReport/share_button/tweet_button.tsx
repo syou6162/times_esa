@@ -1,9 +1,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
+import { TweetButtonProps } from '../../../types/components';
 
-export type TweetButtonProps = {
-  text: string;
-};
 
 export const TweetButton: React.FC<TweetButtonProps> = (props: TweetButtonProps) => {
   const tweet = `https://x.com/intent/post?text=${encodeURIComponent(props.text)}`;

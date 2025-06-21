@@ -5,20 +5,15 @@ import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
 import { makeDefaultEsaCategory } from '../../util';
 import { getDailyReport, getTagList } from '../../api';
+import { Tag } from '../../types';
+import { TimesEsaProps } from '../../types/components';
 
-export type Tag = {
-  name: string;
-  posts_count: number; // eslint-disable-line camelcase
-}
 
 
 const getPostsCount = (md: string): number => {
   return md.split('---').length - 1;
 };
 
-type TimesEsaProps = {
-  canFetchCloudFunctionEndpoints: boolean;
-};
 
 const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
   const [fetching, setFetching] = useState(false);

@@ -3,7 +3,8 @@ import.meta.env.VITE_VALID_MAIL_ADDRESSES = 'valid@example.com';
 
 import { render } from '@testing-library/react'
 import { describe, it, expect } from "vitest"
-import { Footer, FooterProps } from '.'
+import { Footer } from '.'
+import { FooterProps } from '../../types/components'
 
 describe('Footerが正しく表示される', () => {
   it('サインインしていない状態', () => {

@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
+import { DailyReportType } from '../../types';
+import { DailyReportProps, DailyReportHtmlProps, DailyReportTextProps, DailyReportShareProps } from '../../types/components';
 
-type DailyReportHtmlProps = {
-  esaHtml: string;
-};
 
 const DailyReportHtml: React.FC<DailyReportHtmlProps> = (props: DailyReportHtmlProps) => {
   return (
@@ -23,9 +22,6 @@ const DailyReportHtml: React.FC<DailyReportHtmlProps> = (props: DailyReportHtmlP
   );
 };
 
-type DailyReportTextProps = {
-  esaText: string;
-};
 
 const DailyReportText: React.FC<DailyReportTextProps> = (props: DailyReportTextProps) => {
   return (
@@ -42,9 +38,6 @@ const DailyReportText: React.FC<DailyReportTextProps> = (props: DailyReportTextP
   );
 };
 
-type DailyReportShareProps = {
-  esaText: string;
-}
 
 const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportShareProps) => {
   const texts = `${props.esaText}\n\n`.replace(/(\r\n|\n|\r)/gm, '\n')
@@ -93,24 +86,6 @@ const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportSha
   );
 };
 
-export type DailyReportProps = {
-  fetching: boolean;
-  fetchErrorMessage: string;
-
-  esaText: string;
-  esaHtml: string;
-  reloadDailyReport: () => void;
-};
-
-// eslint-disable-next-line no-shadow, no-unused-vars
-enum DailyReportType {
-  // eslint-disable-next-line no-unused-vars
-  HTML = 'HTML',
-  // eslint-disable-next-line no-unused-vars
-  TEXT = 'TEXT',
-  // eslint-disable-next-line no-unused-vars
-  SHARE = 'SHARE',
-}
 
 export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   const [dailyReportType, setDailyReportType] = useState<DailyReportType>(DailyReportType.HTML);

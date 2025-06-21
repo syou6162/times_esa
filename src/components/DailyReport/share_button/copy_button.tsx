@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyButtonProps } from '../../../types/components';
 
-export type CopyButtonProps = {
-  text: string;
-};
 
 export const CopyButton: React.FC<CopyButtonProps> = (props: CopyButtonProps) => {
   const [isCopied, setIsCopied] = useState(false);
