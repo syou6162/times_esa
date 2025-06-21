@@ -58,6 +58,10 @@ const callFirebaseFunction = <TRequest, TResponse>(
   data?: TRequest,
   options?: { timeout?: number }
 ): Promise<HttpsCallableResult<TResponse>> => {
+  if (!import.meta.env.VITE_API_KEY) {
+    throw new Error('Firebase configuration is missing. Please set up Firebase credentials.');
+  }
+  
   const functions = getFunctions();
   functions.region = functionsRegion;
   

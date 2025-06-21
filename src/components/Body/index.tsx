@@ -1,6 +1,7 @@
 import React from 'react';
 import { Auth } from 'firebase/auth';
 import { GoogleUser, isValidEmail } from '../../util';
+import { config } from '../../config';
 import TimesEsa from '../TimesEsa';
 import SignInDialog from '../SignInDialog';
 import WelcomeMessage from '../WelcomeMessage';
@@ -25,7 +26,8 @@ export const Body: React.FC<BodyProps> = (props: BodyProps) => {
       />
     );
   }
-  if (props.hasUserLanded && props.isSignedIn && !isValidEmail(props.user.email)) {
+  // モックモードではメールアドレス検証をスキップ
+  if (!config.useMockApi && props.hasUserLanded && props.isSignedIn && !isValidEmail(props.user.email)) {
     return (
       <div>
         <WelcomeMessage

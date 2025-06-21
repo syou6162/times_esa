@@ -7,9 +7,7 @@ import {
 } from './mockData';
 import { firebaseApi } from './firebase';
 import type { HttpsCallableResult } from 'firebase/functions';
-
-// モックAPIを使用するかどうかの判定
-const useMockApi = () => import.meta.env.VITE_USE_MOCK_API === 'true';
+import { config } from '../config';
 
 // モックレスポンスをFirebase Functionsのレスポンス形式に変換
 const createMockResponse = <T>(data: T): Promise<HttpsCallableResult<T>> => {
@@ -27,7 +25,7 @@ const createMockError = (code: string, message: string): Promise<never> => {
 
 // API関数
 export const getDailyReport = async (category: string) => {
-  if (useMockApi()) {
+  if (config.useMockApi) {
     // モックモード: 今日の日報でない場合はNOT_FOUNDエラー
     const today = new Date().toISOString().split('T')[0].replace(/-/g, '/');
     if (!category.includes(today)) {
@@ -43,7 +41,7 @@ export const getDailyReport = async (category: string) => {
 };
 
 export const getTagList = async () => {
-  if (useMockApi()) {
+  if (config.useMockApi) {
     return createMockResponse(mockTagListData);
   }
   
@@ -56,7 +54,7 @@ export const submitTextToEsa = async (
   title: string,
   text: string
 ) => {
-  if (useMockApi()) {
+  if (config.useMockApi) {
     // モックモード: 入力されたデータを既存の日報に追記したような形で返す
     const response = createSubmitResponse(category, tags, title, text);
     return createMockResponse(response);
@@ -66,7 +64,7 @@ export const submitTextToEsa = async (
 };
 
 export const getRecentDailyReports = async () => {
-  if (useMockApi()) {
+  if (config.useMockApi) {
     return createMockResponse(mockRecentDailyReportsData);
   }
   
