@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Divider } from '@mui/material';
+import { Container, Button, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme, Divider, Fade } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import DailyReport from '../DailyReport';
