@@ -10,7 +10,7 @@ export type GoogleUser = {
 // タグの型定義
 export type Tag = {
   name: string;
-  posts_count: number;
+  postsCount: number;
 }
 
 // 日報表示タイプのenum

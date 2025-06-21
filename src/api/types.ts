@@ -6,10 +6,10 @@ export type DailyReportRequest = {
 }
 
 export type DailyReportResponse = {
-  updated_at: string;
+  updatedAt: string;
   url: string;
-  body_md: string;
-  body_html: string;
+  bodyMd: string;
+  bodyHtml: string;
   tags: string[];
   name: string;
   category: string;
@@ -20,8 +20,9 @@ export type TagListRequest = {}
 export type TagListResponse = {
   tags: Array<{
     name: string;
-    posts_count: number;
+    postsCount: number;
   }>;
+  totalCount: number;
 }
 
 export type SubmitTextToEsaRequest = {
@@ -32,10 +33,10 @@ export type SubmitTextToEsaRequest = {
 }
 
 export type SubmitTextToEsaResponse = {
-  updated_at: string;
+  updatedAt: string;
   url: string;
-  body_md: string;
-  body_html: string;
+  bodyMd: string;
+  bodyHtml: string;
   tags: string[];
   name: string;
   category: string;
