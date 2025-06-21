@@ -13,7 +13,8 @@
   },
   "compileOnSave": true,
   "include": [
-    "src"
+    "src",
+    "../types"
   ],
   "exclude": [
     "src/**/__tests__/**/*",

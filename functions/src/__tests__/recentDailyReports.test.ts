@@ -5,7 +5,7 @@ import {
   getRecentDailyReports 
 } from '../recentDailyReports';
 import * as search from '../search';
-import type { EsaPost } from '../caseConverter';
+import type { EsaPostSnakeCase } from '../caseConverter';
 
 // searchPostsをモック
 vi.mock('../search');
@@ -46,7 +46,7 @@ describe('recentDailyReports', () => {
         body_md: 'test',
         body_html: '<p>test</p>',
         tags: ['tag1']
-      } as EsaPost & { category: string; updated_at: string };
+      } as EsaPostSnakeCase & { category: string; updated_at: string };
 
       const summary = extractDailyReportSummary(post);
       

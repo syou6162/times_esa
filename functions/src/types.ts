@@ -2,7 +2,7 @@
  * Firebase Functionsのリクエスト/レスポンス型定義
  */
 
-import { type DailyReportCategory } from './dateUtils';
+import { type DailyReportCategory } from '../../types/domain';
 
 // 設定型定義
 export type EsaConfig = {

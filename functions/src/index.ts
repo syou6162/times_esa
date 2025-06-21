@@ -4,7 +4,8 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
-import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
+import { formatCategoryToDate } from './dateUtils';
+import { type DailyReportCategory, type DateString } from '../../types/domain';
 import { 
   type EsaConfig,
   type SubmitTextRequest, 
@@ -16,8 +17,8 @@ import {
   convertEsaPostToCamelCase, 
   convertEsaTagsToCamelCase, 
   convertRecentDailyReportsResponseToCamelCase,
-  type EsaPost, 
-  type EsaTags,
+  type EsaPostSnakeCase, 
+  type EsaTagsSnakeCase,
   type EsaSearchResult 
 } from './caseConverter';
 
@@ -92,14 +93,14 @@ export async function createOrUpdatePost(
   tags: string[],
   title: string,
   text: string,
-): Promise<EsaPost> {
+): Promise<EsaPostSnakeCase> {
   const response = await axios.get<EsaSearchResult>(`/v1/teams/${esaConfig.teamName}/posts`, {
     params: {
       q: `on:${category}`,
     },
   });
   if (response.data.total_count === 0) {
-    return axios.post<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts`, {
+    return axios.post<EsaPostSnakeCase>(`/v1/teams/${esaConfig.teamName}/posts`, {
       post: {
         name: title,
         category,
@@ -107,15 +108,15 @@ export async function createOrUpdatePost(
         body_md: text,
         wip: false,
       },
-    }).then((res: AxiosResponse<EsaPost>) => {
+    }).then((res: AxiosResponse<EsaPostSnakeCase>) => {
       return res.data;
     }).catch((err: AxiosError<EsaErrorResponse>) => {
       throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
     });
   }
   if (response.data.total_count === 1) {
-    const latestEsaPost: EsaPost = response.data.posts[0];
-    return axios.patch<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
+    const latestEsaPost: EsaPostSnakeCase = response.data.posts[0];
+    return axios.patch<EsaPostSnakeCase>(`/v1/teams/${esaConfig.teamName}/posts/${latestEsaPost.number}`, {
       post: {
         name: transformTitle(latestEsaPost.name, title),
         category,
@@ -123,7 +124,7 @@ export async function createOrUpdatePost(
         body_md: (text !== '' ? `${text}\n${latestEsaPost.body_md}` : latestEsaPost.body_md),
         wip: false,
       },
-    }).then((res: AxiosResponse<EsaPost>) => {
+    }).then((res: AxiosResponse<EsaPostSnakeCase>) => {
       return res.data;
     }).catch((err: AxiosError<EsaErrorResponse>) => {
       throw new functions.https.HttpsError('invalid-argument', `${err.response?.data.error}: ${err.response?.data.message}`);
@@ -136,7 +137,7 @@ export async function getDailyReport(
   axiosClient: AxiosInstance,
   esaConfig: EsaConfig,
   category: DailyReportCategory,
-): Promise<EsaPost> {
+): Promise<EsaPostSnakeCase> {
   let targetDate: DateString;
   
   try {
@@ -155,7 +156,7 @@ export async function getDailyReport(
       throw new functions.https.HttpsError('already-exists', '複数の日報が存在します');
     } else {
       // 詳細を取得
-      return axiosClient.get<EsaPost>(`/v1/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPost>) => {
+      return axiosClient.get<EsaPostSnakeCase>(`/v1/teams/${esaConfig.teamName}/posts/${response.posts[0].number}`).then((res: AxiosResponse<EsaPostSnakeCase>) => {
         return res.data;
       });
     }
@@ -172,8 +173,8 @@ export async function getDailyReport(
 export async function getTagList(
   axios: AxiosInstance,
   esaConfig: EsaConfig,
-): Promise<EsaTags> {
-  const response = await axios.get<EsaTags>(`/v1/teams/${esaConfig.teamName}/tags`);
+): Promise<EsaTagsSnakeCase> {
+  const response = await axios.get<EsaTagsSnakeCase>(`/v1/teams/${esaConfig.teamName}/tags`);
   return response.data;
 }
 

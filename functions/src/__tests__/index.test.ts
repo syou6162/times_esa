@@ -7,7 +7,7 @@ vi.mock('axios');
 
 // Import the functions to test
 import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList } from '../index';
-import { type EsaPost, type EsaTags, type EsaSearchResult } from '../caseConverter';
+import { type EsaPostSnakeCase, type EsaTagsSnakeCase, type EsaSearchResult } from '../caseConverter';
 import { type RecentDailyReportsRequest } from '../types';
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
@@ -236,7 +236,7 @@ describe('Firebase Functions Tests', () => {
 
     it('should return post data when exactly one daily report exists', async () => {
       // 検索APIのレスポンス（1件の日報）
-      const mockPost: EsaPost = {
+      const mockPost: EsaPostSnakeCase = {
         body_md: '# 日報\n\n今日の作業内容',
         body_html: '<h1>日報</h1><p>今日の作業内容</p>',
         number: 123,
@@ -259,7 +259,7 @@ describe('Firebase Functions Tests', () => {
         } as InternalAxiosRequestConfig,
       };
 
-      const detailResponse: AxiosResponse<EsaPost> = {
+      const detailResponse: AxiosResponse<EsaPostSnakeCase> = {
         data: mockPost,
         status: 200,
         statusText: 'OK',
@@ -323,7 +323,7 @@ describe('Firebase Functions Tests', () => {
 
     it('should throw already-exists error when multiple daily reports exist', async () => {
       // 検索APIのレスポンス（複数件）
-      const mockPosts: EsaPost[] = [
+      const mockPosts: EsaPostSnakeCase[] = [
         {
           body_md: 'post1',
           body_html: '<p>post1</p>',
@@ -421,7 +421,7 @@ describe('Firebase Functions Tests', () => {
           total_count: 0,
         };
 
-        const newPost: EsaPost = {
+        const newPost: EsaPostSnakeCase = {
           number: 123,
           name: 'テストタイトル',
           tags: ['test', 'new'],
@@ -430,7 +430,7 @@ describe('Firebase Functions Tests', () => {
         };
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPost>);
+        mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPostSnakeCase>);
 
         const result = await createOrUpdatePost(
           mockAxios,
@@ -497,7 +497,7 @@ describe('Firebase Functions Tests', () => {
 
     describe('既存投稿更新 (total_count === 1)', () => {
       it('検索結果1件の場合、既存投稿を更新する', async () => {
-        const existingPost: EsaPost = {
+        const existingPost: EsaPostSnakeCase = {
           number: 123,
           name: '既存タイトル',
           tags: ['existing', 'tag'],
@@ -510,7 +510,7 @@ describe('Firebase Functions Tests', () => {
           total_count: 1,
         };
 
-        const updatedPost: EsaPost = {
+        const updatedPost: EsaPostSnakeCase = {
           ...existingPost,
           name: '既存タイトル、新規タイトル',
           tags: ['existing', 'tag', 'new'],
@@ -518,7 +518,7 @@ describe('Firebase Functions Tests', () => {
         };
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPost>);
+        mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPostSnakeCase>);
 
         const result = await createOrUpdatePost(
           mockAxios,
@@ -547,7 +547,7 @@ describe('Firebase Functions Tests', () => {
       });
 
       it('空テキストの場合、既存本文のみを保持する', async () => {
-        const existingPost: EsaPost = {
+        const existingPost: EsaPostSnakeCase = {
           number: 123,
           name: '既存タイトル',
           tags: ['existing'],
@@ -561,7 +561,7 @@ describe('Firebase Functions Tests', () => {
         };
 
         mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.patch.mockResolvedValueOnce({ data: existingPost } as AxiosResponse<EsaPost>);
+        mockAxios.patch.mockResolvedValueOnce({ data: existingPost } as AxiosResponse<EsaPostSnakeCase>);
 
         await createOrUpdatePost(
           mockAxios,
@@ -589,7 +589,7 @@ describe('Firebase Functions Tests', () => {
       });
 
       it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
-        const existingPost: EsaPost = {
+        const existingPost: EsaPostSnakeCase = {
           number: 123,
           name: '既存タイトル',
           tags: [],
@@ -632,7 +632,7 @@ describe('Firebase Functions Tests', () => {
 
     describe('複数投稿エラー (total_count > 1)', () => {
       it('検索結果が複数件の場合、エラーをスローする', async () => {
-        const post1: EsaPost = {
+        const post1: EsaPostSnakeCase = {
           number: 123,
           name: '投稿1',
           tags: [],
@@ -640,7 +640,7 @@ describe('Firebase Functions Tests', () => {
           body_html: '',
         };
 
-        const post2: EsaPost = { ...post1, number: 124, name: '投稿2' };
+        const post2: EsaPostSnakeCase = { ...post1, number: 124, name: '投稿2' };
 
         const searchResult: EsaSearchResult = {
           posts: [post1, post2],
@@ -693,7 +693,7 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('タグ一覧を正常に取得できる', async () => {
-      const mockTags: EsaTags = {
+      const mockTags: EsaTagsSnakeCase = {
         tags: [
           { name: '日報', posts_count: 100 },
           { name: '開発', posts_count: 50 },
@@ -701,7 +701,7 @@ describe('Firebase Functions Tests', () => {
         ],
       };
 
-      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTagsSnakeCase>);
 
       const result = await getTagList(mockAxios, esaConfig);
 
@@ -712,11 +712,11 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('空のタグ一覧を取得できる', async () => {
-      const mockTags: EsaTags = {
+      const mockTags: EsaTagsSnakeCase = {
         tags: [],
       };
 
-      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTags>);
+      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTagsSnakeCase>);
 
       const result = await getTagList(mockAxios, esaConfig);
 
