@@ -3,6 +3,7 @@
 import { Auth } from 'firebase/auth';
 import { AutocompleteProps } from '@mui/material/Autocomplete';
 import { GoogleUser, InputChangeHandler, TextAreaChangeHandler } from './index';
+import type { DateString } from '../../types/domain';
 
 // Body Component Props
 export type BodyProps = {
@@ -93,8 +94,8 @@ export type TimesEsaProps = {
 
 // DailyReportsList Props
 export type DailyReportsListProps = {
-  selectedDate?: string;
-  onDateSelect: (date: string) => void;
+  selectedDate?: DateString;
+  onDateSelect: (date: DateString) => void;
 }
 
 // SignInDialog Props

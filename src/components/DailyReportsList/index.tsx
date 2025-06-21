@@ -11,11 +11,7 @@ import {
 } from '@mui/material';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
-
-interface DailyReportsListProps {
-  selectedDate?: string;
-  onDateSelect: (date: string) => void;
-}
+import type { DailyReportsListProps } from '../../types/components';
 
 export const DailyReportsList: React.FC<DailyReportsListProps> = ({
   selectedDate,
