@@ -26,23 +26,6 @@ describe('convertEsaPostToCamelCase', () => {
     expect(convertEsaPostToCamelCase(input)).toEqual(expected);
   });
 
-  it('オプショナルなフィールドがない場合も正しく処理される', () => {
-    const input = {
-      body_md: 'Content',
-      body_html: '<p>Content</p>',
-      number: 123,
-      name: 'Title',
-      tags: []
-    };
-    const expected = {
-      bodyMd: 'Content',
-      bodyHtml: '<p>Content</p>',
-      number: 123,
-      name: 'Title',
-      tags: []
-    };
-    expect(convertEsaPostToCamelCase(input)).toEqual(expected);
-  });
 
   it('タグ名にアンダースコアが含まれていても変換されない', () => {
     const input = {
@@ -50,7 +33,10 @@ describe('convertEsaPostToCamelCase', () => {
       body_html: '<p>Content</p>',
       number: 123,
       name: 'Title',
-      tags: ['snake_case_tag', 'another_snake_tag']
+      tags: ['snake_case_tag', 'another_snake_tag'],
+      updated_at: '2024-01-01T00:00:00Z',
+      url: 'https://esa.io/posts/123',
+      category: '日報/2024/01/01'
     };
     const result = convertEsaPostToCamelCase(input);
     expect(result.tags).toEqual(['snake_case_tag', 'another_snake_tag']);

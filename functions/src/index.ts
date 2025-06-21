@@ -46,6 +46,9 @@ export type EsaPost = {
   number: number;
   name: string;
   tags: string[];
+  updated_at: string;
+  url: string;
+  category: string;
 }
 
 type TimesEsaPostRequest = {

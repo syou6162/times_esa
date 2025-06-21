@@ -10,9 +10,9 @@ type EsaPostApi = {
   number: number;
   name: string;
   tags: string[];  // タグ名の文字列配列（変換不要）
-  updated_at?: string;
-  url?: string;
-  category?: string;
+  updated_at: string;
+  url: string;
+  category: string;
 }
 
 type EsaTagApi = {
@@ -32,9 +32,9 @@ type EsaPostResponse = {
   number: number;
   name: string;
   tags: string[];  // タグ名はそのまま保持
-  updatedAt?: string;
-  url?: string;
-  category?: string;
+  updatedAt: string;
+  url: string;
+  category: string;
 }
 
 type EsaTagResponse = {
@@ -58,9 +58,9 @@ export function convertEsaPostToCamelCase(esaPost: EsaPostApi): EsaPostResponse 
     number: esaPost.number,
     name: esaPost.name,
     tags: esaPost.tags,  // タグ名の配列はそのまま
-    ...(esaPost.updated_at !== undefined && { updatedAt: esaPost.updated_at }),
-    ...(esaPost.url !== undefined && { url: esaPost.url }),
-    ...(esaPost.category !== undefined && { category: esaPost.category })
+    updatedAt: esaPost.updated_at,
+    url: esaPost.url,
+    category: esaPost.category
   };
 }
 
