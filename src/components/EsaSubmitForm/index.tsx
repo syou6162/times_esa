@@ -47,7 +47,7 @@ export const submitTextToEsa = (
   return submitTextToEsaApi(category, tags, title, text);
 };
 
-export { EsaSubmitFormProps } from '../../types/components';
+export type { EsaSubmitFormProps } from '../../types/components';
 
 export const EsaSubmitForm: React.FC<EsaSubmitFormProps> = (props: EsaSubmitFormProps) => {
   const [sending, setSending] = useState(false);

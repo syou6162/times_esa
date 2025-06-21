@@ -7,7 +7,7 @@ import { GoogleUser } from '../../types';
 import { FooterProps } from '../../types/components';
 
 
-export { FooterProps } from '../../types/components';
+export type { FooterProps } from '../../types/components';
 
 export const Footer: React.FC<FooterProps> = (props: FooterProps) => {
   const hr = (

@@ -88,7 +88,7 @@ const DailyReportShare: React.FC<DailyReportShareProps> = (props: DailyReportSha
 
 
 
-export { DailyReportProps } from '../../types/components';
+export type { DailyReportProps } from '../../types/components';
 
 export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps) => {
   const [dailyReportType, setDailyReportType] = useState<DailyReportType>(DailyReportType.HTML);

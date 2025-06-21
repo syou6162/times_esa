@@ -10,7 +10,7 @@ import WelcomeMessage from '../WelcomeMessage';
 import SignOutButton from '../SignOutButton';
 
 
-export { BodyProps } from '../../types/components';
+export type { BodyProps } from '../../types/components';
 
 export const Body: React.FC<BodyProps> = (props: BodyProps) => {
   const isShowSignedInDialog = (): boolean => {
