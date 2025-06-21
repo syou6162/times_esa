@@ -53,6 +53,7 @@ describe('recentDailyReports', () => {
       expect(summary).toEqual({
         date: '2024-06-20',
         title: '開発、テスト',
+        tags: ['tag1'],
         category: '日報/2024/06/20',
         updated_at: '2024-06-20T10:30:00+09:00',
         number: 123
@@ -104,6 +105,7 @@ describe('recentDailyReports', () => {
       expect(result.reports[0]).toEqual({
         date: '2024-06-20',
         title: '開発、テスト',
+        tags: ['tag1'],
         category: '日報/2024/06/20',
         updated_at: '2024-06-20T10:30:00+09:00',
         number: 123
@@ -111,6 +113,7 @@ describe('recentDailyReports', () => {
       expect(result.reports[1]).toEqual({
         date: '2024-06-19',
         title: '設計',
+        tags: [],
         category: '日報/2024/06/19',
         updated_at: '2024-06-19T09:15:00+09:00',
         number: 122

@@ -3,6 +3,7 @@
 import { Auth } from 'firebase/auth';
 import { AutocompleteProps } from '@mui/material/Autocomplete';
 import { GoogleUser, InputChangeHandler, TextAreaChangeHandler } from './index';
+import type { DateString } from '../../types/domain';
 
 // Body Component Props
 export type BodyProps = {
@@ -19,6 +20,7 @@ export type DailyReportProps = {
   esaText: string;
   esaHtml: string;
   reloadDailyReport: () => void;
+  isReadOnly?: boolean;
 }
 
 // DailyReport内部のコンポーネントProps
@@ -89,6 +91,20 @@ export type EsaTagsFieldProps = {
 // TimesEsa Props
 export type TimesEsaProps = {
   canFetchCloudFunctionEndpoints: boolean;
+}
+
+// DailyReportsList Props
+export type DailyReportsListProps = {
+  selectedDate?: DateString;
+  onDateSelect: (date: DateString, reportInfo: { title: string; tags: string[] }) => void;
+}
+
+// DailyReportsSidebar Props
+export type DailyReportsSidebarProps = {
+  selectedDate?: DateString;
+  onDateSelect: (date: DateString, reportInfo: { title: string; tags: string[] }) => void;
+  onTodayClick: () => void;
+  isMobile: boolean;
 }
 
 // SignInDialog Props

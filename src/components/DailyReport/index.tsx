@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, CircularProgress, Box, Alert } from '@mui/material';
 import { CopyButton } from './share_button/copy_button';
 import { TweetButton } from './share_button/tweet_button';
 import { DailyReportType } from '../../types';
@@ -121,10 +121,21 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
   };
   const getDailyReport = () => {
     if (props.fetching) {
-      return '今日の日報を取得中です...';
+      return (
+        <Box display="flex" alignItems="center" justifyContent="center" py={4}>
+          <CircularProgress size={40} />
+          <Box ml={2}>日報を取得中です...</Box>
+        </Box>
+      );
     // eslint-disable-next-line no-else-return
     } else if (props.fetchErrorMessage !== '') {
-      return props.fetchErrorMessage;
+      return (
+        <Box py={2}>
+          <Alert severity="error" variant="outlined">
+            {props.fetchErrorMessage}
+          </Alert>
+        </Box>
+      );
     }
     return getDailyReportByType(dailyReportType);
   };
@@ -140,6 +151,7 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
         size="small"
         color="secondary"
         onClick={props.reloadDailyReport}
+        disabled={props.isReadOnly}
       >
         Update
       </Button>
