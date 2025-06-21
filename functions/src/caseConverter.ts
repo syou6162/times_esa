@@ -4,7 +4,7 @@
  */
 
 // esa APIからのレスポンス型定義（スネークケース）
-type EsaPostApiResponse = {
+export type EsaPost = {
   body_md: string;
   body_html: string;
   number: number;
@@ -15,13 +15,13 @@ type EsaPostApiResponse = {
   category: string;
 }
 
-type EsaTagApiResponse = {
+export type Tag = {
   name: string;  // タグ名（変換不要）
   posts_count: number;
 }
 
-type EsaTagsApiResponse = {
-  tags: EsaTagApiResponse[];
+export type EsaTags = {
+  tags: Tag[];
   total_count?: number;
 }
 
@@ -51,7 +51,7 @@ type EsaTagsCamelCase = {
  * EsaのAPIレスポンス（投稿）をキャメルケースに変換
  * タグ名などの値は変換せず、フィールド名のみを変換
  */
-export function convertEsaPostToCamelCase(esaPost: EsaPostApiResponse): EsaPostCamelCase {
+export function convertEsaPostToCamelCase(esaPost: EsaPost): EsaPostCamelCase {
   return {
     bodyMd: esaPost.body_md,
     bodyHtml: esaPost.body_html,
@@ -68,7 +68,7 @@ export function convertEsaPostToCamelCase(esaPost: EsaPostApiResponse): EsaPostC
  * EsaのAPIレスポンス（タグリスト）をキャメルケースに変換
  * タグ名は変換せず、フィールド名のみを変換
  */
-export function convertEsaTagsToCamelCase(esaTags: EsaTagsApiResponse): EsaTagsCamelCase {
+export function convertEsaTagsToCamelCase(esaTags: EsaTags): EsaTagsCamelCase {
   return {
     tags: esaTags.tags.map(tag => ({
       name: tag.name,  // タグ名はそのまま

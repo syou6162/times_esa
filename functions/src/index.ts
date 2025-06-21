@@ -5,7 +5,7 @@ import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate, type DailyReportCategory, type DateString } from './dateUtils';
-import { convertEsaPostToCamelCase, convertEsaTagsToCamelCase } from './caseConverter';
+import { convertEsaPostToCamelCase, convertEsaTagsToCamelCase, EsaPost, EsaTags } from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
 
@@ -39,18 +39,6 @@ export function createAxiosClient(accessToken?: string): AxiosInstance {
   });
 }
 
-export type EsaPost = {
-  // esaのレスポンスを全部camelcaseに変換するのは面倒なので、ここだけlintは無視する
-  body_md: string;
-  body_html: string;
-  number: number;
-  name: string;
-  tags: string[];
-  updated_at: string;
-  url: string;
-  category: string;
-}
-
 type TimesEsaPostRequest = {
   category: DailyReportCategory;
   tags: string[];
@@ -61,15 +49,6 @@ type TimesEsaPostRequest = {
 export type EsaSearchResult = {
   posts: EsaPost[];
   total_count: number;
-}
-
-export type Tag = {
-  name: string;
-  posts_count: number;
-}
-
-export type EsaTags = {
-  tags: Tag[]
 }
 
 // ref: https://docs.esa.io/posts/102#%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9
