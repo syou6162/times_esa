@@ -115,7 +115,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', color: 'white' }}>
       <Box sx={{ p: 2, pt: isMobile ? 2 : 2, pl: isMobile ? 8 : 2 }}>
         <Typography variant="h6" gutterBottom>
-          過去の日報
+          過去の日報一覧
         </Typography>
       </Box>
       {selectedDate && (
