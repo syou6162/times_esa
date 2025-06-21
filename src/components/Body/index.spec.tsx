@@ -3,7 +3,8 @@ process.env.VITE_VALID_MAIL_ADDRESSES = 'valid@example.com';
 
 import { render } from '@testing-library/react'
 import { describe, it, expect, vi } from "vitest"
-import { Body, BodyProps } from '.'
+import { Body } from '.'
+import { BodyProps } from '../../types/components'
 import { getAuth } from 'firebase/auth';
 
 // 認証の画面をmock

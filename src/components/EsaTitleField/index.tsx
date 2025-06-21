@@ -3,14 +3,8 @@ import { outlinedInputClasses, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
 import { moveCursorToEnd } from '../../util';
+import { EsaTitleFieldProps } from '../../types/components';
 
-type EsaTitleFieldProps = {
-  sending: boolean;
-  fetching: boolean;
-  title: string;
-  // eslint-disable-next-line no-unused-vars
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-};
 
 const TitleTextField = styled(TextField)({
   [`& .${outlinedInputClasses.input}`]: {

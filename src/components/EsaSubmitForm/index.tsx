@@ -7,23 +7,8 @@ import EsaTextField from '../EsaTextField';
 import { EsaTagsField } from '../EsaTagsField';
 import { makeDefaultEsaCategory } from '../../util';
 import { submitTextToEsa as submitTextToEsaApi } from '../../api';
+import { EsaSubmitFormProps } from '../../types/components';
 
-export type EsaSubmitFormProps = {
-  category: string;
-  title: string;
-  tags: string[];
-  tagCandidates: string[];
-  fetching: boolean;
-  onSubmit: (
-    /* eslint-disable no-unused-vars */
-    category: string,
-    title: string,
-    markdown: string,
-    html: string,
-    tags: string[]
-    /* eslint-enable no-unused-vars */
-  ) => void;
-};
 
 export function getDay(date: Date): string {
   const day = date.getDay();

@@ -2,28 +2,11 @@ import React from 'react';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/system';
 import Autocomplete, {
-  AutocompleteChangeReason,
-  AutocompleteChangeDetails,
   AutocompleteRenderInputParams,
 } from '@mui/material/Autocomplete';
 import Chip from '@mui/material/Chip';
+import { EsaTagsFieldProps } from '../../types/components';
 
-export type EsaTagsFieldProps = {
-  sending: boolean;
-  fetching: boolean;
-  tags: string[];
-  tagCandidates: string[];
-  onChange: (
-    // eslint-disable-next-line no-unused-vars
-    event: React.ChangeEvent<{}>,
-    // eslint-disable-next-line no-unused-vars
-    value: string[],
-    // eslint-disable-next-line no-unused-vars
-    reason: AutocompleteChangeReason,
-    // eslint-disable-next-line no-unused-vars
-    details?: AutocompleteChangeDetails<string> | undefined
-  ) => void;
-};
 
 const TagTextField = styled(TextField)({
   '& .MuiOutlinedInput-input': {

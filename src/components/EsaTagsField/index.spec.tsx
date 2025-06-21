@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { render } from '@testing-library/react'
 import { describe, it, expect } from "vitest"
-import { EsaTagsField, EsaTagsFieldProps } from '.'
+import { EsaTagsField } from '.'
+import { EsaTagsFieldProps } from '../../types/components'
 
 describe('esaのタグが正しく表示される', () => {
   it('tagsもtagCandidatesも空の状態', () => {

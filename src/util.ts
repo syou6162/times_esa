@@ -20,11 +20,6 @@ export const makeDefaultEsaCategory = (date: Date): string => {
 
 export const functionsRegion = 'asia-northeast1';
 
-export type GoogleUser = {
-  email: string;
-  displayName: string;
-  photoURL: string;
-}
 
 export const isValidEmail = (email: string): boolean => {
   return email === import.meta.env.VITE_VALID_MAIL_ADDRESSES;

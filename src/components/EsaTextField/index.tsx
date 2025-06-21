@@ -1,13 +1,8 @@
 import React from 'react';
 import { outlinedInputClasses, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import { EsaTextFieldProps } from '../../types/components';
 
-type EsaTextFieldProps = {
-  sending: boolean;
-  text: string;
-  // eslint-disable-next-line no-unused-vars
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-};
 
 const ContentTextField = styled(TextField)({
   [`& .${outlinedInputClasses.input}`]: {
