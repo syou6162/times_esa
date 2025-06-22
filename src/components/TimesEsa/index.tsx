@@ -230,7 +230,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {selectedDate ? selectedDate : '今日'}
+        {selectedDate || format(new Date(), 'yyyy-MM-dd')}
       </a>
       {`は${getPostsCount(esaText)}個つぶやいたよ`}
       {!selectedDate && (
