@@ -46,16 +46,17 @@ export function formatDateStringToCategory(date: DateString): DailyReportCategor
 }
 
 /**
- * 指定された日数分の過去の日付カテゴリを生成する
+ * 指定された日数分の過去の日付カテゴリを生成する（今日を除く）
  * @param days - 取得する日数（デフォルト: 10）
  * @param baseDate - 基準日（デフォルト: 今日）
- * @returns 日報カテゴリの配列（新しい日付順）
+ * @returns 日報カテゴリの配列（新しい日付順、今日を除く）
  */
 export function getDateRangeCategories(days: number = 10, baseDate: Date = new Date()): DailyReportCategory[] {
   const categories: DailyReportCategory[] = [];
-  const date = new Date(baseDate);
   
-  // 基準日から過去に遡って日付を生成
+  const date = new Date(baseDate);
+  date.setDate(date.getDate() - 1);
+  
   for (let i = 0; i < days; i++) {
     categories.push(formatDateToCategory(date));
     date.setDate(date.getDate() - 1);
