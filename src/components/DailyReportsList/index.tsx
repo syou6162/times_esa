@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { List } from '@mui/material';
+import { format } from 'date-fns';
 import { apiClient } from '../../api/client';
 import type { DailyReportSummary } from '../../../types/api';
 import type { DailyReportsListProps } from '../../types/components';
@@ -50,9 +51,15 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
     return <DailyReportsEmpty />;
   }
 
+  const todayDateString = format(new Date(), 'yyyy-MM-dd');
+  
+  const filteredReports = selectedDate 
+    ? reports.filter(report => report.date !== todayDateString)
+    : reports;
+
   return (
     <List sx={{ p: 0 }}>
-      {reports.map((report) => (
+      {filteredReports.map((report) => (
         <DailyReportItem
           key={report.date}
           report={report}
