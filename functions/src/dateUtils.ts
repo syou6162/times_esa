@@ -53,9 +53,8 @@ export function formatDateStringToCategory(date: DateString): DailyReportCategor
  */
 export function getDateRangeCategories(days: number = 10, baseDate: Date = new Date()): DailyReportCategory[] {
   const categories: DailyReportCategory[] = [];
-  const date = new Date(baseDate);
   
-  // 今日を除外して昨日から過去に遡って日付を生成
+  const date = new Date(baseDate);
   date.setDate(date.getDate() - 1);
   
   for (let i = 0; i < days; i++) {
