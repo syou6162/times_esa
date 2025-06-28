@@ -10,7 +10,7 @@
     "@mui/material": "7.1.2",
     "@mui/system": "7.1.1",
     "@types/node": "22.15.33",
-    "@vitejs/plugin-react": "4.5.2",
+    "@vitejs/plugin-react": "4.6.0",
     "date-fns": "4.1.0",
     "firebase": "11.9.1",
     "firebaseui": "6.1.0",
