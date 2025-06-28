@@ -9,7 +9,7 @@
     "@mui/lab": "5.0.0-alpha.176",
     "@mui/material": "7.1.2",
     "@mui/system": "7.1.1",
-    "@types/node": "22.15.32",
+    "@types/node": "22.15.33",
     "@vitejs/plugin-react": "4.5.2",
     "date-fns": "4.1.0",
     "firebase": "11.9.1",
