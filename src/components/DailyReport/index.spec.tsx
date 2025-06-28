@@ -64,4 +64,60 @@ describe('DailyReportが正しく表示される', () => {
       expect(renderResult.queryByText("hello world")).toBeNull();
     });
   });
+
+  it('isReadOnly=trueの時、Updateボタンが表示されない', () => {
+    const props: DailyReportProps = {
+      fetching: false,
+      fetchErrorMessage: "",
+      esaText: "test text",
+      esaHtml: "<p>test html</p>",
+      reloadDailyReport: () => { },
+      isReadOnly: true
+    }
+    const renderResult = render(<DailyReport {...props} />)
+    
+    const updateButton = renderResult.queryByText('Update')
+    expect(updateButton).toBeNull()
+    
+    expect(renderResult.getByText('html')).toBeTruthy()
+    expect(renderResult.getByText('text')).toBeTruthy()
+    expect(renderResult.getByText('share')).toBeTruthy()
+  })
+
+  it('isReadOnly=falseの時、Updateボタンが表示される', () => {
+    const props: DailyReportProps = {
+      fetching: false,
+      fetchErrorMessage: "",
+      esaText: "test text",
+      esaHtml: "<p>test html</p>",
+      reloadDailyReport: () => { },
+      isReadOnly: false
+    }
+    const renderResult = render(<DailyReport {...props} />)
+    
+    const updateButton = renderResult.getByText('Update')
+    expect(updateButton).toBeTruthy()
+    
+    expect(renderResult.getByText('html')).toBeTruthy()
+    expect(renderResult.getByText('text')).toBeTruthy()
+    expect(renderResult.getByText('share')).toBeTruthy()
+  })
+
+  it('isReadOnlyが未指定の時、Updateボタンが表示される', () => {
+    const props: DailyReportProps = {
+      fetching: false,
+      fetchErrorMessage: "",
+      esaText: "test text",
+      esaHtml: "<p>test html</p>",
+      reloadDailyReport: () => { }
+    }
+    const renderResult = render(<DailyReport {...props} />)
+    
+    const updateButton = renderResult.getByText('Update')
+    expect(updateButton).toBeTruthy()
+    
+    expect(renderResult.getByText('html')).toBeTruthy()
+    expect(renderResult.getByText('text')).toBeTruthy()
+    expect(renderResult.getByText('share')).toBeTruthy()
+  })
 });
