@@ -18,6 +18,10 @@ const mockecdGetAuth = getAuth;
 
 vi.mock('../StyledFirebaseAuth');
 
+vi.mock('date-fns', () => ({
+  format: vi.fn(() => '2025-06-25'),
+}));
+
 describe('Bodyが正しく表示される', () => {
   it('firebaseの認証が表示されていない状態', () => {
     const props: BodyProps = {

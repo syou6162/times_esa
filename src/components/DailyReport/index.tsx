@@ -142,19 +142,20 @@ export const DailyReport: React.FC<DailyReportProps> = (props: DailyReportProps)
 
   return (
     <div>
-      <Button
-        style={{
-          margin: '3px',
-          textTransform: 'none',
-        }}
-        variant="contained"
-        size="small"
-        color="secondary"
-        onClick={props.reloadDailyReport}
-        disabled={props.isReadOnly}
-      >
-        Update
-      </Button>
+      {!props.isReadOnly && (
+        <Button
+          style={{
+            margin: '3px',
+            textTransform: 'none',
+          }}
+          variant="contained"
+          size="small"
+          color="secondary"
+          onClick={props.reloadDailyReport}
+        >
+          Update
+        </Button>
+      )}
       { getDailyReportTypeButton('html', DailyReportType.HTML) }
       { getDailyReportTypeButton('text', DailyReportType.TEXT) }
       { getDailyReportTypeButton('share', DailyReportType.SHARE) }
