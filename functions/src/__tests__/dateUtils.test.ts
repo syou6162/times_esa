@@ -41,40 +41,40 @@ describe('dateUtils', () => {
   });
 
   describe('getDateRangeCategories', () => {
-    it('デフォルトで10日分の日報カテゴリを生成する', () => {
+    it('デフォルトで10日分の日報カテゴリを生成する（今日を除く）', () => {
       const baseDate = new Date('2024-06-20');
       const categories = getDateRangeCategories(10, baseDate);
       
       expect(categories).toHaveLength(10);
-      expect(categories[0]).toBe('日報/2024/06/20');
-      expect(categories[9]).toBe('日報/2024/06/11');
+      expect(categories[0]).toBe('日報/2024/06/19');
+      expect(categories[9]).toBe('日報/2024/06/10');
     });
 
-    it('指定された日数分の日報カテゴリを生成する', () => {
+    it('指定された日数分の日報カテゴリを生成する（今日を除く）', () => {
       const baseDate = new Date('2024-06-20');
       const categories = getDateRangeCategories(5, baseDate);
       
       expect(categories).toHaveLength(5);
-      expect(categories[0]).toBe('日報/2024/06/20');
-      expect(categories[4]).toBe('日報/2024/06/16');
+      expect(categories[0]).toBe('日報/2024/06/19');
+      expect(categories[4]).toBe('日報/2024/06/15');
     });
 
-    it('月をまたぐ場合も正しく生成される', () => {
+    it('月をまたぐ場合も正しく生成される（今日を除く）', () => {
       const baseDate = new Date('2024-07-02');
       const categories = getDateRangeCategories(5, baseDate);
       
       expect(categories).toHaveLength(5);
-      expect(categories[0]).toBe('日報/2024/07/02');
-      expect(categories[4]).toBe('日報/2024/06/28');
+      expect(categories[0]).toBe('日報/2024/07/01');
+      expect(categories[4]).toBe('日報/2024/06/27');
     });
 
-    it('年をまたぐ場合も正しく生成される', () => {
+    it('年をまたぐ場合も正しく生成される（今日を除く）', () => {
       const baseDate = new Date('2025-01-02');
       const categories = getDateRangeCategories(5, baseDate);
       
       expect(categories).toHaveLength(5);
-      expect(categories[0]).toBe('日報/2025/01/02');
-      expect(categories[4]).toBe('日報/2024/12/29');
+      expect(categories[0]).toBe('日報/2025/01/01');
+      expect(categories[4]).toBe('日報/2024/12/28');
     });
   });
 

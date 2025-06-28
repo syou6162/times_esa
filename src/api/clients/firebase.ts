@@ -62,7 +62,8 @@ export class FirebaseApiClient implements ApiClient {
 
   getRecentDailyReports(): Promise<HttpsCallableResult<RecentDailyReportsResponse>> {
     return callFirebaseFunction<RecentDailyReportsRequest, RecentDailyReportsResponse>(
-      'recentDailyReports'
+      'recentDailyReports',
+      {}
     );
   }
 }
