@@ -19,7 +19,7 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
-    "@types/node": "22.15.32",
+    "@types/node": "22.16.3",
     "@types/request": "2.48.12",
     "axios": "1.10.0",
     "esa-node": "0.2.2",
@@ -28,10 +28,10 @@
     "request": "2.88.2"
   },
   "devDependencies": {
-    "@types/express-serve-static-core": "5.0.6",
-    "@typescript-eslint/eslint-plugin": "8.34.1",
-    "@typescript-eslint/parser": "8.34.1",
-    "eslint": "9.29.0",
+    "@types/express-serve-static-core": "5.0.7",
+    "@typescript-eslint/eslint-plugin": "8.36.0",
+    "@typescript-eslint/parser": "8.36.0",
+    "eslint": "9.31.0",
     "eslint-plugin-import": "2.32.0",
     "typescript": "5.8.3",
     "vitest": "3.2.4"
