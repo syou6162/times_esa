@@ -76,7 +76,7 @@ describe('search', () => {
         { query: 'wip:false' }
       ];
 
-      const result = await searchPosts({ 
+      const result = await searchPosts({
         options,
         page: 2,
         perPage: 50,

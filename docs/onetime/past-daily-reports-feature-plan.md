@@ -16,7 +16,7 @@
 1. **過去の日報の閲覧**
    - 特定の日付の日報を表示できる
    - 過去の日報は読み取り専用（編集不可）
-   
+
 2. **日報リストの表示**
    - 直近10件程度の日報リストを表示（タイトルと日付のみ）
    - リストから選択して該当日の日報を表示
@@ -192,7 +192,7 @@ type ReportListCache = {
    ```typescript
    // 日報リスト取得（タイトルのみ）
    GET /v1/teams/{team_name}/posts?q=category:日報/2024&fields=name,category,updated_at
-   
+
    // 特定日の詳細取得（クリック時）
    GET /v1/teams/{team_name}/posts/{number}
    ```

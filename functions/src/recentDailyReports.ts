@@ -17,7 +17,7 @@ export function createMultipleCategoryQuery(categories: DailyReportCategory[]): 
   if (categories.length === 0) {
     return '';
   }
-  
+
   // 各カテゴリを on: で完全一致検索し、OR で結合
   const queries = categories.map(category => `on:${category}`);
   return queries.join(' OR ');
@@ -51,10 +51,10 @@ export async function getRecentDailyReports(
 ): Promise<{ reports: DailyReportSummarySnakeCase[]; total_count: number }> {
   // 過去N日分のカテゴリを生成
   const categories = getDateRangeCategories(days);
-  
+
   // OR検索クエリを構築
   const query = createMultipleCategoryQuery(categories);
-  
+
   // 検索実行
   const result = await searchPosts({
     options: [{ query }],
@@ -62,7 +62,7 @@ export async function getRecentDailyReports(
     sort: 'updated',
     order: 'desc'
   }, axiosClient);
-  
+
   // 結果を日報サマリー形式に変換
   const reports = result.posts
     .filter((post: EsaPostSnakeCase): post is EsaPostSnakeCase & { category: DailyReportCategory } => {
@@ -70,7 +70,7 @@ export async function getRecentDailyReports(
       return isDailyReportCategory(post.category);
     })
     .map((post) => extractDailyReportSummary(post));
-  
+
   return {
     reports,
     total_count: result.total_count

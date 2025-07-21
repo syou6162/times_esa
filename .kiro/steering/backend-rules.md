@@ -29,7 +29,7 @@ export const myFunction = onCall(
   async (req: CallableRequest<RequestType>) => {
     // 1. 認証チェック（必須）
     checkAuthTokenEmail(req);
-    
+
     // 2. バリデーション
     // 3. ビジネスロジック
     // 4. レスポンス変換（キャメルケース）

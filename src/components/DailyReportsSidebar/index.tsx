@@ -23,7 +23,7 @@ export const DailyReportsSidebar: React.FC<DailyReportsSidebarProps> = ({
               variant="contained"
               fullWidth
               onClick={onTodayClick}
-              sx={{ 
+              sx={{
                 mb: 1,
               }}
             >

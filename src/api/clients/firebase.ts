@@ -21,16 +21,16 @@ const callFirebaseFunction = <TRequest, TResponse>(
   if (!import.meta.env.VITE_API_KEY) {
     throw new Error('Firebase configuration is missing. Please set up Firebase credentials.');
   }
-  
+
   const functions = getFunctions();
   functions.region = functionsRegion;
-  
+
   const callable = httpsCallable<TRequest, TResponse>(
     functions,
     functionName,
     options
   );
-  
+
   return callable(data as TRequest);
 };
 

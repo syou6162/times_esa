@@ -123,7 +123,7 @@ export const createSubmitResponse = (category: string, tags: string[], title: st
   const currentBody = mockDailyReportData.bodyMd;
   const newBodyMd = currentBody + text;
   const newBodyHtml = newBodyMd.replace(/\n/g, '<br>').replace(/---/g, '<hr>');
-  
+
   return {
     updatedAt: new Date().toISOString(),
     url: mockDailyReportData.url,
