@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { 
-  convertEsaPostToCamelCase, 
+import {
+  convertEsaPostToCamelCase,
   convertEsaTagsToCamelCase,
   convertDailyReportSummaryToCamelCase,
   convertRecentDailyReportsResponseToCamelCase

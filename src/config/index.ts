@@ -2,7 +2,7 @@
 export const config = {
   // モックAPIを使用するかどうか
   useMockApi: import.meta.env.VITE_USE_MOCK_API === 'true',
-  
+
   // Firebase設定
   firebase: {
     apiKey: import.meta.env.VITE_API_KEY,
@@ -13,7 +13,7 @@ export const config = {
     appId: import.meta.env.VITE_APP_ID,
     measurementId: import.meta.env.VITE_MEASUREMENT_ID,
   },
-  
+
   // 認証設定
   validMailAddresses: import.meta.env.VITE_VALID_MAIL_ADDRESSES?.split(',') || [],
 } as const;

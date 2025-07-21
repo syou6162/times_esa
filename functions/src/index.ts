@@ -6,20 +6,20 @@ import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
 import { formatCategoryToDate } from './dateUtils';
 import { type DailyReportCategory, type DateString } from '../../types/domain';
-import { 
+import {
   type EsaConfig,
-  type SubmitTextRequest, 
-  type DailyReportRequest, 
-  type RecentDailyReportsRequest, 
-  type EsaErrorResponse 
+  type SubmitTextRequest,
+  type DailyReportRequest,
+  type RecentDailyReportsRequest,
+  type EsaErrorResponse
 } from './types';
-import { 
-  convertEsaPostToCamelCase, 
-  convertEsaTagsToCamelCase, 
+import {
+  convertEsaPostToCamelCase,
+  convertEsaTagsToCamelCase,
   convertRecentDailyReportsResponseToCamelCase,
-  type EsaPostSnakeCase, 
+  type EsaPostSnakeCase,
   type EsaTagsSnakeCase,
-  type EsaSearchResult 
+  type EsaSearchResult
 } from './caseConverter';
 
 setGlobalOptions({ region: 'asia-northeast1' })
@@ -55,22 +55,22 @@ export function createAxiosClient(accessToken?: string): AxiosInstance {
 
 /**
  * 複数のセッションから並行編集されたタイトルをマージする
- * 
+ *
  * times_esaでは情報の喪失を防ぐため、すべての要素を保持する方針を採用。
  * 意図的な置き換えが必要な場合は、esa.io本体から編集することを想定。
- * 
+ *
  * @param oldTitle 既存のタイトル
  * @param newTitle 新しく設定されたタイトル
  * @returns マージされたタイトル（重複は除去、「日報」は特別扱い）
- * 
+ *
  * @example
  * // 基本的なマージ
  * transformTitle("開発", "テスト") // => "開発、テスト"
- * 
+ *
  * // 並行編集（共通要素がある場合）
  * transformTitle("開発、設計", "開発、テスト") // => "開発、設計、テスト"
  * transformTitle("a,b,c", "a,d,e") // => "a、b、c、d、e"
- * 
+ *
  * // 「日報」の特別扱い
  * transformTitle("日報", "開発") // => "開発"
  * transformTitle("日報、開発", "テスト") // => "開発、テスト"
@@ -139,17 +139,17 @@ export async function getDailyReport(
   category: DailyReportCategory,
 ): Promise<EsaPostSnakeCase> {
   let targetDate: DateString;
-  
+
   try {
     // categoryから日付を抽出
     targetDate = formatCategoryToDate(category);
   } catch {
     throw new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません');
   }
-  
+
   try {
     const response = await searchDailyReport(targetDate, axiosClient);
-    
+
     if (response.total_count === 0) {
       throw new functions.https.HttpsError('not-found', '指定された日の日報はまだありません');
     } else if (response.total_count > 1) {
@@ -246,12 +246,12 @@ export const recentDailyReports = onCall(
 
     const { getRecentDailyReports } = await import('./recentDailyReports');
     const days = req.data.days ?? 10; // nullish coalescingで0を許可
-    
+
     // daysパラメータのバリデーション（1〜31の範囲）
     if (days < 1 || days > 31) {
       throw new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください');
     }
-    
+
     try {
       const result = await getRecentDailyReports(days);
       return convertRecentDailyReportsResponseToCamelCase(result);

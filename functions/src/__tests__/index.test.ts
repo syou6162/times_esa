@@ -56,7 +56,7 @@ describe('Firebase Functions Tests', () => {
       // 日報が混在している場合
       expect(transformTitle('開発、日報', 'テスト')).toBe('開発、テスト');
       expect(transformTitle('日報、開発', '日報、テスト')).toBe('開発、テスト');
-      
+
       // 一方が日報のみ、もう一方が日報を含む複数タイトル
       expect(transformTitle('日報', '日報、開発')).toBe('開発');
       expect(transformTitle('日報、開発', '日報')).toBe('開発');
@@ -66,11 +66,11 @@ describe('Firebase Functions Tests', () => {
       // 空文字列と日報 - 日報のみの場合は日報を返す
       expect(transformTitle('', '日報')).toBe('日報');
       expect(transformTitle('日報', '')).toBe('日報');
-      
+
       // スペースのみ（現在の実装ではスペースは保持される）
       expect(transformTitle(' ', 'テスト')).toBe(' 、テスト');
       expect(transformTitle('テスト', ' ')).toBe('テスト、 ');
-      
+
       // カンマやセパレータのみ（空文字列になるため除去される）
       expect(transformTitle(',', 'テスト')).toBe('テスト');
       expect(transformTitle('、', 'テスト')).toBe('テスト');
@@ -81,7 +81,7 @@ describe('Firebase Functions Tests', () => {
       expect(transformTitle('毎日報告', 'テスト')).toBe('毎日報告、テスト');
       expect(transformTitle('日報会議', 'レビュー')).toBe('日報会議、レビュー');
       expect(transformTitle('営業日報', 'ミーティング')).toBe('営業日報、ミーティング');
-      
+
       // 分割された要素が正確に"日報"の場合のみ特別扱い
       expect(transformTitle('日報、毎日報告', 'テスト')).toBe('毎日報告、テスト');
       expect(transformTitle('毎日報告、日報', 'レビュー')).toBe('毎日報告、レビュー');
@@ -91,16 +91,16 @@ describe('Firebase Functions Tests', () => {
       // 並行編集パターン：すべての要素を保持
       // ケース1: 共通の開始部分がある場合
       expect(transformTitle('開発、設計', '開発、テスト')).toBe('開発、設計、テスト');
-      
+
       // ケース2: より複雑な共通要素
       expect(transformTitle('開発、設計、テスト', '開発、レビュー、デプロイ')).toBe('開発、設計、テスト、レビュー、デプロイ');
-      
+
       // ケース3: 一部の要素が共通（順序が異なる）
       expect(transformTitle('a,b,c', 'a,d,e')).toBe('a、b、c、d、e');
-      
+
       // ケース4: 中間の要素が共通
       expect(transformTitle('a,b,c', 'd,b')).toBe('a、b、c、d');
-      
+
       // ケース5: 完全包含も並行編集として扱う
       expect(transformTitle('開発', '開発、テスト')).toBe('開発、テスト');
       expect(transformTitle('開発、テスト', '開発、テスト、レビュー')).toBe('開発、テスト、レビュー');
@@ -109,12 +109,12 @@ describe('Firebase Functions Tests', () => {
     it('should document parallel editing behavior', () => {
       // このテストは仕様を文書化するためのもの
       // times_esaでは情報の喪失を防ぐため、すべての要素を保持する
-      
+
       // 例1: 異なるセッションが異なる作業を追加
       const session1 = '開発、バグ修正';
       const session2 = '開発、新機能追加';
       expect(transformTitle(session1, session2)).toBe('開発、バグ修正、新機能追加');
-      
+
       // 例2: 意図的な置き換えはesa.io本体で行うため、ここでは考慮しない
       const original = '設計、実装、テスト';
       const updated = '設計、レビュー、デプロイ';
@@ -192,7 +192,7 @@ describe('Firebase Functions Tests', () => {
 
     it('should use VALID_EMAIL from environment', () => {
       process.env.VALID_EMAIL = 'different@example.com';
-      
+
       const validContext = {
         auth: {
           uid: 'test-uid',
@@ -279,7 +279,7 @@ describe('Firebase Functions Tests', () => {
 
       // 検証
       expect(mockAxios.get).toHaveBeenCalledTimes(2);
-      
+
       // 検索API呼び出しの検証
       expect(mockAxios.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
@@ -782,7 +782,7 @@ describe('Firebase Functions Tests', () => {
 
     it('認証が失敗した場合、permission-deniedエラーをスローする', async () => {
       const { recentDailyReports } = await import('../index');
-      
+
       const invalidContext: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         auth: {
@@ -794,21 +794,21 @@ describe('Firebase Functions Tests', () => {
       };
 
       await expect(
-         
+
         recentDailyReports.run(invalidContext)
       ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
     });
 
     it('認証なしの場合、permission-deniedエラーをスローする', async () => {
       const { recentDailyReports } = await import('../index');
-      
+
       const noAuthContext: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         auth: null,
       };
 
       await expect(
-         
+
         recentDailyReports.run(noAuthContext)
       ).rejects.toThrow(new functions.https.HttpsError('permission-denied', 'Auth Error'));
     });
@@ -834,8 +834,8 @@ describe('Firebase Functions Tests', () => {
       }));
 
       const { recentDailyReports } = await import('../index');
-      
-       
+
+
       const result = await recentDailyReports.run(mockContext);
 
       expect(mockGetRecentDailyReports).toHaveBeenCalledWith(10); // デフォルト値
@@ -854,13 +854,13 @@ describe('Firebase Functions Tests', () => {
       }));
 
       const { recentDailyReports } = await import('../index');
-      
+
       const contextWithDays: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         data: { days: 20 },
       };
 
-       
+
       await recentDailyReports.run(contextWithDays);
 
       expect(mockGetRecentDailyReports).toHaveBeenCalledWith(20);
@@ -870,25 +870,25 @@ describe('Firebase Functions Tests', () => {
       // モジュールをリセット
       vi.resetModules();
       const { recentDailyReports } = await import('../index');
-      
+
       const contextWithZeroDays: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         data: { days: 0 },
       };
 
       await expect(
-         
+
         recentDailyReports.run(contextWithZeroDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
-      
+
       // 負の数でもテスト
       const contextWithNegativeDays: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         data: { days: -5 },
       };
-      
+
       await expect(
-         
+
         recentDailyReports.run(contextWithNegativeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
     });
@@ -897,25 +897,25 @@ describe('Firebase Functions Tests', () => {
       // モジュールをリセット
       vi.resetModules();
       const { recentDailyReports } = await import('../index');
-      
+
       const contextWithLargeDays: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         data: { days: 32 },
       };
 
       await expect(
-         
+
         recentDailyReports.run(contextWithLargeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
-      
+
       // より大きな値でもテスト
       const contextWithVeryLargeDays: CallableRequest<RecentDailyReportsRequest> = {
         ...mockContext,
         data: { days: 100 },
       };
-      
+
       await expect(
-         
+
         recentDailyReports.run(contextWithVeryLargeDays)
       ).rejects.toThrow(new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください'));
     });
@@ -928,9 +928,9 @@ describe('Firebase Functions Tests', () => {
       }));
 
       const { recentDailyReports } = await import('../index');
-      
+
       await expect(
-         
+
         recentDailyReports.run(mockContext)
       ).rejects.toThrow(new functions.https.HttpsError('internal', '日報リストの取得中にエラーが発生しました'));
     });

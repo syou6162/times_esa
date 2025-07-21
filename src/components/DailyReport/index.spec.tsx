@@ -75,10 +75,10 @@ describe('DailyReportが正しく表示される', () => {
       isReadOnly: true
     }
     const renderResult = render(<DailyReport {...props} />)
-    
+
     const updateButton = renderResult.queryByText('Update')
     expect(updateButton).toBeNull()
-    
+
     expect(renderResult.getByText('html')).toBeTruthy()
     expect(renderResult.getByText('text')).toBeTruthy()
     expect(renderResult.getByText('share')).toBeTruthy()
@@ -94,10 +94,10 @@ describe('DailyReportが正しく表示される', () => {
       isReadOnly: false
     }
     const renderResult = render(<DailyReport {...props} />)
-    
+
     const updateButton = renderResult.getByText('Update')
     expect(updateButton).toBeTruthy()
-    
+
     expect(renderResult.getByText('html')).toBeTruthy()
     expect(renderResult.getByText('text')).toBeTruthy()
     expect(renderResult.getByText('share')).toBeTruthy()
@@ -112,10 +112,10 @@ describe('DailyReportが正しく表示される', () => {
       reloadDailyReport: () => { }
     }
     const renderResult = render(<DailyReport {...props} />)
-    
+
     const updateButton = renderResult.getByText('Update')
     expect(updateButton).toBeTruthy()
-    
+
     expect(renderResult.getByText('html')).toBeTruthy()
     expect(renderResult.getByText('text')).toBeTruthy()
     expect(renderResult.getByText('share')).toBeTruthy()

@@ -12,7 +12,7 @@ import { GoogleUser } from './types';
 import { config } from './config';
 
 const App: React.FC = () => {
-  
+
   // firebaseのonAuthStateChangedを通過したか
   const [hasUserLanded, setHasUserLanded] = useState(false);
   // (validかどうにかに関わらず)ユーザーがサインインしたいか

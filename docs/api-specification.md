@@ -83,7 +83,7 @@ type SubmitTextResponse = {
 
 // esa.io APIエラー
 {
-  "error": "invalid-argument", 
+  "error": "invalid-argument",
   "message": "Bad Request: Invalid category format"
 }
 ```
@@ -232,11 +232,11 @@ function transformTitle(oldTitle: string, newTitle: string): string {
   const result = Array.from(new Set(
     oldTitle.split(/,\s?|、/).concat(newTitle.split(/,\s?|、/))
   )).filter(item => item !== '');
-  
+
   if (result.length === 1 && result[0] === '日報') {
     return '日報';
   }
-  
+
   return result.filter(item => item !== '日報').join('、');
 }
 ```
@@ -247,7 +247,7 @@ function transformTitle(oldTitle: string, newTitle: string): string {
 // 日付からカテゴリへの変換
 // "2024-01-20" → "日報/2024/01/20"
 
-// カテゴリから日付への変換  
+// カテゴリから日付への変換
 // "日報/2024/01/20" → "2024-01-20"
 ```
 
@@ -278,7 +278,7 @@ Authorization: Bearer {ESA_ACCESS_TOKEN}
 # カテゴリ完全一致
 on:日報/2024/01/20
 
-# カテゴリ前方一致  
+# カテゴリ前方一致
 in:日報/2024/01
 
 # タグ検索

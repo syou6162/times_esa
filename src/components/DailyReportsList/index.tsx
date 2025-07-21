@@ -21,9 +21,9 @@ export const DailyReportsList: React.FC<DailyReportsListProps> = React.memo(({
       try {
         setLoading(true);
         setError(null);
-        
+
         const result = await apiClient.getRecentDailyReports();
-        
+
         if (result.data && result.data.reports) {
           setReports(result.data.reports);
         }

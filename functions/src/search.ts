@@ -30,10 +30,10 @@ export async function searchPosts(
 ): Promise<EsaSearchResult> {
   const client = axiosClient || createAxiosClient();
   const config = getEsaConfig();
-  
+
   // 検索クエリを構築
   const query = combineOptions(params.options);
-  
+
   // APIパラメータを構築（esa.ioのデフォルト値に合わせる）
   const apiParams = {
     q: query,
@@ -42,12 +42,12 @@ export async function searchPosts(
     sort: params.sort || 'updated',
     order: params.order || 'desc'
   };
-  
+
   const response = await client.get<EsaSearchResult>(
     `/v1/teams/${config.teamName}/posts`,
     { params: apiParams }
   );
-  
+
   return response.data;
 }
 
@@ -63,20 +63,20 @@ export async function searchDailyReport(
 ): Promise<EsaSearchResult> {
   const client = axiosClient || createAxiosClient();
   const config = getEsaConfig();
-  
+
   // 日付からカテゴリを構築（日報は日付まで含むカテゴリ構造）
   const [year, month, day] = date.split('-');
   const category = `日報/${year}/${month}/${day}`;
-  
+
   // 完全一致検索で特定の日付の日報を取得
   const response = await client.get<EsaSearchResult>(
     `/v1/teams/${config.teamName}/posts`,
-    { 
+    {
       params: {
         q: `on:${category}`
       }
     }
   );
-  
+
   return response.data;
 }

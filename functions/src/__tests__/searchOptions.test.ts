@@ -57,8 +57,8 @@ describe('searchOptions', () => {
     });
 
     it('複数のタグをスペースで結合する', () => {
-      expect(withTags(['重要', '緊急', 'バグ'])).toEqual({ 
-        query: 'tag:重要 tag:緊急 tag:バグ' 
+      expect(withTags(['重要', '緊急', 'バグ'])).toEqual({
+        query: 'tag:重要 tag:緊急 tag:バグ'
       });
     });
 
@@ -83,8 +83,8 @@ describe('searchOptions', () => {
     });
 
     it('スペースを含むタイトルも処理できる', () => {
-      expect(withTitle('2024年6月 日報')).toEqual({ 
-        query: 'title:2024年6月 日報' 
+      expect(withTitle('2024年6月 日報')).toEqual({
+        query: 'title:2024年6月 日報'
       });
     });
   });
@@ -97,7 +97,7 @@ describe('searchOptions', () => {
         withTags(['重要', '緊急']),
         withTitle('6月20日')
       ];
-      
+
       const combinedQuery = combineOptions(options);
       expect(combinedQuery).toBe(
         'in:日報/2024/06 tag:重要 tag:緊急 title:6月20日'
@@ -110,7 +110,7 @@ describe('searchOptions', () => {
         withTags([]),  // 空のタグ
         withTitle('')  // 空のタイトル
       ];
-      
+
       const combinedQuery = combineOptions(options);
       expect(combinedQuery).toBe('in:日報');
     });

@@ -53,15 +53,15 @@ export function formatDateStringToCategory(date: DateString): DailyReportCategor
  */
 export function getDateRangeCategories(days: number = 10, baseDate: Date = new Date()): DailyReportCategory[] {
   const categories: DailyReportCategory[] = [];
-  
+
   const date = new Date(baseDate);
   date.setDate(date.getDate() - 1);
-  
+
   for (let i = 0; i < days; i++) {
     categories.push(formatDateToCategory(date));
     date.setDate(date.getDate() - 1);
   }
-  
+
   return categories;
 }
 
@@ -75,17 +75,17 @@ export function getDateRangeCategoriesBetween(start: DateString, end: DateString
   const startDate = new Date(start);
   const endDate = new Date(end);
   const categories: DailyReportCategory[] = [];
-  
+
   if (startDate > endDate) {
     throw new Error('開始日は終了日より前である必要があります');
   }
-  
+
   const current = new Date(endDate);
   while (current >= startDate) {
     categories.push(formatDateToCategory(current));
     current.setDate(current.getDate() - 1);
   }
-  
+
   return categories;
 }
 

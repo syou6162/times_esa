@@ -44,7 +44,7 @@ describe('dateUtils', () => {
     it('デフォルトで10日分の日報カテゴリを生成する（今日を除く）', () => {
       const baseDate = new Date('2024-06-20');
       const categories = getDateRangeCategories(10, baseDate);
-      
+
       expect(categories).toHaveLength(10);
       expect(categories[0]).toBe('日報/2024/06/19');
       expect(categories[9]).toBe('日報/2024/06/10');
@@ -53,7 +53,7 @@ describe('dateUtils', () => {
     it('指定された日数分の日報カテゴリを生成する（今日を除く）', () => {
       const baseDate = new Date('2024-06-20');
       const categories = getDateRangeCategories(5, baseDate);
-      
+
       expect(categories).toHaveLength(5);
       expect(categories[0]).toBe('日報/2024/06/19');
       expect(categories[4]).toBe('日報/2024/06/15');
@@ -62,7 +62,7 @@ describe('dateUtils', () => {
     it('月をまたぐ場合も正しく生成される（今日を除く）', () => {
       const baseDate = new Date('2024-07-02');
       const categories = getDateRangeCategories(5, baseDate);
-      
+
       expect(categories).toHaveLength(5);
       expect(categories[0]).toBe('日報/2024/07/01');
       expect(categories[4]).toBe('日報/2024/06/27');
@@ -71,7 +71,7 @@ describe('dateUtils', () => {
     it('年をまたぐ場合も正しく生成される（今日を除く）', () => {
       const baseDate = new Date('2025-01-02');
       const categories = getDateRangeCategories(5, baseDate);
-      
+
       expect(categories).toHaveLength(5);
       expect(categories[0]).toBe('日報/2025/01/01');
       expect(categories[4]).toBe('日報/2024/12/28');
@@ -81,7 +81,7 @@ describe('dateUtils', () => {
   describe('getDateRangeCategoriesBetween', () => {
     it('2つの日付間の日報カテゴリを生成する', () => {
       const categories = getDateRangeCategoriesBetween('2024-06-18', '2024-06-20');
-      
+
       expect(categories).toHaveLength(3);
       expect(categories[0]).toBe('日報/2024/06/20');
       expect(categories[1]).toBe('日報/2024/06/19');
@@ -90,7 +90,7 @@ describe('dateUtils', () => {
 
     it('開始日と終了日が同じ場合、1つのカテゴリを返す', () => {
       const categories = getDateRangeCategoriesBetween('2024-06-20', '2024-06-20');
-      
+
       expect(categories).toHaveLength(1);
       expect(categories[0]).toBe('日報/2024/06/20');
     });

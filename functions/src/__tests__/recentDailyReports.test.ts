@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { 
-  createMultipleCategoryQuery, 
+import {
+  createMultipleCategoryQuery,
   extractDailyReportSummary,
-  getRecentDailyReports 
+  getRecentDailyReports
 } from '../recentDailyReports';
 import * as search from '../search';
 import type { EsaPostSnakeCase } from '../caseConverter';
@@ -49,7 +49,7 @@ describe('recentDailyReports', () => {
       } as EsaPostSnakeCase & { category: string; updated_at: string };
 
       const summary = extractDailyReportSummary(post);
-      
+
       expect(summary).toEqual({
         date: '2024-06-20',
         title: '開発、テスト',

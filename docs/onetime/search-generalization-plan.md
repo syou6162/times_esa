@@ -74,7 +74,7 @@ describe('transformTitle', () => {
 - run: npm --prefix functions run test
 ```
 
-**完了条件**: 
+**完了条件**:
 - [ ] 既存機能の基本的なテストが書かれている
 - [ ] GitHub Actionsでテストが自動実行される
 - [ ] テストが失敗したらマージできない
@@ -119,9 +119,9 @@ describe('transformTitle', () => {
 
 ```typescript
 // 検索オプションの例
-export const withCategory = (category: string) => 
-  (config: SearchConfig) => { 
-    config.categoryQuery = `category:${category}`; 
+export const withCategory = (category: string) =>
+  (config: SearchConfig) => {
+    config.categoryQuery = `category:${category}`;
   };
 ```
 

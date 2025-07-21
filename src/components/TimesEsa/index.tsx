@@ -165,8 +165,8 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
               width: 280,
               bgcolor: '#1a1a1a',
             },
@@ -200,9 +200,9 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
       )}
 
       {/* メインコンテンツ */}
-      <Container maxWidth={false} sx={{ 
-        flexGrow: 1, 
-        overflow: 'auto', 
+      <Container maxWidth={false} sx={{
+        flexGrow: 1,
+        overflow: 'auto',
         p: 3,
         pt: 1,
       }}>

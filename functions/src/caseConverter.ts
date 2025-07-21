@@ -5,7 +5,7 @@
 
 import { type DateString, type DailyReportCategory } from '../../types/domain';
 // 変換後の型定義をインポート
-import type { 
+import type {
   EsaPost,
   EsaTags,
   DailyReportSummary,

@@ -41,7 +41,7 @@ export class MockApiClient implements ApiClient {
     }
 
     const dateString = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`;
-    
+
     // モックレポートを返す（日付に応じて内容を少し変える）
     const mockReport = {
       ...mockDailyReportData,
@@ -49,7 +49,7 @@ export class MockApiClient implements ApiClient {
       bodyMd: mockDailyReportData.bodyMd.replace(/今日/g, dateString),
       bodyHtml: mockDailyReportData.bodyHtml.replace(/今日/g, dateString),
     };
-    
+
     return createMockResponse(mockReport);
   }
 

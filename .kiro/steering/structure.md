@@ -14,7 +14,7 @@ inclusion: always
 ```
 times_esa/
 ├── .kiro/               # Kiro設定・スペック
-├── docs/                # プロジェクトドキュメント  
+├── docs/                # プロジェクトドキュメント
 ├── src/                 # フロントエンド
 │   ├── components/      # Reactコンポーネント
 │   ├── api/            # API関連
