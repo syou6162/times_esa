@@ -14,9 +14,9 @@
     "date-fns": "4.1.0",
     "firebase": "12.0.0",
     "firebaseui": "6.1.0",
-    "react": "19.1.0",
+    "react": "19.1.1",
     "react-copy-to-clipboard": "5.1.0",
-    "react-dom": "19.1.0",
+    "react-dom": "19.1.1",
     "typescript": "5.8.3",
     "web-vitals": "5.0.3"
   },
