@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Box, Typography, Chip, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import DailyReport from '../DailyReport';
 import { EsaSubmitForm } from '../EsaSubmitForm';
@@ -155,6 +157,29 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
         </IconButton>
       )}
 
+      {/* テーマ切り替えボタン */}
+      <IconButton
+        onClick={props.toggleColorMode}
+        color="primary"
+        aria-label="toggle theme"
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+          zIndex: theme.zIndex.drawer + 1,
+          bgcolor: 'action.hover',
+          boxShadow: 1,
+          '&:hover': {
+            bgcolor: 'background.paper',
+            transform: 'scale(1.05)',
+            boxShadow: 2,
+          },
+          transition: 'all 0.2s',
+        }}
+      >
+        {props.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+
       {/* サイドバー/ドロワー */}
       {isMobile ? (
         <Drawer
@@ -168,7 +193,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: 280,
-              bgcolor: '#1a1a1a',
+              bgcolor: 'background.paper',
             },
           }}
         >
@@ -187,7 +212,7 @@ const TimesEsa: React.FC<TimesEsaProps> = (props: TimesEsaProps) => {
             borderRight: 1,
             borderColor: 'divider',
             overflow: 'auto',
-            bgcolor: '#1a1a1a',
+            bgcolor: 'background.paper',
           }}
         >
           <DailyReportsSidebar

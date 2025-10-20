@@ -2,6 +2,7 @@
 
 import { Auth } from 'firebase/auth';
 import { AutocompleteProps } from '@mui/material/Autocomplete';
+import { PaletteMode } from '@mui/material/styles';
 import { GoogleUser, InputChangeHandler, TextAreaChangeHandler } from './index';
 import type { DateString } from '../../types/domain';
 
@@ -11,6 +12,8 @@ export type BodyProps = {
   isSignedIn: boolean;
   user: GoogleUser;
   firebaseAuth: Auth | null;
+  toggleColorMode: () => void;
+  mode: PaletteMode;
 }
 
 // DailyReport Component Props
@@ -91,6 +94,8 @@ export type EsaTagsFieldProps = {
 // TimesEsa Props
 export type TimesEsaProps = {
   canFetchCloudFunctionEndpoints: boolean;
+  toggleColorMode: () => void;
+  mode: PaletteMode;
 }
 
 // DailyReportsList Props

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ThemeProvider, createTheme, PaletteMode } from '@mui/material/styles';
 import './App.css';
 
 import {
@@ -12,6 +12,11 @@ import { GoogleUser } from './types';
 import { config } from './config';
 
 const App: React.FC = () => {
+  // テーマモードの状態管理
+  const [mode, setMode] = useState<PaletteMode>(() => {
+    const savedMode = localStorage.getItem('themeMode');
+    return (savedMode as PaletteMode) || 'dark';
+  });
 
   // firebaseのonAuthStateChangedを通過したか
   const [hasUserLanded, setHasUserLanded] = useState(false);
@@ -22,6 +27,15 @@ const App: React.FC = () => {
     displayName: '',
     photoURL: '',
   });
+
+  // テーマ切り替え関数
+  const toggleColorMode = () => {
+    setMode((prevMode) => {
+      const newMode = prevMode === 'light' ? 'dark' : 'light';
+      localStorage.setItem('themeMode', newMode);
+      return newMode;
+    });
+  };
 
   useEffect(() => {
     // モックモードの場合は認証をスキップ
@@ -55,31 +69,37 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#3f51b5',
-      },
-      secondary: {
-        main: '#e0e0e0',
-      },
-      success: {
-        main: '#c51162',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Hiragino Sans"',
-        '"Hiragino Kaku Gothic ProN"',
-        '"Yu Gothic"',
-        'Meiryo',
-        'IPAGothic',
-        'sans-serif'
-      ].join(','),
-    },
-  });
+  // テーマを動的に生成
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: '#3f51b5',
+          },
+          secondary: {
+            main: '#e0e0e0',
+          },
+          success: {
+            main: '#c51162',
+          },
+        },
+        typography: {
+          fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Hiragino Sans"',
+            '"Hiragino Kaku Gothic ProN"',
+            '"Yu Gothic"',
+            'Meiryo',
+            'IPAGothic',
+            'sans-serif'
+          ].join(','),
+        },
+      }),
+    [mode]
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,6 +110,8 @@ const App: React.FC = () => {
           isSignedIn={isSignedIn}
           user={user}
           firebaseAuth={firebaseAuth}
+          toggleColorMode={toggleColorMode}
+          mode={mode}
         />
         <Footer
           isSignedIn={isSignedIn}

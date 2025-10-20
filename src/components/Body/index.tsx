@@ -43,6 +43,8 @@ export const Body: React.FC<BodyProps> = (props: BodyProps) => {
     <TimesEsa
       key={`canFetchCloudFunctionEndpoints_${props.isSignedIn}`}
       canFetchCloudFunctionEndpoints={props.isSignedIn}
+      toggleColorMode={props.toggleColorMode}
+      mode={props.mode}
     />
   );
 };
