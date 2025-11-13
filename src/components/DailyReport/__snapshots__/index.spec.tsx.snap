@@ -39,7 +39,7 @@ exports[`DailyReportが正しく表示される > shareをクリックすると�
       <div>
         <div>
           <div
-            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left;"
           >
             12:34 RAW TEXT
           </div>
@@ -67,7 +67,7 @@ exports[`DailyReportが正しく表示される > shareをクリックすると�
         </div>
         <div>
           <div
-            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+            style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left;"
           >
             13:15 hoge
           </div>
@@ -136,7 +136,7 @@ exports[`DailyReportが正しく表示される > textをクリックするとte
     </button>
     <div>
       <div
-        style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left; align-items: left;"
+        style="white-space: pre-wrap; word-wrap: break-word; text-align: left; justify-content: left;"
       >
         RAW TEXT
       </div>
@@ -182,7 +182,7 @@ exports[`DailyReportが正しく表示される > ディフォルトではhtml�
     </button>
     <div>
       <div
-        style="white-space: normal; overflow: hidden; text-align: left; justify-content: left; align-items: left;"
+        style="white-space: normal; overflow: hidden; text-align: left; justify-content: left;"
       >
         <span>
           HTML TEXT

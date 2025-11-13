@@ -200,7 +200,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
         </button>
       </form>
       <hr
-        style="border-top: 2px dashed #bbb;"
+        style="border-top: 2px dashed rgb(187, 187, 187); border-bottom: medium;"
       />
       <div>
         <button
@@ -237,7 +237,7 @@ exports[`Bodyが正しく表示される > firebaseの認証が表示されて�
         </button>
         <div>
           <div
-            style="white-space: normal; overflow: hidden; text-align: left; justify-content: left; align-items: left;"
+            style="white-space: normal; overflow: hidden; text-align: left; justify-content: left;"
           />
         </div>
       </div>
