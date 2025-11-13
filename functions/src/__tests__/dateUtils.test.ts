@@ -76,6 +76,43 @@ describe('dateUtils', () => {
       expect(categories[0]).toBe('日報/2025/01/01');
       expect(categories[4]).toBe('日報/2024/12/28');
     });
+
+    // TDDテスト: JST早朝のタイムゾーンバグを再現
+    it('JST早朝（UTC前日夜）でも正しくJST基準で昨日の日報を含む', () => {
+      // 実際のバグシナリオ:
+      // JST: 2024-11-13 08:00（朝8時） - ユーザーがアクセスした時刻
+      // UTC: 2024-11-12 23:00（前日夜11時） - Firebase Functionsのタイムゾーン
+
+      // Firebase Functions上では new Date() がUTCで解釈されるため、
+      // このタイムスタンプは getDate() で 12 を返す
+      const utcEarlyMorningJST = new Date('2024-11-12T23:00:00Z'); // UTC 11/12 23:00 = JST 11/13 08:00
+      const categories = getDateRangeCategories(3, utcEarlyMorningJST);
+
+      // 期待値: JST基準で「今日」は11/13なので、昨日（11/12）から始まるべき
+      expect(categories).toEqual([
+        '日報/2024/11/12', // JST基準の昨日
+        '日報/2024/11/11', // 一昨日
+        '日報/2024/11/10'  // 3日前
+      ]);
+
+      // 現在の実装の挙動: UTC基準で「今日」が11/12なので、昨日（11/11）から始まってしまう
+      // 実際の結果: ['日報/2024/11/11', '日報/2024/11/10', '日報/2024/11/09']
+      // これにより JST 11/12（昨日）の日報が検索対象から漏れる
+    });
+
+    it('JST日中（UTC同日）の場合は正しく動作する', () => {
+      // JST: 2024-11-13 15:00（午後3時）
+      // UTC: 2024-11-13 06:00（朝6時）
+      const utcAfternoonJST = new Date('2024-11-13T06:00:00Z'); // UTC 11/13 06:00 = JST 11/13 15:00
+      const categories = getDateRangeCategories(3, utcAfternoonJST);
+
+      // この場合は現在の実装でも正しく動作する（UTCとJSTで日付が一致）
+      expect(categories).toEqual([
+        '日報/2024/11/12',
+        '日報/2024/11/11',
+        '日報/2024/11/10'
+      ]);
+    });
   });
 
   describe('getDateRangeCategoriesBetween', () => {
