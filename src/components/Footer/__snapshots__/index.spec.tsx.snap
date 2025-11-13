@@ -4,7 +4,7 @@ exports[`Footerが正しく表示される > invalidなユーザーでログイ�
 <DocumentFragment>
   <footer>
     <hr
-      style="border-top: 2px dashed #bbb; clear: both;"
+      style="border-top: 2px dashed rgb(187, 187, 187); border-bottom: medium; clear: both;"
     />
     <div>
       <a
@@ -28,7 +28,7 @@ exports[`Footerが正しく表示される > validなユーザーでログイン
 <DocumentFragment>
   <footer>
     <hr
-      style="border-top: 2px dashed #bbb; clear: both;"
+      style="border-top: 2px dashed rgb(187, 187, 187); border-bottom: medium; clear: both;"
     />
     <div>
       ようこそ valid (
@@ -48,7 +48,7 @@ exports[`Footerが正しく表示される > validなユーザーでログイン
       Sign-out
     </button>
     <hr
-      style="border-top: 2px dashed #bbb; clear: both;"
+      style="border-top: 2px dashed rgb(187, 187, 187); border-bottom: medium; clear: both;"
     />
     <div>
       <a
@@ -72,7 +72,7 @@ exports[`Footerが正しく表示される > サインインしていない状�
 <DocumentFragment>
   <footer>
     <hr
-      style="border-top: 2px dashed #bbb; clear: both;"
+      style="border-top: 2px dashed rgb(187, 187, 187); border-bottom: medium; clear: both;"
     />
     <div>
       <a
