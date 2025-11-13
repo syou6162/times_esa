@@ -22,6 +22,10 @@ import {
   type EsaSearchResult
 } from './caseConverter';
 
+// Firebase FunctionsをJSTタイムゾーンで動作させる
+// これにより、日報の日付処理がすべて日本時間基準になる
+process.env.TZ = 'Asia/Tokyo';
+
 setGlobalOptions({ region: 'asia-northeast1' })
 
 
