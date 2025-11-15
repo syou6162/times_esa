@@ -15,11 +15,11 @@
     "test:coverage": "vitest --coverage"
   },
   "engines": {
-    "node": "22"
+    "node": "24"
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
-    "@types/node": "22.19.1",
+    "@types/node": "24.10.1",
     "@types/request": "2.48.13",
     "axios": "1.13.2",
     "esa-node": "0.2.2",
