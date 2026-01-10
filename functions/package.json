@@ -28,7 +28,7 @@
     "request": "2.88.2"
   },
   "devDependencies": {
-    "@types/express-serve-static-core": "5.1.0",
+    "@types/express-serve-static-core": "5.1.1",
     "@typescript-eslint/eslint-plugin": "8.52.0",
     "@typescript-eslint/parser": "8.52.0",
     "eslint": "9.39.2",
