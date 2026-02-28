@@ -19,7 +19,7 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
-    "@types/node": "24.10.15",
+    "@types/node": "24.11.0",
     "@types/request": "2.48.13",
     "axios": "1.13.5",
     "esa-node": "0.2.2",
