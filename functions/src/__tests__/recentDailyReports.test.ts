@@ -6,9 +6,17 @@ import {
 } from '../recentDailyReports';
 import * as search from '../search';
 import type { EsaPostSnakeCase } from '../caseConverter';
+import type { EsaHttpClient } from '../esaHttpClient';
 
 // searchPostsをモック
 vi.mock('../search');
+
+// テスト用のダミークライアント
+const mockEsaClient = {
+  get: vi.fn(),
+  post: vi.fn(),
+  patch: vi.fn(),
+} as unknown as EsaHttpClient;
 
 describe('recentDailyReports', () => {
   beforeEach(() => {
@@ -90,15 +98,15 @@ describe('recentDailyReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentDailyReports(5);
+      const result = await getRecentDailyReports(mockEsaClient, 5);
 
       // searchPostsが正しいパラメータで呼ばれたか確認
-      expect(searchPostsMock).toHaveBeenCalledWith({
+      expect(searchPostsMock).toHaveBeenCalledWith(mockEsaClient, {
         options: [{ query: expect.stringContaining('on:日報/') as string }],
         perPage: 5,
         sort: 'updated',
         order: 'desc'
-      }, undefined);
+      });
 
       // 結果の確認
       expect(result.reports).toHaveLength(2);
@@ -149,7 +157,7 @@ describe('recentDailyReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentDailyReports(5);
+      const result = await getRecentDailyReports(mockEsaClient, 5);
 
       // 日報のみが含まれることを確認
       expect(result.reports).toHaveLength(1);
@@ -165,7 +173,7 @@ describe('recentDailyReports', () => {
       const searchPostsMock = vi.mocked(search.searchPosts);
       searchPostsMock.mockResolvedValue(mockSearchResult);
 
-      const result = await getRecentDailyReports(10);
+      const result = await getRecentDailyReports(mockEsaClient, 10);
 
       expect(result.reports).toHaveLength(0);
       expect(result.total_count).toBe(0);

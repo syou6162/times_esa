@@ -2,9 +2,9 @@
  * ESA APIを使用した汎用的な投稿検索機能
  */
 
-import { AxiosInstance } from 'axios';
+import { type EsaHttpClient } from './esaHttpClient';
 import { SearchOption, combineOptions } from './searchOptions';
-import { createAxiosClient, getEsaConfig } from './index';
+import { getEsaConfig } from './index';
 import { type EsaSearchResult } from './caseConverter';
 
 /**
@@ -20,15 +20,14 @@ export interface SearchParams {
 
 /**
  * 汎用的な投稿検索関数
+ * @param client - esa.io 用 HTTP クライアント
  * @param params - 検索パラメータ
- * @param axiosClient - Axiosクライアント（テスト用にオプション）
  * @returns 検索結果
  */
 export async function searchPosts(
-  params: SearchParams,
-  axiosClient?: AxiosInstance
+  client: EsaHttpClient,
+  params: SearchParams
 ): Promise<EsaSearchResult> {
-  const client = axiosClient || createAxiosClient();
   const config = getEsaConfig();
 
   // 検索クエリを構築
@@ -43,25 +42,22 @@ export async function searchPosts(
     order: params.order || 'desc'
   };
 
-  const response = await client.get<EsaSearchResult>(
+  return await client.get<EsaSearchResult>(
     `/v1/teams/${config.teamName}/posts`,
     { params: apiParams }
   );
-
-  return response.data;
 }
 
 /**
  * 日報を検索する関数（特定の日付のカテゴリで検索）
+ * @param client - esa.io 用 HTTP クライアント
  * @param date - 日付（YYYY-MM-DD形式）
- * @param axiosClient - Axiosクライアント（テスト用にオプション）
  * @returns 検索結果
  */
 export async function searchDailyReport(
-  date: string,
-  axiosClient?: AxiosInstance
+  client: EsaHttpClient,
+  date: string
 ): Promise<EsaSearchResult> {
-  const client = axiosClient || createAxiosClient();
   const config = getEsaConfig();
 
   // 日付からカテゴリを構築（日報は日付まで含むカテゴリ構造）
@@ -69,7 +65,7 @@ export async function searchDailyReport(
   const category = `日報/${year}/${month}/${day}`;
 
   // 完全一致検索で特定の日付の日報を取得
-  const response = await client.get<EsaSearchResult>(
+  return await client.get<EsaSearchResult>(
     `/v1/teams/${config.teamName}/posts`,
     {
       params: {
@@ -77,6 +73,4 @@ export async function searchDailyReport(
       }
     }
   );
-
-  return response.data;
 }
