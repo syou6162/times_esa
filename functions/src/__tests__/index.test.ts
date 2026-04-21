@@ -2,15 +2,24 @@ import * as functions from 'firebase-functions';
 import { CallableRequest } from 'firebase-functions/v2/https';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
-// Mock axios before importing the module
-vi.mock('axios');
-
-// Import the functions to test
 import { transformTitle, checkAuthTokenEmail, getDailyReport, createOrUpdatePost, getTagList } from '../index';
 import { type EsaPostSnakeCase, type EsaTagsSnakeCase, type EsaSearchResult } from '../caseConverter';
 import { type RecentDailyReportsRequest } from '../types';
-import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import type { EsaHttpClient } from '../esaHttpClient';
+import { EsaHttpError, type EsaHttpClient } from '../esaHttpClient';
+
+type MockEsaHttpClient = {
+  get: ReturnType<typeof vi.fn>;
+  post: ReturnType<typeof vi.fn>;
+  patch: ReturnType<typeof vi.fn>;
+};
+
+function createMockEsaClient(): MockEsaHttpClient {
+  return {
+    get: vi.fn(),
+    post: vi.fn(),
+    patch: vi.fn(),
+  };
+}
 
 
 describe('Firebase Functions Tests', () => {
@@ -221,30 +230,17 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('getDailyReport', () => {
-    // Axiosモックのタイプ定義（詳細取得用）
-    const mockAxios = {
-      get: vi.fn(),
-    };
-
-    // EsaHttpClient モック（searchDailyReport 用）
-    const mockEsaClientGet = vi.fn();
-    const mockEsaClient = {
-      get: mockEsaClientGet,
-      post: vi.fn(),
-      patch: vi.fn(),
-    } as unknown as EsaHttpClient;
-
+    let mockClient: MockEsaHttpClient;
     const mockEsaConfig = {
       teamName: 'test-team',
       accessToken: 'test-token',
     };
 
     beforeEach(() => {
-      vi.clearAllMocks();
+      mockClient = createMockEsaClient();
     });
 
     it('should return post data when exactly one daily report exists', async () => {
-      // 検索APIのレスポンス（1件の日報）
       const mockPost: EsaPostSnakeCase = {
         body_md: '# 日報\n\n今日の作業内容',
         body_html: '<h1>日報</h1><p>今日の作業内容</p>',
@@ -258,63 +254,43 @@ describe('Firebase Functions Tests', () => {
         total_count: 1,
       };
 
-      const detailResponse: AxiosResponse<EsaPostSnakeCase> = {
-        data: mockPost,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: {},
-        } as InternalAxiosRequestConfig,
-      };
+      // 検索 → 詳細取得の順に client.get が呼ばれる
+      mockClient.get.mockResolvedValueOnce(searchResult);
+      mockClient.get.mockResolvedValueOnce(mockPost);
 
-      // モックの設定
-      // searchDailyReport は EsaHttpClient 経由なので esa クライアントの mock にセット
-      mockEsaClientGet.mockResolvedValueOnce(searchResult);
-      // 詳細取得は引き続き axios 経由
-      mockAxios.get.mockResolvedValueOnce(detailResponse);
+      const result = await getDailyReport(mockClient as unknown as EsaHttpClient, mockEsaConfig, '日報/2024/06/20');
 
-      // 実行
-      const result = await getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaClient, mockEsaConfig, '日報/2024/06/20');
+      expect(mockClient.get).toHaveBeenCalledTimes(2);
 
-      // 検証
-      expect(mockEsaClientGet).toHaveBeenCalledTimes(1);
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-
-      // 検索API呼び出しの検証（EsaHttpClient）
-      expect(mockEsaClientGet).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+      // 検索API
+      expect(mockClient.get).toHaveBeenNthCalledWith(1, '/v1/teams/test-team/posts', {
         params: {
           q: 'on:日報/2024/06/20',
         },
       });
 
-      // 詳細取得API呼び出しの検証（axios）
-      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts/123');
+      // 詳細取得API
+      expect(mockClient.get).toHaveBeenNthCalledWith(2, '/v1/teams/test-team/posts/123');
 
-      // 結果の検証
       expect(result).toEqual(mockPost);
     });
 
     it('should throw not-found error when no daily report exists', async () => {
-      // 検索APIのレスポンス（0件）
       const searchResult: EsaSearchResult = {
         posts: [],
         total_count: 0,
       };
 
-      mockEsaClientGet.mockResolvedValueOnce(searchResult);
+      mockClient.get.mockResolvedValueOnce(searchResult);
 
-      // 実行と検証
-      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaClient, mockEsaConfig, '日報/2024/06/20'))
+      await expect(getDailyReport(mockClient as unknown as EsaHttpClient, mockEsaConfig, '日報/2024/06/20'))
         .rejects
         .toThrow(new functions.https.HttpsError('not-found', '指定された日の日報はまだありません'));
 
-      expect(mockEsaClientGet).toHaveBeenCalledTimes(1);
-      expect(mockAxios.get).not.toHaveBeenCalled();
+      expect(mockClient.get).toHaveBeenCalledTimes(1);
     });
 
     it('should throw already-exists error when multiple daily reports exist', async () => {
-      // 検索APIのレスポンス（複数件）
       const mockPosts: EsaPostSnakeCase[] = [
         {
           body_md: 'post1',
@@ -337,66 +313,39 @@ describe('Firebase Functions Tests', () => {
         total_count: 2,
       };
 
-      mockEsaClientGet.mockResolvedValueOnce(searchResult);
+      mockClient.get.mockResolvedValueOnce(searchResult);
 
-      // 実行と検証
-      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaClient, mockEsaConfig, '日報/2024/06/20'))
+      await expect(getDailyReport(mockClient as unknown as EsaHttpClient, mockEsaConfig, '日報/2024/06/20'))
         .rejects
         .toThrow(new functions.https.HttpsError('already-exists', '複数の日報が存在します'));
 
-      expect(mockEsaClientGet).toHaveBeenCalledTimes(1);
-      expect(mockAxios.get).not.toHaveBeenCalled();
+      expect(mockClient.get).toHaveBeenCalledTimes(1);
     });
 
     it('should throw error for invalid category format', async () => {
       // 曜日付きカテゴリはサポートしない
-      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaClient, mockEsaConfig, '日報/2024/06/20 (金)'))
+      await expect(getDailyReport(mockClient as unknown as EsaHttpClient, mockEsaConfig, '日報/2024/06/20 (金)'))
         .rejects
         .toThrow(new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません'));
 
-      // APIが呼ばれていないことを確認
-      expect(mockAxios.get).not.toHaveBeenCalled();
-      expect(mockEsaClientGet).not.toHaveBeenCalled();
+      expect(mockClient.get).not.toHaveBeenCalled();
     });
 
     it('should throw error for non-date category format', async () => {
-      // 日付形式ではないカテゴリでテスト
-      await expect(getDailyReport(mockAxios as unknown as AxiosInstance, mockEsaClient, mockEsaConfig, 'テストカテゴリ'))
+      await expect(getDailyReport(mockClient as unknown as EsaHttpClient, mockEsaConfig, 'テストカテゴリ'))
         .rejects
         .toThrow(new functions.https.HttpsError('invalid-argument', 'カテゴリの形式が正しくありません'));
 
-      // APIが呼ばれていないことを確認
-      expect(mockAxios.get).not.toHaveBeenCalled();
-      expect(mockEsaClientGet).not.toHaveBeenCalled();
+      expect(mockClient.get).not.toHaveBeenCalled();
     });
   });
 
   describe('createOrUpdatePost', () => {
-    type MockAxiosInstance = {
-      get: ReturnType<typeof vi.fn>;
-      post: ReturnType<typeof vi.fn>;
-      patch: ReturnType<typeof vi.fn>;
-      defaults: { headers: { common: Record<string, unknown> } };
-      interceptors: {
-        request: { use: ReturnType<typeof vi.fn> };
-        response: { use: ReturnType<typeof vi.fn> };
-      };
-    };
-    let mockAxios: MockAxiosInstance;
+    let mockClient: MockEsaHttpClient;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
-      // Create a mock axios instance
-      mockAxios = {
-        get: vi.fn(),
-        post: vi.fn(),
-        patch: vi.fn(),
-        defaults: { headers: { common: {} } },
-        interceptors: {
-          request: { use: vi.fn() },
-          response: { use: vi.fn() },
-        },
-      };
+      mockClient = createMockEsaClient();
     });
 
     describe('新規投稿作成 (total_count === 0)', () => {
@@ -414,11 +363,11 @@ describe('Firebase Functions Tests', () => {
           body_html: '<p>テスト本文</p>',
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.post.mockResolvedValueOnce({ data: newPost } as AxiosResponse<EsaPostSnakeCase>);
+        mockClient.get.mockResolvedValueOnce(searchResult);
+        mockClient.post.mockResolvedValueOnce(newPost);
 
         const result = await createOrUpdatePost(
-          mockAxios,
+          mockClient as unknown as EsaHttpClient,
           esaConfig,
           '日報/2025/06/20',
           ['test', 'new'],
@@ -427,10 +376,10 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(newPost);
-        expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+        expect(mockClient.get).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           params: { q: 'on:日報/2025/06/20' },
         });
-        expect(mockAxios.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
+        expect(mockClient.post).toHaveBeenCalledWith('/v1/teams/test-team/posts', {
           post: {
             name: 'テストタイトル',
             category: '日報/2025/06/20',
@@ -440,10 +389,9 @@ describe('Firebase Functions Tests', () => {
           },
         });
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.patch).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).toHaveBeenCalledTimes(1);
+        expect(mockClient.patch).not.toHaveBeenCalled();
       });
 
       it('POSTリクエストが失敗した場合、エラーをスローする', async () => {
@@ -452,19 +400,17 @@ describe('Firebase Functions Tests', () => {
           total_count: 0,
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.post.mockRejectedValueOnce({
-          response: {
-            data: {
-              error: 'invalid_token',
-              message: 'Invalid access token',
-            },
-          },
-        });
+        mockClient.get.mockResolvedValueOnce(searchResult);
+        mockClient.post.mockRejectedValueOnce(
+          new EsaHttpError(401, {
+            error: 'invalid_token',
+            message: 'Invalid access token',
+          }),
+        );
 
         await expect(
           createOrUpdatePost(
-            mockAxios,
+            mockClient as unknown as EsaHttpClient,
             esaConfig,
             '日報/2025/06/20',
             ['test'],
@@ -473,10 +419,9 @@ describe('Firebase Functions Tests', () => {
           ),
         ).rejects.toThrow('invalid_token: Invalid access token');
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).toHaveBeenCalledTimes(1);
-        expect(mockAxios.patch).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).toHaveBeenCalledTimes(1);
+        expect(mockClient.patch).not.toHaveBeenCalled();
       });
     });
 
@@ -502,11 +447,11 @@ describe('Firebase Functions Tests', () => {
           body_md: '新規本文\n既存本文',
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.patch.mockResolvedValueOnce({ data: updatedPost } as AxiosResponse<EsaPostSnakeCase>);
+        mockClient.get.mockResolvedValueOnce(searchResult);
+        mockClient.patch.mockResolvedValueOnce(updatedPost);
 
         const result = await createOrUpdatePost(
-          mockAxios,
+          mockClient as unknown as EsaHttpClient,
           esaConfig,
           '日報/2025/06/20',
           ['new'],
@@ -515,7 +460,7 @@ describe('Firebase Functions Tests', () => {
         );
 
         expect(result).toEqual(updatedPost);
-        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+        expect(mockClient.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
             category: '日報/2025/06/20',
@@ -525,10 +470,9 @@ describe('Firebase Functions Tests', () => {
           },
         });
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.patch).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).not.toHaveBeenCalled();
       });
 
       it('空テキストの場合、既存本文のみを保持する', async () => {
@@ -545,11 +489,11 @@ describe('Firebase Functions Tests', () => {
           total_count: 1,
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.patch.mockResolvedValueOnce({ data: existingPost } as AxiosResponse<EsaPostSnakeCase>);
+        mockClient.get.mockResolvedValueOnce(searchResult);
+        mockClient.patch.mockResolvedValueOnce(existingPost);
 
         await createOrUpdatePost(
-          mockAxios,
+          mockClient as unknown as EsaHttpClient,
           esaConfig,
           '日報/2025/06/20',
           [],
@@ -557,7 +501,7 @@ describe('Firebase Functions Tests', () => {
           '', // 空テキスト
         );
 
-        expect(mockAxios.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
+        expect(mockClient.patch).toHaveBeenCalledWith('/v1/teams/test-team/posts/123', {
           post: {
             name: '既存タイトル、新規タイトル',
             category: '日報/2025/06/20',
@@ -567,10 +511,9 @@ describe('Firebase Functions Tests', () => {
           },
         });
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.patch).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).not.toHaveBeenCalled();
       });
 
       it('PATCHリクエストが失敗した場合、エラーをスローする', async () => {
@@ -587,19 +530,17 @@ describe('Firebase Functions Tests', () => {
           total_count: 1,
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-        mockAxios.patch.mockRejectedValueOnce({
-          response: {
-            data: {
-              error: 'rate_limit',
-              message: 'Rate limit exceeded',
-            },
-          },
-        });
+        mockClient.get.mockResolvedValueOnce(searchResult);
+        mockClient.patch.mockRejectedValueOnce(
+          new EsaHttpError(429, {
+            error: 'rate_limit',
+            message: 'Rate limit exceeded',
+          }),
+        );
 
         await expect(
           createOrUpdatePost(
-            mockAxios,
+            mockClient as unknown as EsaHttpClient,
             esaConfig,
             '日報/2025/06/20',
             [],
@@ -608,10 +549,9 @@ describe('Firebase Functions Tests', () => {
           ),
         ).rejects.toThrow('rate_limit: Rate limit exceeded');
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.patch).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.patch).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).not.toHaveBeenCalled();
       });
     });
 
@@ -632,11 +572,11 @@ describe('Firebase Functions Tests', () => {
           total_count: 2,
         };
 
-        mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
+        mockClient.get.mockResolvedValueOnce(searchResult);
 
         await expect(
           createOrUpdatePost(
-            mockAxios,
+            mockClient as unknown as EsaHttpClient,
             esaConfig,
             '日報/2025/06/20',
             [],
@@ -645,36 +585,19 @@ describe('Firebase Functions Tests', () => {
           ),
         ).rejects.toThrow('複数の日報が存在します');
 
-        // エンドポイント呼び出し回数を検証
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
-        expect(mockAxios.post).not.toHaveBeenCalled();
-        expect(mockAxios.patch).not.toHaveBeenCalled();
+        expect(mockClient.get).toHaveBeenCalledTimes(1);
+        expect(mockClient.post).not.toHaveBeenCalled();
+        expect(mockClient.patch).not.toHaveBeenCalled();
       });
     });
   });
 
   describe('getTagList', () => {
-    type MockAxiosInstance = {
-      get: ReturnType<typeof vi.fn>;
-      defaults: { headers: { common: Record<string, unknown> } };
-      interceptors: {
-        request: { use: ReturnType<typeof vi.fn> };
-        response: { use: ReturnType<typeof vi.fn> };
-      };
-    };
-    let mockAxios: MockAxiosInstance;
+    let mockClient: MockEsaHttpClient;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
-      // Create a mock axios instance
-      mockAxios = {
-        get: vi.fn(),
-        defaults: { headers: { common: {} } },
-        interceptors: {
-          request: { use: vi.fn() },
-          response: { use: vi.fn() },
-        },
-      };
+      mockClient = createMockEsaClient();
     });
 
     it('タグ一覧を正常に取得できる', async () => {
@@ -686,14 +609,13 @@ describe('Firebase Functions Tests', () => {
         ],
       };
 
-      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTagsSnakeCase>);
+      mockClient.get.mockResolvedValueOnce(mockTags);
 
-      const result = await getTagList(mockAxios, esaConfig);
+      const result = await getTagList(mockClient as unknown as EsaHttpClient, esaConfig);
 
       expect(result).toEqual(mockTags);
-      // Jest mockのメソッド参照はthisに依存しないため安全
-      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      expect(mockClient.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      expect(mockClient.get).toHaveBeenCalledTimes(1);
     });
 
     it('空のタグ一覧を取得できる', async () => {
@@ -701,21 +623,20 @@ describe('Firebase Functions Tests', () => {
         tags: [],
       };
 
-      mockAxios.get.mockResolvedValueOnce({ data: mockTags } as AxiosResponse<EsaTagsSnakeCase>);
+      mockClient.get.mockResolvedValueOnce(mockTags);
 
-      const result = await getTagList(mockAxios, esaConfig);
+      const result = await getTagList(mockClient as unknown as EsaHttpClient, esaConfig);
 
       expect(result).toEqual(mockTags);
-      // Jest mockのメソッド参照はthisに依存しないため安全
-      expect(mockAxios.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      expect(mockClient.get).toHaveBeenCalledWith('/v1/teams/test-team/tags');
+      expect(mockClient.get).toHaveBeenCalledTimes(1);
     });
 
     it('APIエラーが発生した場合、エラーがスローされる', async () => {
-      mockAxios.get.mockRejectedValueOnce(new Error('Network error'));
+      mockClient.get.mockRejectedValueOnce(new Error('Network error'));
 
-      await expect(getTagList(mockAxios, esaConfig)).rejects.toThrow('Network error');
-      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      await expect(getTagList(mockClient as unknown as EsaHttpClient, esaConfig)).rejects.toThrow('Network error');
+      expect(mockClient.get).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -727,17 +648,6 @@ describe('Firebase Functions Tests', () => {
         // by testing functions that use it
         expect(process.env.ESA_TEAM_NAME).toBe('test-team');
         expect(process.env.ESA_ACCESS_TOKEN).toBe('test-access-token');
-      });
-    });
-
-    describe('createAxiosClient', () => {
-      it('正しい設定でAxiosクライアントが作成される', () => {
-        // This is tested indirectly through the API calls in other tests
-        // The axios.create mock is set up in the Jest mock, but not called directly in test setup
-        // We can verify the behavior through the successful API call tests
-        // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
-        const axios = require('axios');
-        expect(axios).toBeDefined();
       });
     });
   });
@@ -927,51 +837,30 @@ describe('Firebase Functions Tests', () => {
   });
 
   describe('Error handling integration', () => {
-    type MockAxiosInstance = {
-      get: ReturnType<typeof vi.fn>;
-      post: ReturnType<typeof vi.fn>;
-      patch: ReturnType<typeof vi.fn>;
-      defaults: { headers: { common: Record<string, unknown> } };
-      interceptors: {
-        request: { use: ReturnType<typeof vi.fn> };
-        response: { use: ReturnType<typeof vi.fn> };
-      };
-    };
-    let mockAxios: MockAxiosInstance;
+    let mockClient: MockEsaHttpClient;
     const esaConfig = { teamName: 'test-team', accessToken: 'test-token' };
 
     beforeEach(() => {
-      mockAxios = {
-        get: vi.fn(),
-        post: vi.fn(),
-        patch: vi.fn(),
-        defaults: { headers: { common: {} } },
-        interceptors: {
-          request: { use: vi.fn() },
-          response: { use: vi.fn() },
-        },
-      };
+      mockClient = createMockEsaClient();
     });
 
-    it('AxiosError のエラーレスポンスが正しく変換される', async () => {
+    it('EsaHttpError のエラーレスポンスが正しく変換される', async () => {
       const searchResult: EsaSearchResult = {
         posts: [],
         total_count: 0,
       };
 
-      mockAxios.get.mockResolvedValueOnce({ data: searchResult } as AxiosResponse<EsaSearchResult>);
-      mockAxios.post.mockRejectedValueOnce({
-        response: {
-          data: {
-            error: 'validation_failed',
-            message: 'Title is required',
-          },
-        },
-      });
+      mockClient.get.mockResolvedValueOnce(searchResult);
+      mockClient.post.mockRejectedValueOnce(
+        new EsaHttpError(400, {
+          error: 'validation_failed',
+          message: 'Title is required',
+        }),
+      );
 
       await expect(
         createOrUpdatePost(
-          mockAxios,
+          mockClient as unknown as EsaHttpClient,
           esaConfig,
           '日報/2025/06/20',
           [],
@@ -982,14 +871,10 @@ describe('Firebase Functions Tests', () => {
     });
 
     it('ネットワークエラーなどの一般的なエラーが適切に伝播される', async () => {
-      const mockEsaClient = {
-        get: vi.fn().mockRejectedValueOnce(new Error('Network timeout')),
-        post: vi.fn(),
-        patch: vi.fn(),
-      } as unknown as EsaHttpClient;
+      mockClient.get.mockRejectedValueOnce(new Error('Network timeout'));
 
       await expect(
-        getDailyReport(mockAxios, mockEsaClient, esaConfig, '日報/2024/06/20'),
+        getDailyReport(mockClient as unknown as EsaHttpClient, esaConfig, '日報/2024/06/20'),
       ).rejects.toThrow('エラーが発生しました');
     });
   });
