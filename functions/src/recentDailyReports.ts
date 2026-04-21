@@ -2,7 +2,7 @@
  * 過去の日報リストを取得するための機能
  */
 
-import { AxiosInstance } from 'axios';
+import { type EsaHttpClient } from './esaHttpClient';
 import { searchPosts } from './search';
 import { getDateRangeCategories, formatCategoryToDate, isDailyReportCategory } from './dateUtils';
 import { type DailyReportCategory } from '../../types/domain';
@@ -41,13 +41,13 @@ export function extractDailyReportSummary(post: EsaPostSnakeCase & { category: D
 
 /**
  * 過去の日報リストを取得する
+ * @param client - esa.io 用 HTTP クライアント
  * @param days - 取得する日数（デフォルト: 10）
- * @param axiosClient - Axiosクライアント（テスト用にオプション）
  * @returns 日報リストと総数
  */
 export async function getRecentDailyReports(
-  days: number = 10,
-  axiosClient?: AxiosInstance
+  client: EsaHttpClient,
+  days: number = 10
 ): Promise<{ reports: DailyReportSummarySnakeCase[]; total_count: number }> {
   // 過去N日分のカテゴリを生成
   const categories = getDateRangeCategories(days);
@@ -56,12 +56,12 @@ export async function getRecentDailyReports(
   const query = createMultipleCategoryQuery(categories);
 
   // 検索実行
-  const result = await searchPosts({
+  const result = await searchPosts(client, {
     options: [{ query }],
     perPage: days, // 最大でも指定日数分しか存在しないはず
     sort: 'updated',
     order: 'desc'
-  }, axiosClient);
+  });
 
   // 結果を日報サマリー形式に変換
   const reports = result.posts

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { CallableRequest, onCall } from 'firebase-functions/v2/https';
 import { searchDailyReport } from './search';
+import { createEsaClient, type EsaHttpClient } from './esaHttpClient';
 import { formatCategoryToDate } from './dateUtils';
 import { type DailyReportCategory, type DateString } from '../../types/domain';
 import {
@@ -139,6 +140,7 @@ export async function createOrUpdatePost(
 
 export async function getDailyReport(
   axiosClient: AxiosInstance,
+  esaClient: EsaHttpClient,
   esaConfig: EsaConfig,
   category: DailyReportCategory,
 ): Promise<EsaPostSnakeCase> {
@@ -152,7 +154,7 @@ export async function getDailyReport(
   }
 
   try {
-    const response = await searchDailyReport(targetDate, axiosClient);
+    const response = await searchDailyReport(esaClient, targetDate);
 
     if (response.total_count === 0) {
       throw new functions.https.HttpsError('not-found', '指定された日の日報はまだありません');
@@ -222,7 +224,8 @@ export const dailyReport = onCall(
 
     const esaConfig = getEsaConfig();
     const axios = createAxiosClient(esaConfig.accessToken);
-    const result = await getDailyReport(axios, esaConfig, req.data.category);
+    const esaClient = createEsaClient(esaConfig.accessToken);
+    const result = await getDailyReport(axios, esaClient, esaConfig, req.data.category);
     return convertEsaPostToCamelCase(result);
   }
 );
@@ -256,8 +259,11 @@ export const recentDailyReports = onCall(
       throw new functions.https.HttpsError('invalid-argument', 'daysパラメータは1から31の範囲で指定してください');
     }
 
+    const esaConfig = getEsaConfig();
+    const esaClient = createEsaClient(esaConfig.accessToken);
+
     try {
-      const result = await getRecentDailyReports(days);
+      const result = await getRecentDailyReports(esaClient, days);
       return convertRecentDailyReportsResponseToCamelCase(result);
     } catch (error) {
       console.error('recentDailyReports error:', error);

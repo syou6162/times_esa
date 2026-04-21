@@ -1,22 +1,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { searchPosts, searchDailyReport } from '../search';
 import { type SearchOption } from '../searchOptions';
-import type { AxiosInstance } from 'axios';
+import type { EsaHttpClient } from '../esaHttpClient';
 import type { EsaSearchResult } from '../caseConverter';
 
-// モック用のAxiosクライアント
+// モック用の EsaHttpClient
 const mockGet = vi.fn();
-const mockAxiosClient = {
-  get: mockGet
-} as unknown as AxiosInstance;
+const mockEsaClient = {
+  get: mockGet,
+  post: vi.fn(),
+  patch: vi.fn(),
+} as unknown as EsaHttpClient;
 
 // モック用のESA設定
 vi.mock('../index', () => ({
   getEsaConfig: () => ({
     accessToken: 'test-token',
     teamName: 'test-team'
-  }),
-  createAxiosClient: () => mockAxiosClient
+  })
 }));
 
 describe('search', () => {
@@ -39,13 +40,13 @@ describe('search', () => {
         total_count: 1
       };
 
-      mockGet.mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const options: SearchOption[] = [
         { query: 'on:日報/2024/06/20' }
       ];
 
-      const result = await searchPosts({ options }, mockAxiosClient);
+      const result = await searchPosts(mockEsaClient, { options });
 
       expect(mockGet).toHaveBeenCalledWith(
         '/v1/teams/test-team/posts',
@@ -68,7 +69,7 @@ describe('search', () => {
         total_count: 0
       };
 
-      mockGet.mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const options: SearchOption[] = [
         { query: 'on:日報/2024/06/21' },
@@ -76,13 +77,13 @@ describe('search', () => {
         { query: 'wip:false' }
       ];
 
-      const result = await searchPosts({
+      const result = await searchPosts(mockEsaClient, {
         options,
         page: 2,
         perPage: 50,
         sort: 'created',
         order: 'asc'
-      }, mockAxiosClient);
+      });
 
       expect(mockGet).toHaveBeenCalledWith(
         '/v1/teams/test-team/posts',
@@ -105,9 +106,9 @@ describe('search', () => {
         total_count: 0
       };
 
-      mockGet.mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce(mockResponse);
 
-      const result = await searchPosts({ options: [] }, mockAxiosClient);
+      const result = await searchPosts(mockEsaClient, { options: [] });
 
       expect(mockGet).toHaveBeenCalledWith(
         '/v1/teams/test-team/posts',
@@ -129,7 +130,7 @@ describe('search', () => {
       mockGet.mockRejectedValueOnce(error);
 
       await expect(
-        searchPosts({ options: [] }, mockAxiosClient)
+        searchPosts(mockEsaClient, { options: [] })
       ).rejects.toThrow('API Error');
     });
   });
@@ -149,9 +150,9 @@ describe('search', () => {
         total_count: 1
       };
 
-      mockGet.mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce(mockResponse);
 
-      const result = await searchDailyReport('2024-06-20', mockAxiosClient);
+      const result = await searchDailyReport(mockEsaClient, '2024-06-20');
 
       expect(mockGet).toHaveBeenCalledWith(
         '/v1/teams/test-team/posts',
@@ -170,9 +171,9 @@ describe('search', () => {
         total_count: 0
       };
 
-      mockGet.mockResolvedValueOnce({ data: mockResponse });
+      mockGet.mockResolvedValueOnce(mockResponse);
 
-      await searchDailyReport('2024-01-05', mockAxiosClient);
+      await searchDailyReport(mockEsaClient, '2024-01-05');
 
       expect(mockGet).toHaveBeenCalledWith(
         '/v1/teams/test-team/posts',
