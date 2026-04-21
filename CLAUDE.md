@@ -69,9 +69,9 @@ Key architectural patterns:
 ### Backend Architecture
 - **Runtime**: Node.js 22 + TypeScript
 - **Framework**: Firebase Functions v2
-- **API Integration**: esa.io API via axios (direct HTTP calls to https://api.esa.io/v1)
+- **API Integration**: esa.io API (direct HTTP calls to https://api.esa.io/v1 via EsaHttpClient)
 - **Authentication**: Firebase Admin SDK for token validation
-- **HTTP Client**: Axios for external API calls
+- **HTTP Client**: Node.js standard fetch API (wrapped via EsaHttpClient in functions/src/esaHttpClient.ts) for external API calls
 
 Key architectural patterns:
 - Callable Functions pattern for client-server communication
