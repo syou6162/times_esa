@@ -61,7 +61,7 @@ src/
 - **Firebase Cloud Functions** - サーバーレス実行環境
 - **Node.js 22** - ランタイム
 - **TypeScript 5.8** - 型安全性の確保
-- **Axios** - HTTP クライアント
+- **fetch (Node.js 標準) + EsaHttpClient** - HTTP クライアント (`functions/src/esaHttpClient.ts`)
 
 ### Cloud Functions一覧
 | 関数名 | 機能 | 説明 |
