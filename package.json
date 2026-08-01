@@ -40,9 +40,9 @@
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "16.3.2",
-    "@types/react": "19.2.17",
+    "@types/react": "19.2.18",
     "@types/react-copy-to-clipboard": "5.0.7",
-    "@types/react-dom": "19.2.3",
+    "@types/react-dom": "19.2.4",
     "@typescript-eslint/eslint-plugin": "8.65.0",
     "@typescript-eslint/parser": "8.65.0",
     "dotenv": "17.4.2",
